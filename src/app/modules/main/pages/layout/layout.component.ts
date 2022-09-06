@@ -9,11 +9,24 @@ export class LayoutComponent implements OnInit {
   //#region variables
   menu = [
     // { icon: '', label: '', route: '' },
-    { icon: 'bi bi-house', label: 'dashboard', route: './dashboard' },
-    { icon: 'bi bi-house', label: 'settings', route: './settings' },
+    // { icon: 'bi bi-building', label: 'brand name', route: './brand' },
+    { icon: 'bi bi-house-door', label: 'dashboard', route: './dashboard' },
+    { icon: 'bi bi-person', label: 'customers', route: './contacts' },
+    { icon: 'bi bi-chat', label: 'messages', route: './messages' },
+    { icon: 'bi bi-question-circle', label: 'help', route: './help' },
+    { icon: 'bi bi-chat', label: 'messages', route: './messages' },
+    { icon: 'bi bi-gear', label: 'settings', route: './settings' },
+    { icon: 'bi bi-box-arrow-left', label: 'log out' },
   ];
+  colapse: boolean = true;
   //#endregion variables
   constructor() {}
 
   ngOnInit(): void {}
+
+  //#region methods
+  toggleMenu() {
+    this.colapse = !this.colapse;
+  }
+  //#endregion methods
 }
