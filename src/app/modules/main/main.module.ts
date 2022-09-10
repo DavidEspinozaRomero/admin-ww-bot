@@ -16,6 +16,7 @@ import { LayoutComponent } from './pages/layout/layout.component';
   ],
   imports: [
     CommonModule,
+    
     MainRoutingModule,
     SharedModule
   ]

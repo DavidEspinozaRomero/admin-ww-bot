@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RestorePasswordComponent } from './pages/restore-password/restore-password.component';
+
+import {
+  LayoutComponent,
+  LoginComponent,
+  RestorePasswordComponent,
+  RegisterComponent,
+} from './pages';
 
 const routes: Routes = [
   {
     path: '',
+    component: LayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
       { path: 'restore-password', component: RestorePasswordComponent },
       { path: '**', redirectTo: 'login' },
     ],

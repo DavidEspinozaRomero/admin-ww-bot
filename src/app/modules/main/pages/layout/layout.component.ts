@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -16,17 +17,22 @@ export class LayoutComponent implements OnInit {
     { icon: 'bi bi-question-circle', label: 'help', route: './help' },
     { icon: 'bi bi-chat', label: 'messages', route: './messages' },
     { icon: 'bi bi-gear', label: 'settings', route: './settings' },
-    { icon: 'bi bi-box-arrow-left', label: 'log out' },
+    { icon: 'bi bi-box-arrow-left', label: 'log out', function: this.logout },
   ];
   colapse: boolean = true;
   //#endregion variables
-  constructor() {}
+  constructor(private readonly router: Router) {}
 
   ngOnInit(): void {}
 
   //#region methods
   toggleMenu() {
     this.colapse = !this.colapse;
+  }
+
+  logout() {
+    console.log('logout');
+    this.router.navigateByUrl('/auth');
   }
   //#endregion methods
 }
