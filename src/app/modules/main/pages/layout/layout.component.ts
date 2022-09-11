@@ -32,6 +32,7 @@ export class LayoutComponent implements OnInit {
 
   logout() {
     console.log('logout');
+    localStorage.removeItem('token')
     this.router.navigateByUrl('/auth');
   }
   //#endregion methods

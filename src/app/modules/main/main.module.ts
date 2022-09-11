@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MainRoutingModule } from './main-routing.module';
+import { MainRoutingModule } from './main.routing';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { SharedModule } from '../shared/shared.module';

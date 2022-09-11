@@ -1,18 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../sevices/auth.service';
 
-export const regexpPassword: RegExp =
-  /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+import { ToastBaseService } from '../../../shared/services/toast.service';
+import { AuthService } from '../services/auth.service';
+import { RegExpAPP } from '../../interfaces/auth.interface';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   //#region variables
   loginForm: FormGroup = this.fb.group({
     email: [
@@ -22,7 +21,7 @@ export class LoginComponent implements OnInit {
         Validators.email,
         Validators.minLength(1),
         Validators.maxLength(30),
-        // Validators.pattern(),
+        Validators.pattern(RegExpAPP.email),
       ],
     ],
     password: [
@@ -31,7 +30,7 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.minLength(8),
         Validators.maxLength(30),
-        Validators.pattern(regexpPassword),
+        Validators.pattern(RegExpAPP.password),
       ],
     ],
   });
@@ -39,11 +38,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
-    private readonly toast: ToastrService,
+    private readonly toast: ToastBaseService,
     private readonly authService: AuthService
   ) {}
-
-  ngOnInit(): void {}
 
   //#region methods
   login() {
@@ -54,16 +51,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: (res) => {
-        console.log(res);
-        this.router.navigateByUrl('/settings');
-        this.toast.success(res.message, 'Listo');
+        this.toast.success(res.message);
+        this.router.navigateByUrl('/admin/settings');
       },
       error: (err) => {
-        console.log(err);
-        this.toast.success(err.error.message, 'Ups...');
-
-        // TODO: agregar un snackbar o toast para mostrar los errores
-        // alert(err.error.message)
+        this.toast.error(err.error.message);
       },
     });
   }

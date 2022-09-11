@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { ValidateTokenGuard } from './modules/auth/guards/validate-token.guard';
+
 const routes: Routes = [
   {
     path: 'auth',
@@ -8,11 +10,14 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: '',
+    path: 'admin',
     loadChildren: () =>
       import('./modules/main/main.module').then((m) => m.MainModule),
+    canActivate: [ValidateTokenGuard],
+    canLoad: [ValidateTokenGuard],
   },
   { path: '**', redirectTo: 'auth' },
+  // { path: '', pathMatch: 'full', redirectTo: 'path' },
 ];
 
 @NgModule({

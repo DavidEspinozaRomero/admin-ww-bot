@@ -19,7 +19,11 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }),
     AppRoutingModule,
   ],
   providers: [
