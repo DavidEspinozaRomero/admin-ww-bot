@@ -9,9 +9,9 @@ import { LocalStorageKey } from '../interfaces/storage.interface';
 export class StorageService {
   constructor(private readonly crypt: CryptService) {}
 
-  setLocalStorage(key: LocalStorageKey, data: any) {
-    const DATA = JSON.stringify(data);
-    localStorage.setItem(key, DATA);
+  setLocalStorage(key: LocalStorageKey, data: string) {
+    // const DATA = JSON.stringify(data);
+    localStorage.setItem(key, data);
   }
   getLocalStorage(key: LocalStorageKey) {
     return localStorage.getItem(key);
