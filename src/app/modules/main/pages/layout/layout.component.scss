@@ -15,7 +15,7 @@
   li {
     position: relative;
   }
-  li .hovered,
+  .hovered a,
   li a {
     color: white;
     background-color: $blue;
@@ -29,7 +29,7 @@
     margin-top: auto;
     color: red !important;
   }
-  li .hovered,
+  .hovered a,
   li:hover a {
     background-color: white;
     border-radius: 1rem 0 0 1rem;
@@ -37,7 +37,7 @@
   }
 
   li:hover a::after,
-  li .hovered::after {
+  .hovered a::after {
     content: "";
     position: absolute;
     right: 0;
@@ -49,7 +49,7 @@
     box-shadow: 1rem 1rem 0 0.5rem white;
   }
   li:hover a::before,
-  li .hovered::before {
+  .hovered a::before {
     content: "";
     position: absolute;
     right: 0;

@@ -15,16 +15,15 @@ export class ValidateTokenGuard implements CanActivate, CanLoad {
 
   canActivate(): Observable<boolean> | boolean {
     console.log('canActivate');
-    return this.auth.validarToken().pipe(
-      tap((valid) => {
-        if (!valid) {
-          this.router.navigateByUrl('/auth');
-        }
-      })
-    );
+    return this.isValidToken();
   }
   canLoad(): Observable<boolean> | boolean {
     console.log('canLoad');
+    return this.isValidToken();
+  }
+
+  //#region methods
+  isValidToken() {
     return this.auth.validarToken().pipe(
       tap((valid) => {
         if (!valid) {
@@ -33,4 +32,5 @@ export class ValidateTokenGuard implements CanActivate, CanLoad {
       })
     );
   }
+  //#endregion methods
 }

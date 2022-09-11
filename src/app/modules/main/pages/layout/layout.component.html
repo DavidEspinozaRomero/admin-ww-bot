@@ -19,20 +19,20 @@
         [routerLinkActiveOptions]="{ exact: true }"
         class="nav-link ps-2"
         (click)="toggleMenu()"
-        
       >
         <i class="bi bi-building"></i>
         <span *ngIf="!colapse"> Brand name </span>
       </a>
     </li>
-    <li *ngFor="let item of menu" class="nav-item">
-      <a
-        [routerLink]="item.route"
-        routerLinkActive="hovered"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="nav-link ps-2 "
-        (click)="item?.function()"
-      >
+    <li
+      *ngFor="let item of menu"
+      class="nav-item"
+      role="button"
+      routerLinkActive="hovered"
+      [routerLink]="item.route"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a class="nav-link ps-2" (click)="item?.function()">
         <i [class]="item.icon"></i>
         <span class="ps-3" *ngIf="!colapse"> {{ item.label }} </span>
       </a>
@@ -41,6 +41,5 @@
 </nav>
 <main class="p-3" [ngClass]="{ extend: colapse }">
   <router-outlet></router-outlet>
-  <button class="btn btn-primary" (click)="logout()"> log out</button>
+  <button class="btn btn-primary" (click)="logout()">log out</button>
 </main>
-
