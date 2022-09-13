@@ -3,14 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, of, tap } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { StorageService } from '../../../shared/services/storage.service';
+import { StorageService } from '../../shared/services/storage.service';
 import { LocalStorageKey } from 'src/app/modules/shared/interfaces/storage.interface';
 import {
   authloginResponse,
   registerUser,
   loginUser,
   User,
-} from '../../interfaces/auth.interface';
+} from '../interfaces/auth.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
