@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,18 +17,22 @@ export class LayoutComponent implements OnInit {
     { icon: 'bi bi-question-circle', label: 'help', route: './help' },
     { icon: 'bi bi-chat', label: 'messages', route: './messages' },
     { icon: 'bi bi-gear', label: 'settings', route: './settings' },
-    { icon: 'bi bi-box-arrow-left', label: 'log out', function: this.logout },
+    // { icon: 'bi bi-box-arrow-left', label: 'log out' },
   ];
   colapse: boolean = true;
   //#endregion variables
+  
   constructor(private readonly router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   //#region methods
-  toggleMenu() {
-    this.colapse = !this.colapse;
-  }
+
+
+  // toggleMenu() {
+  //   this.colapse = !this.colapse;
+  // }
 
   logout() {
     console.log('logout');

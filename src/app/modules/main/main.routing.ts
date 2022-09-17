@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
   DashboardComponent,
-  LayoutComponent,
   SettingsComponent,
+  LayoutComponent,
 } from './pages';
 
 const routes: Routes = [
