@@ -1,7 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
-import { AuthService } from '../../../auth/services/auth.service';
-import { MainService } from '../../services/main.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-settings',
@@ -11,25 +8,7 @@ import { MainService } from '../../services/main.service';
 export class SettingsComponent implements OnInit {
   //#region
   //#endregion
-  //#region variables
-  @ViewChild('qrcode') qrcode!: ElementRef<HTMLDivElement>;
-  //#endregion variables
-  public get user() {
-    return this.authService.user;
-  }
+  constructor() {}
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly mainService: MainService
-  ) {}
-
-  ngOnInit(): void {
-    this.mainService.getqrimg().subscribe({
-      next: (res) => {
-        console.log(res);
-        const svg: any = res
-        this.qrcode.nativeElement.appendChild(svg)
-      },
-    });
-  }
+  ngOnInit(): void {}
 }
