@@ -8,11 +8,11 @@
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: $bg-blue; /* Black*/
+  background-color: $blue; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-  border-left: 1rem solid $bg-blue;
+  border-left: 1rem solid $blue;
 }
 
 /* The sidebar links */
@@ -24,8 +24,8 @@
 
 /* When you mouse over the navigation links, change their color */
 .sidebar li:hover {
-  // color: $bg-blue;
-  background-color: $bg-white;
+  // color: $blue;
+  background-color: $white;
 }
 
 /* Position and style the close button (top right corner) */
