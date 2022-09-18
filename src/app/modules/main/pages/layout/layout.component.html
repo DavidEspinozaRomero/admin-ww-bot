@@ -1,33 +1,35 @@
-<nav class="sidebar" [ngClass]="{ menu_extend: colapse }">
-  <ul class="nav d-block">
-    <li class="nav-item">
-      <a
-        href="javascript:void(0)"
-        class="closebtn"
-        (click)="colapse = !colapse"
-      >
-        &times;
-      </a>
-    </li>
-    <li class="nav-item" *ngFor="let item of menu">
-      <a
-        [routerLink]="item.route"
-        [routerLinkActive]="'classname'"
-        class="nav-link text-black"
-        [class]="item.icon"
-      >
-        {{ item.label | titlecase}}
+<nav class="sidebar " [ngClass]="{ menu_extend: !colapse }">
+  <p
+    class="mt-4 mb-3 ps-3"
+    role="button"
+    style="inline-size: max-content"
+    (click)="colapse = !colapse"
+  >
+    <i class="fs-5 bi bi-box-arrow-left"></i> <span class="ms-3">BRAND</span>
+  </p>
+  <ul class="nav d-block h-100">
+    <li
+      *ngFor="let item of menu"
+      class="nav-item"
+      role="button"
+      [routerLink]="item.route"
+      [routerLinkActive]="'hovered'"
+    >
+      <a class="nav-link">
+        <i class="fs-5" [class]="item.icon"></i>
+        <span class="ms-3"> {{ item.label | titlecase }} </span>
       </a>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link text-black bi bi-box-arrow-left" (click)="logout()">
-        Log out
+    <li class="nav-item mt-auto">
+      <a class="nav-link" (click)="logout()">
+        <i class="fs-5 bi bi-box-arrow-left"></i>
+        <span class="ms-3">Log out</span>
       </a>
     </li>
   </ul>
 </nav>
 
-<main class="main" [ngClass]="{ menu_colapse: colapse }">
+<main class="main p-3" [ngClass]="{ menu_colapse: !colapse }">
   <router-outlet></router-outlet>
 </main>

@@ -8,24 +8,58 @@
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: $bg-blue; /* Black*/
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 60px; /* Place content 60px from the top */
+  background-color: $blue; /* Black*/
+  overflow: hidden; /* Disable horizontal scroll */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
-  border-left: 1rem solid $bg-blue;
+  border-left: 1rem solid $blue;
 }
 
 /* The sidebar links */
 .sidebar li {
   display: block;
-  transition: 0.3s;
+  position: relative;
   border-radius: 1rem 0 0 1rem;
+  a {
+    width: 10rem;
+  }
+  .nav-link {
+    color: $white;
+  }
+}
+
+.hovered a::before,
+li:hover a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -1rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  border-radius: 1rem;
+  box-shadow: 8px 8px 0px 4px $white;
+}
+
+.hovered a::after,
+li:hover a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -1rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  border-radius: 1rem;
+  box-shadow: 8px -8px 0px 4px $white;
 }
 
 /* When you mouse over the navigation links, change their color */
+.sidebar .hovered,
 .sidebar li:hover {
-  // color: $bg-blue;
-  background-color: $bg-white;
+  background-color: $white;
+  a {
+    color: $blue;
+  }
 }
 
 /* Position and style the close button (top right corner) */
@@ -55,80 +89,3 @@
   }
 }
 
-// .navidation {
-//   width: 10rem;
-//   height: 100%;
-//   border-left: 1rem solid $blue;
-//   // transition: 300ms ease-in-out;
-//   overflow: hidden;
-//   ul {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//   }
-//   li {
-//     position: relative;
-//   }
-//   .hovered a,
-//   li a {
-//     color: white;
-//     background-color: $blue;
-//     border-radius: 1rem 0 0 1rem;
-//   }
-//   li:nth-child(1) {
-//     margin-top: 1rem;
-//     margin-bottom: 3rem;
-//   }
-//   li:last-child {
-//     margin-top: auto;
-//     color: red !important;
-//   }
-//   .hovered a,
-//   li:hover a {
-//     background-color: white;
-//     border-radius: 1rem 0 0 1rem;
-//     color: $blue;
-//   }
-
-//   li:hover a::after,
-//   .hovered a::after {
-//     content: "";
-//     position: absolute;
-//     right: 0;
-//     top: -1rem;
-//     width: 1rem;
-//     height: 1rem;
-//     background-color: transparent;
-//     border-radius: 1rem;
-//     box-shadow: 1rem 1rem 0 0.5rem white;
-//   }
-//   li:hover a::before,
-//   .hovered a::before {
-//     content: "";
-//     position: absolute;
-//     right: 0;
-//     bottom: -1rem;
-//     width: 1rem;
-//     height: 1rem;
-//     background-color: transparent;
-//     border-radius: 1rem;
-//     box-shadow: 1rem -1rem 0 0.5rem white;
-//     z-index: 1;
-//   }
-// }
-
-// main {
-//   position: absolute;
-//   left: 10rem;
-//   width: calc(100% - 10rem);
-//   transition: 300ms ease-in-out;
-// }
-// .extend {
-//   left: 4rem;
-//   width: calc(100% - 4rem);
-// }
-
-// .colapse {
-//   width: 4rem;
-// }
