@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MainRoutingModule } from './main.routing';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -22,7 +23,7 @@ import { ContactsComponent } from './pages/contacts/contacts.component';
   ],
   imports: [
     CommonModule,
-    
+    ReactiveFormsModule,
     MainRoutingModule,
     SharedModule
   ]

@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'contacts', component: ContactsComponent },
       { path: 'settings', component: SettingsComponent },
 
-      { path: '**', redirectTo: 'dashboard' },
+      { path: '**', redirectTo: 'messages' },
     ],
   },
 ];

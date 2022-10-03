@@ -1,5 +1,180 @@
-<p>settings works!</p>
+<!-- <p>settings works!</p>
 <span> user: </span>
-<pre> {{ user | json }} </pre>
+<pre> {{ user | json }} </pre> -->
 
-<div #qrcode></div>
+<h1>ws conect</h1>
+<span> {{ status.conected ? "conect" : "aoeu" }} </span>
+
+<section style="transition: 1s">
+  <button
+    type="button"
+    class="btn btn-primary mb-3"
+    data-bs-toggle="collapse"
+    data-bs-target="#collapseExample"
+    aria-expanded="false"
+    aria-controls="collapseExample"
+  >
+    + Nuevo Mensaje
+  </button>
+  <!-- (click)="status.showFormMessage = true" -->
+
+  <!-- *ngIf="status.showFormMessage" -->
+  <form
+    class="mb-3 collapse"
+    id="collapseExample"
+    [formGroup]="newMessageGroup"
+  >
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <label for="message" class="form-label">Mensage</label>
+          <textarea
+            type="text"
+            class="form-control form-control-sm"
+            name="message"
+            id=""
+            aria-describedby="helpId"
+            placeholder=" -- Agregue el mensaje --"
+            formControlName="message"
+            rows="4"
+          >
+          </textarea>
+          <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="mb-1">
+          <label for="category" class="form-label">Categoria</label>
+          <select
+            class="form-select form-select-sm"
+            name="category"
+            id=""
+            formControlName="category"
+          >
+            <option value="" selected>-- Select one --</option>
+            <option [value]="item" *ngFor="let item of categories">
+              {{ item | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="date" class="form-label">Fecha</label>
+          <input
+            type="date"
+            class="form-control form-control-sm"
+            name="date"
+            id=""
+            aria-describedby="helpId"
+            placeholder=" -- Agregue el mensaje --"
+            formControlName="date"
+          />
+          <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+        </div>
+        <!-- <div class="mb-3">
+              <label for="asdf" class="form-label">Hora</label>
+              <input
+                type="time"
+                class="form-control form-control-sm"
+                name="asdf"
+                id=""
+                aria-describedby="helpId"
+                placeholder=" -- Agregue el mensaje --"
+              />
+            </div> -->
+      </div>
+    </div>
+    <div class="text-end">
+      <!-- (click)="status.showFormMessage = false" -->
+      <button type="button" class="btn btn-primary me-3">Guardar</button>
+      <!-- (click)="status.showFormMessage = false" -->
+      <button type="button" class="btn btn-outline-danger">Cancelar</button>
+    </div>
+  </form>
+  <!-- <pre> {{ newMessageGroup.value | json }} </pre> -->
+
+  <!-- TODO: agregar lista de mensajes -->
+  <div class="table-responsive">
+    <table
+      class="table table-striped table-hover table-borderless align-middle"
+    >
+      <thead class="table-primary text-primary">
+        <!-- <caption>
+          Table Name
+        </caption> -->
+        <tr>
+          <th class="" style="min-width: 10rem">Mensaje</th>
+          <th class="text-center" style="width: 8rem">Categoria</th>
+          <th class="" style="width: 8rem">Fecha</th>
+          <th class="" style="width: 5rem"></th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let item of [1, 11, 1, 1, 1, 1, 1]" class="">
+          <td scope="row">Buenos Dias!</td>
+          <td class="text-center">
+            <span class="badge bg-primary">Primary</span>
+          </td>
+          <td>
+            {{ today | date: "mediumDate" }}
+          </td>
+          <td>
+            <i
+              class="bi bi-pencil-square bg-white border rouded px-1 me-2"
+              role="button"
+            ></i>
+            <i
+              class="bi bi-trash text-danger bg-white border rouded px-1"
+              role="button"
+            ></i>
+          </td>
+        </tr>
+        <!-- <tr class="table-primary">
+          <td scope="row">Item</td>
+          <td>Item</td>
+          <td>Item</td>
+        </tr> -->
+      </tbody>
+      <tfoot></tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- <section class="row justify-content-center">
+  <div class="col-4">
+    <h2>Scan de QRCODE to use the app</h2>
+    <ol>
+      <li>Abre WhatsApp en tu teléfono</li>
+      <li>
+        Toca Menu <i class="bi bi-three-dots-vertical"></i> o Configuracion
+        <i class="bi bi-gear"></i> y selecciona dispositivos vinculados
+      </li>
+      <li>
+        Cuando se active la cámara, apunta tu teléfono hacia esta pantalla para
+        escanear el código
+      </li>
+    </ol>
+  </div>
+  <div class="col-3" style="background-color: #eee">
+    <div
+      *ngIf="status.loadingQR"
+      class="d-flex h-100 justify-content-center align-items-center"
+    >
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <div
+      *ngIf="!status.loadingQR && !status.responseQR"
+      class="h-100 text-center p-3"
+    >
+      <p class="mt-4">
+        <i class="bi bi-arrow-clockwise fs-1 text-success"></i>
+      </p>
+      <button class="btn btn-outline-primary" (click)="getQRCODE()">
+        Refresh code
+      </button>
+    </div>
+    <div #qrcode *ngIf="!status.loadingQR && status.responseQR" class=""></div>
+  </div>
+</section> -->
