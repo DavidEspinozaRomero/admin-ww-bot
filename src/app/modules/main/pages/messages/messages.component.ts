@@ -20,10 +20,12 @@ export class MessagesComponent implements OnInit {
   //#endregion
   //#region variables
   @ViewChild('qrcode') qrcodeDiv!: ElementRef<HTMLDivElement>;
+  @ViewChild('BtnNewMessage') BtnNewMessage?: ElementRef<HTMLButtonElement>;
 
   status = {
     loading: false,
     response: false,
+    spinner: false,
     loadingQR: false,
     responseQR: false,
     conected: false,
@@ -38,16 +40,18 @@ export class MessagesComponent implements OnInit {
     'informativo',
     'pareja',
   ];
-  showCode: boolean = false;
+  today: string = new Date().toLocaleDateString();
+  listMessages: any = [];
 
+  showCode: boolean = false;
   private URLWS: string = 'http://localhost:3000/socket.io/socket.io.js';
   manager: any;
   socket!: Socket;
-  today = new Date();
+
   newMessageGroup: FormGroup = this.fb.group({
     message: [null, [Validators.required, Validators.minLength(2)]],
-    category: [''],
-    date: [new Date().toLocaleDateString()],
+    category: ['', Validators.required],
+    date: [null, [Validators.required]],
   });
 
   miForm: FormGroup = this.fb.group({
@@ -66,30 +70,100 @@ export class MessagesComponent implements OnInit {
     private readonly mainService: MainService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllMessages();
+  }
 
   //#region Apis
   // Get
   // TODO: agregar evento para llamar a la api y traer el qrcode
+  getAllMessages() {
+    this.mainService.getAllMessages().subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.listMessages = res.data;
+      },
+      error: (err) => {
+        console.log(err);
+        this.toast.error(err.message);
+      },
+    });
+  }
 
   // Post
-  createMessage() {
-    this.mainService.createMessage({}).subscribe({
+  createMessage(json: {}) {
+    this.mainService.createMessage(json).subscribe({
       next: (res) => {
         console.log(res);
       },
       error: (err) => {
+        console.log(err);
         this.toast.error(err.message);
       },
     });
   }
   // Update
-
+  updateMessage(id: string, json: {}) {
+    this.mainService.updateMessage(id, json).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+        this.toast.error(err.message);
+      },
+    });
+  }
   // Delete
-
+  deleteMessage(id: string) {
+    this.mainService.deleteMessage(id).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+        this.toast.error(err.message);
+      },
+    });
+  }
   //#endregion Apis
 
   //#region methods
+  cancel() {
+    this.BtnNewMessage?.nativeElement.click();
+    this.resetForm();
+  }
+  edit(msg: any, index: number) {
+    console.log(msg, index);
+  }
+  erase(msg: any, index: number) {
+    console.log(msg, index);
+  }
+  resetForm() {
+    this.newMessageGroup.reset();
+  }
+
+  save() {
+    this.newMessageGroup.markAllAsTouched();
+    new Date().toLocaleDateString();
+    if (this.newMessageGroup.invalid) {
+      this.toast.error('Falta llenar el formulario');
+      return;
+    }
+    this.buildJson();
+  }
+
+  buildJson() {
+    let json = this.newMessageGroup.value;
+    console.log(JSON.stringify(json));
+
+    this.createMessage(json);
+  }
+
+  isValid(form: FormGroup, control: string) {
+    return form.get(control)?.errors && form.get(control)?.touched;
+  }
+
   // wsConect () {
   // this.getQRCODE();
   // this.manager = new Manager(this.URLWS)

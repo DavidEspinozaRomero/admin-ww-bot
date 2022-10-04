@@ -22,13 +22,38 @@ export class MainService {
   // }
 
   createMessage(body: {}) {
-    const URL = `${this.BaseUrl}auth/check-status`;
+    const URL = `${this.BaseUrl}messages`;
     const headers: HttpHeaders = new HttpHeaders().set(
       'Authorization',
       `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
     );
-
-    return this.httpClient.post(URL, body ,{ headers })
+    return this.httpClient.post(URL, body, { headers });
   }
 
+  getAllMessages() {
+    const URL = `${this.BaseUrl}messages`;
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
+    );
+    return this.httpClient.get(URL, { headers });
+  }
+
+  updateMessage(id: string, body: {}) {
+    const URL = `${this.BaseUrl}messages/${id}`;
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
+    );
+    return this.httpClient.patch(URL, body, { headers });
+  }
+
+  deleteMessage(id: string) {
+    const URL = `${this.BaseUrl}messages/${id}`;
+    const headers: HttpHeaders = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
+    );
+    return this.httpClient.delete(URL, { headers });
+  }
 }

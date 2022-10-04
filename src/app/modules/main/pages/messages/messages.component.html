@@ -5,8 +5,9 @@
 <h1>ws conect</h1>
 <span> {{ status.conected ? "conect" : "aoeu" }} </span>
 
-<section style="transition: 1s">
+<section>
   <button
+    #BtnNewMessage
     type="button"
     class="btn btn-primary mb-3"
     data-bs-toggle="collapse"
@@ -37,6 +38,7 @@
             placeholder=" -- Agregue el mensaje --"
             formControlName="message"
             rows="4"
+            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'message') }"
           >
           </textarea>
           <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
@@ -50,6 +52,7 @@
             name="category"
             id=""
             formControlName="category"
+            [ngClass]="{'is-invalid': isValid(newMessageGroup, 'category')}"
           >
             <option value="" selected>-- Select one --</option>
             <option [value]="item" *ngFor="let item of categories">
@@ -69,7 +72,12 @@
             placeholder=" -- Agregue el mensaje --"
             formControlName="date"
           />
-          <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
+          <small
+            *ngIf="isValid(newMessageGroup, 'date')"
+            id="helpId"
+            class="form-text text-muted"
+            >Help text</small
+          >
         </div>
         <!-- <div class="mb-3">
               <label for="asdf" class="form-label">Hora</label>
@@ -86,9 +94,17 @@
     </div>
     <div class="text-end">
       <!-- (click)="status.showFormMessage = false" -->
-      <button type="button" class="btn btn-primary me-3">Guardar</button>
+      <button *ngIf="!status.spinner" type="button" class="btn btn-primary me-3" (click)="save()">
+        Guardar
+      </button>
+      <button *ngIf="status.spinner" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Guardando...
+      </button>
       <!-- (click)="status.showFormMessage = false" -->
-      <button type="button" class="btn btn-outline-danger">Cancelar</button>
+      <button type="button" class="btn btn-outline-danger" (click)="cancel()">
+        Cancelar
+      </button>
     </div>
   </form>
   <!-- <pre> {{ newMessageGroup.value | json }} </pre> -->
@@ -110,22 +126,24 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let item of [1, 11, 1, 1, 1, 1, 1]" class="">
-          <td scope="row">Buenos Dias!</td>
+        <tr *ngFor="let msg of listMessages; index as i_msg" class="">
+          <td scope="row"> {{msg.message}} </td>
           <td class="text-center">
-            <span class="badge bg-primary">Primary</span>
+            <span class="badge bg-primary"> {{msg.category}} </span>
           </td>
           <td>
-            {{ today | date: "mediumDate" }}
+            {{ msg.date | date: "mediumDate" }}
           </td>
           <td>
             <i
               class="bi bi-pencil-square bg-white border rouded px-1 me-2"
               role="button"
+              (click)="edit(msg, i_msg)"
             ></i>
             <i
               class="bi bi-trash text-danger bg-white border rouded px-1"
               role="button"
+              (click)="erase(msg, i_msg)"
             ></i>
           </td>
         </tr>
