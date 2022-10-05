@@ -78,16 +78,22 @@ export class MessagesComponent implements OnInit {
   // Get
   // TODO: agregar evento para llamar a la api y traer el qrcode
   getAllMessages() {
-    this.mainService.getAllMessages().subscribe({
-      next: (res: any) => {
-        console.log(res);
-        this.listMessages = res.data;
-      },
-      error: (err) => {
-        console.log(err);
-        this.toast.error(err.message);
-      },
-    });
+    this.status.loading = true;
+    this.mainService
+      .getAllMessages()
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.listMessages = res.data;
+          this.status.response = true;
+        },
+        error: (err) => {
+          console.log(err);
+          this.toast.error(err.message);
+          this.status.response = false;
+        },
+      })
+      .add(() => (this.status.loading = false));
   }
 
   // Post
