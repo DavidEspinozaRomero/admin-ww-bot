@@ -1,5 +1,8 @@
 <app-loading *ngIf="status.loading"></app-loading>
-<app-retry *ngIf="!status.loading && !status.response" (onRetry)="ngOnInit()" ></app-retry>
+<app-retry
+  *ngIf="!status.loading && !status.response"
+  (onRetry)="ngOnInit()"
+></app-retry>
 <!-- <h1>ws conect</h1>
 <span> {{ status.conected ? "conect" : "aoeu" }} </span> -->
 
@@ -16,7 +19,6 @@
     + Nuevo Mensaje
   </button>
 
-  *ngIf="status.showFormMessage"
   <form
     class="mb-3 collapse"
     id="collapseExample"
@@ -38,9 +40,13 @@
             [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'message') }"
           >
           </textarea>
-          <small *ngIf="isValid(newMessageGroup, 'message')" id="helpId" class="form-text text-muted">Help text</small>
-          
-        </div> 
+          <small
+            *ngIf="isValid(newMessageGroup, 'message')"
+            id="helpId"
+            class="form-text text-muted"
+            >Help text</small
+          >
+        </div>
       </div>
       <div class="col-4">
         <div class="mb-1">
@@ -77,7 +83,6 @@
             >Help text</small
           >
         </div>
-        
       </div>
     </div>
     <div class="text-end">
@@ -142,7 +147,6 @@
             ></i>
           </td>
         </tr>
-        
       </tbody>
       <tfoot></tfoot>
     </table>

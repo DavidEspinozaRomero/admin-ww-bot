@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
 import { MainService } from '../../services/main.service';
 import { Manager, Socket } from 'socket.io-client';
 import { ToastBaseService } from 'src/app/modules/shared/services';
@@ -21,6 +20,7 @@ export class MessagesComponent implements OnInit {
   //#region variables
   @ViewChild('qrcode') qrcodeDiv!: ElementRef<HTMLDivElement>;
   @ViewChild('BtnNewMessage') BtnNewMessage?: ElementRef<HTMLButtonElement>;
+  @ViewChild('formColapse') formColapse?: ElementRef<HTMLFormElement>;
 
   status = {
     loading: false,
@@ -41,7 +41,8 @@ export class MessagesComponent implements OnInit {
     'pareja',
   ];
   today: string = new Date().toLocaleDateString();
-  listMessages: any = [];
+  msgIndex!: number;
+  listMessages: any[] = [];
 
   showCode: boolean = false;
   private URLWS: string = 'http://localhost:3000/socket.io/socket.io.js';
@@ -49,6 +50,7 @@ export class MessagesComponent implements OnInit {
   socket!: Socket;
 
   newMessageGroup: FormGroup = this.fb.group({
+    id: [null],
     message: [null, [Validators.required, Validators.minLength(2)]],
     category: ['', Validators.required],
     date: [null, [Validators.required]],
@@ -57,16 +59,12 @@ export class MessagesComponent implements OnInit {
   miForm: FormGroup = this.fb.group({
     messages: this.fb.array([]),
   });
-  //#endregion variables
 
-  public get user() {
-    return this.authService.user;
-  }
+  //#endregion variables
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly toast: ToastBaseService,
-    private readonly authService: AuthService,
     private readonly mainService: MainService
   ) {}
 
@@ -83,12 +81,10 @@ export class MessagesComponent implements OnInit {
       .getAllMessages()
       .subscribe({
         next: (res: any) => {
-          console.log(res);
           this.listMessages = res.data;
           this.status.response = true;
         },
         error: (err) => {
-          console.log(err);
           this.toast.error(err.message);
           this.status.response = false;
         },
@@ -100,34 +96,37 @@ export class MessagesComponent implements OnInit {
   createMessage(json: {}) {
     this.mainService.createMessage(json).subscribe({
       next: (res) => {
-        console.log(res);
+        this.listMessages.push(res);
+        this.BtnNewMessage?.nativeElement.click();
+        this.resetForm();
       },
       error: (err) => {
-        console.log(err);
         this.toast.error(err.message);
       },
     });
   }
+
   // Update
-  updateMessage(id: string, json: {}) {
+  updateMessage(id: string, json: {}, index: number) {
     this.mainService.updateMessage(id, json).subscribe({
-      next: (res) => {
-        console.log(res);
+      next: (res: any) => {
+        this.listMessages.splice(index, 1, { ...res.data });
+        this.BtnNewMessage?.nativeElement.click();
+        this.resetForm();
       },
       error: (err) => {
-        console.log(err);
         this.toast.error(err.message);
       },
     });
   }
+
   // Delete
-  deleteMessage(id: string) {
+  deleteMessage(id: string, cb: () => void) {
     this.mainService.deleteMessage(id).subscribe({
       next: (res) => {
-        console.log(res);
+        cb();
       },
       error: (err) => {
-        console.log(err);
         this.toast.error(err.message);
       },
     });
@@ -139,11 +138,22 @@ export class MessagesComponent implements OnInit {
     this.BtnNewMessage?.nativeElement.click();
     this.resetForm();
   }
+
+  
   edit(msg: any, index: number) {
-    console.log(msg, index);
+    this.msgIndex = index;
+    this.newMessageGroup.reset(msg);
+    const open = document
+      .getElementById('collapseExample')
+      ?.classList.contains('show');
+    if (!open) {
+      this.BtnNewMessage?.nativeElement.click();
+    }
   }
   erase(msg: any, index: number) {
-    console.log(msg, index);
+    this.deleteMessage(msg.id, () => {
+      this.listMessages.splice(index, 1);
+    });
   }
   resetForm() {
     this.newMessageGroup.reset();
@@ -160,9 +170,13 @@ export class MessagesComponent implements OnInit {
   }
 
   buildJson() {
-    let json = this.newMessageGroup.value;
-    console.log(JSON.stringify(json));
-
+    let json = { ...this.newMessageGroup.value };
+    if (json.id) {
+      const { id, ...data } = json;
+      this.updateMessage(id, data, this.msgIndex);
+      return;
+    }
+    delete json.id;
     this.createMessage(json);
   }
 
