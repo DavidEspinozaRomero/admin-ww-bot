@@ -14,46 +14,30 @@ export class MainService {
     private readonly storage: StorageService
   ) {}
 
-  // getqrimg() {
-  //   const URL = `${this.BaseUrl}bot-webwhatsap/qrcode`;
-  //   const headers: HttpHeaders = new HttpHeaders();
-  //   headers.set('Accept', `image/svg+xml`);
-  //   return this.httpClient.get(URL, { headers, responseType: 'text' });
-  // }
+  getqrimg() {
+    const URL = `${this.BaseUrl}bot-webwhatsap/qrcode`;
+    const headers: HttpHeaders = new HttpHeaders();
+    headers.set('Accept', `image/svg+xml`);
+    return this.httpClient.get(URL, { headers });
+  }
 
   createMessage(body: {}) {
     const URL = `${this.BaseUrl}messages`;
-    const headers: HttpHeaders = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
-    );
-    return this.httpClient.post(URL, body, { headers });
+    return this.httpClient.post(URL, body);
   }
 
   getAllMessages() {
     const URL = `${this.BaseUrl}messages`;
-    const headers: HttpHeaders = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
-    );
-    return this.httpClient.get(URL, { headers });
+    return this.httpClient.get(URL);
   }
 
   updateMessage(id: string, body: {}) {
     const URL = `${this.BaseUrl}messages/${id}`;
-    const headers: HttpHeaders = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
-    );
-    return this.httpClient.patch(URL, body, { headers });
+    return this.httpClient.patch(URL, body);
   }
 
   deleteMessage(id: string) {
     const URL = `${this.BaseUrl}messages/${id}`;
-    const headers: HttpHeaders = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
-    );
-    return this.httpClient.delete(URL, { headers });
+    return this.httpClient.delete(URL);
   }
 }

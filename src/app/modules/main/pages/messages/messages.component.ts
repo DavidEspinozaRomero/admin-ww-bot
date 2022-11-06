@@ -40,6 +40,10 @@ export class MessagesComponent implements OnInit {
     'informativo',
     'pareja',
   ];
+  menu = [
+    { label: 'mensajes', selected: true },
+    { label: 'respuestas', selected: false },
+  ];
   today: string = new Date().toLocaleDateString();
   msgIndex!: number;
   listMessages: any[] = [];
@@ -54,6 +58,7 @@ export class MessagesComponent implements OnInit {
     message: [null, [Validators.required, Validators.minLength(2)]],
     category: ['', Validators.required],
     date: [null, [Validators.required]],
+    type: [true, [Validators.required]],
   });
 
   miForm: FormGroup = this.fb.group({
@@ -69,6 +74,7 @@ export class MessagesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // this.wsConect();
     this.getAllMessages();
   }
 
@@ -134,12 +140,17 @@ export class MessagesComponent implements OnInit {
   //#endregion Apis
 
   //#region methods
+  selecNavItem(item: any) {
+    this.menu.forEach((item) => {
+      item.selected = false;
+    });
+    item.selected = true;
+  }
   cancel() {
     this.BtnNewMessage?.nativeElement.click();
     this.resetForm();
   }
 
-  
   edit(msg: any, index: number) {
     this.msgIndex = index;
     this.newMessageGroup.reset(msg);
@@ -184,54 +195,50 @@ export class MessagesComponent implements OnInit {
     return form.get(control)?.errors && form.get(control)?.touched;
   }
 
-  // wsConect () {
-  // this.getQRCODE();
-  // this.manager = new Manager(this.URLWS)
-  // this.socket?.removeAllListeners();
+  wsConect() {
+    this.manager = new Manager(this.URLWS);
+    this.socket?.removeAllListeners();
 
-  // this.socket = this.manager.socket('/');
+    this.socket = this.manager.socket('/');
 
-  // this.socket.on('connect', () => {
-  //   console.log('conect');
-  //   this.status.conected = true;
-  // });
-  // this.socket.on('disconnect', () => {
-  //   console.log('disconect');
-  //   this.status.conected = false;
-  // });
+    this.socket.on('connect', () => {
+      console.log('conect');
+      this.status.conected = true;
+    });
+    this.socket.on('disconnect', () => {
+      console.log('disconect');
+      this.status.conected = false;
+    });
 
-  // this.socket.on(
-  //   'message-from-server',
-  //   (payload: { fullName: string; message: string, qr?: File }) => {
-  //     // this.messages.push(payload);
-  //     console.log(payload);
-  //     if (payload.qr) {
-  //       var reader = new FileReader();
-  //       reader.readAsText(payload.qr)
-  //       console.log();
+    this.socket.on(
+      'message-from-server',
+      (payload: { action: string; description: string }) => {
+        const { action, description } = payload;
+        if (action == 'download') {
+          this.getQRCODE();
+        }
+        console.log(payload);
+      }
+    );
+  }
 
-  //     }
-  //   }
-  // );
-
-  // }
-  // getQRCODE() {
-  //   this.status.loadingQR = true;
-  //   this.mainService
-  //     .getqrimg()
-  //     .subscribe({
-  //       next: (res: any) => {
-  //         this.status.responseQR = true;
-  //         setTimeout(() => {
-  //           this.qrcodeDiv.nativeElement.innerHTML = res;
-  //         }, 300);
-  //       },
-  //       error: (err) => {
-  //         this.status.responseQR = false;
-  //       },
-  //     })
-  //     .add(() => (this.status.loadingQR = false));
-  // }
+  getQRCODE() {
+    this.status.loadingQR = true;
+    this.mainService
+      .getqrimg()
+      .subscribe({
+        next: (res: any) => {
+          this.status.responseQR = true;
+          setTimeout(() => {
+            this.qrcodeDiv.nativeElement.innerHTML = res;
+          }, 300);
+        },
+        error: (err) => {
+          this.status.responseQR = false;
+        },
+      })
+      .add(() => (this.status.loadingQR = false));
+  }
   //#endregion methods
 }
 
