@@ -40,4 +40,9 @@ export class MainService {
     const URL = `${this.BaseUrl}messages/${id}`;
     return this.httpClient.delete(URL);
   }
+
+  getCategories() {
+    const URL = `${this.BaseUrl}messages/get-categories`;
+    return this.httpClient.get(URL);
+  }
 }

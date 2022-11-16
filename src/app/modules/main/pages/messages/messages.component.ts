@@ -2,12 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { Manager, Socket } from 'socket.io-client';
 import { ToastBaseService } from 'src/app/modules/shared/services';
+import { StorageService } from '../../../shared/services/storage.service';
+import { LocalStorageKey } from 'src/app/modules/shared/interfaces/storage.interface';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Category, Message } from '../interfaces/message.inteface';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-messages',
@@ -31,22 +35,16 @@ export class MessagesComponent implements OnInit {
     conected: false,
     showFormMessage: false,
   };
+  
+    menu = [
+      { label: 'respuestas', selected: true },
+      { label: 'mensajes', selected: false },
+    ];
 
-  categories = [
-    'default',
-    'familia',
-    'amigo',
-    'negocio',
-    'informativo',
-    'pareja',
-  ];
-  menu = [
-    { label: 'mensajes', selected: true },
-    { label: 'respuestas', selected: false },
-  ];
-  today: string = new Date().toLocaleDateString();
-  msgIndex!: number;
+  categories: Category[] = [];
   listMessages: any[] = [];
+
+  msgIndex!: number;
 
   showCode: boolean = false;
   private URLWS: string = 'http://localhost:3000/socket.io/socket.io.js';
@@ -55,10 +53,12 @@ export class MessagesComponent implements OnInit {
 
   newMessageGroup: FormGroup = this.fb.group({
     id: [null],
-    message: [null, [Validators.required, Validators.minLength(2)]],
+    query: [null, [Validators.required, Validators.minLength(2)]],
+    answer: [null, [Validators.required, Validators.minLength(2)]],
     category: ['', Validators.required],
-    date: [null, [Validators.required]],
-    type: [true, [Validators.required]],
+    startTime: [null, [Validators.required]],
+    endTime: [null, [Validators.required]],
+    // type: [true, [Validators.required]],
   });
 
   miForm: FormGroup = this.fb.group({
@@ -70,12 +70,13 @@ export class MessagesComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly toast: ToastBaseService,
+    private readonly storage: StorageService,
     private readonly mainService: MainService
   ) {}
 
   ngOnInit(): void {
     // this.wsConect();
-    this.getAllMessages();
+    this.initapis()
   }
 
   //#region Apis
@@ -87,7 +88,29 @@ export class MessagesComponent implements OnInit {
       .getAllMessages()
       .subscribe({
         next: (res: any) => {
-          this.listMessages = res.data;
+          console.log(res);
+
+          this.listMessages = res.data as Message[];
+          this.status.response = true;
+        },
+        error: (err) => {
+          this.toast.error(err.message);
+          this.status.response = false;
+        },
+      })
+      .add(() => (this.status.loading = false));
+  }
+  initapis() {
+    forkJoin({
+      allmessages: this.mainService.getAllMessages(),
+      categories: this.mainService.getCategories(),
+    })
+      .subscribe({
+        next: ({ allmessages, categories }: any) => {
+          console.log(allmessages);
+          this.listMessages = allmessages.data as Message[];
+          this.categories = categories
+
           this.status.response = true;
         },
         error: (err) => {
@@ -101,8 +124,9 @@ export class MessagesComponent implements OnInit {
   // Post
   createMessage(json: {}) {
     this.mainService.createMessage(json).subscribe({
-      next: (res) => {
-        this.listMessages.push(res);
+      next: (message:any) => {
+        message.category = this.categories.find(category => category.id == message.category.id)?.description
+        this.listMessages.push(message);
         this.BtnNewMessage?.nativeElement.click();
         this.resetForm();
       },
@@ -141,8 +165,8 @@ export class MessagesComponent implements OnInit {
 
   //#region methods
   selecNavItem(item: any) {
-    this.menu.forEach((item) => {
-      item.selected = false;
+    this.menu.forEach((element) => {
+      element.selected = false;
     });
     item.selected = true;
   }
@@ -172,7 +196,6 @@ export class MessagesComponent implements OnInit {
 
   save() {
     this.newMessageGroup.markAllAsTouched();
-    new Date().toLocaleDateString();
     if (this.newMessageGroup.invalid) {
       this.toast.error('Falta llenar el formulario');
       return;
@@ -181,64 +204,67 @@ export class MessagesComponent implements OnInit {
   }
 
   buildJson() {
-    let json = { ...this.newMessageGroup.value };
-    if (json.id) {
-      const { id, ...data } = json;
-      this.updateMessage(id, data, this.msgIndex);
+    const { id = null, category = 1, ...data } = { ...this.newMessageGroup.value };
+    if (id) {
+      this.updateMessage(id, {category, data}, this.msgIndex);
       return;
     }
-    delete json.id;
-    this.createMessage(json);
+    this.createMessage({category: +category,...data});
   }
 
   isValid(form: FormGroup, control: string) {
     return form.get(control)?.errors && form.get(control)?.touched;
   }
 
-  wsConect() {
-    this.manager = new Manager(this.URLWS);
-    this.socket?.removeAllListeners();
+  // wsConect() {
+  //   this.manager = new Manager(this.URLWS, {
+  //     extraHeaders: {
+  //       authorization:
+  //         this.storage.getLocalStorage(LocalStorageKey.token) || '',
+  //     },
+  //   });
+  //   this.socket?.removeAllListeners();
 
-    this.socket = this.manager.socket('/');
+  //   this.socket = this.manager.socket('/');
 
-    this.socket.on('connect', () => {
-      console.log('conect');
-      this.status.conected = true;
-    });
-    this.socket.on('disconnect', () => {
-      console.log('disconect');
-      this.status.conected = false;
-    });
+  //   this.socket.on('connect', () => {
+  //     console.log('conect');
+  //     this.status.conected = true;
+  //   });
+  //   this.socket.on('disconnect', () => {
+  //     console.log('disconect');
+  //     this.status.conected = false;
+  //   });
 
-    this.socket.on(
-      'message-from-server',
-      (payload: { action: string; description: string }) => {
-        const { action, description } = payload;
-        if (action == 'download') {
-          this.getQRCODE();
-        }
-        console.log(payload);
-      }
-    );
-  }
+  //   this.socket.on(
+  //     'message-from-server',
+  //     (payload: { action: string; description: string }) => {
+  //       const { action, description } = payload;
+  //       if (action == 'download') {
+  //         this.getQRCODE();
+  //       }
+  //       console.log(payload);
+  //     }
+  //   );
+  // }
 
-  getQRCODE() {
-    this.status.loadingQR = true;
-    this.mainService
-      .getqrimg()
-      .subscribe({
-        next: (res: any) => {
-          this.status.responseQR = true;
-          setTimeout(() => {
-            this.qrcodeDiv.nativeElement.innerHTML = res;
-          }, 300);
-        },
-        error: (err) => {
-          this.status.responseQR = false;
-        },
-      })
-      .add(() => (this.status.loadingQR = false));
-  }
+  // getQRCODE() {
+  //   this.status.loadingQR = true;
+  //   this.mainService
+  //     .getqrimg()
+  //     .subscribe({
+  //       next: (res: any) => {
+  //         this.status.responseQR = true;
+  //         setTimeout(() => {
+  //           this.qrcodeDiv.nativeElement.innerHTML = res;
+  //         }, 300);
+  //       },
+  //       error: (err) => {
+  //         this.status.responseQR = false;
+  //       },
+  //     })
+  //     .add(() => (this.status.loadingQR = false));
+  // }
   //#endregion methods
 }
 

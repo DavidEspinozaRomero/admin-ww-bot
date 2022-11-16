@@ -8,7 +8,7 @@
 <span> {{ status.conected ? "conect" : "aoeu" }} </span> -->
 
 <!-- <section *ngIf="!status.loading && status.response"> -->
-<!-- <section *ngIf="true">
+<section *ngIf="true">
   <button
     #BtnNewMessage
     type="button"
@@ -29,21 +29,40 @@
     <div class="row">
       <div class="col">
         <div class="mb-3">
-          <label for="message" class="form-label">Mensage</label>
-          <textarea
+          <label for="query" class="form-label">Pregunta</label>
+          <input
             type="text"
             class="form-control form-control-sm"
-            name="message"
+            name="query"
             id=""
             aria-describedby="helpId"
             placeholder=" -- Agregue el mensaje --"
-            formControlName="message"
+            formControlName="query"
+            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'query') }"
+          />
+          <small
+            *ngIf="isValid(newMessageGroup, 'query')"
+            id="helpId"
+            class="form-text text-muted"
+            >Help text</small
+          >
+        </div>
+        <div class="mb-3">
+          <label for="answer" class="form-label">Respuesta</label>
+          <textarea
+            type="text"
+            class="form-control form-control-sm"
+            name="answer"
+            id=""
+            aria-describedby="helpId"
+            placeholder=" -- Agregue el mensaje --"
+            formControlName="answer"
             rows="4"
-            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'message') }"
+            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'answer') }"
           >
           </textarea>
           <small
-            *ngIf="isValid(newMessageGroup, 'message')"
+            *ngIf="isValid(newMessageGroup, 'answer')"
             id="helpId"
             class="form-text text-muted"
             >Help text</small
@@ -51,7 +70,7 @@
         </div>
       </div>
       <div class="col-4">
-        <div class="mb-1">
+        <div class="mb-3">
           <label for="category" class="form-label">Categoria</label>
           <select
             class="form-select form-select-sm"
@@ -61,51 +80,51 @@
             [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'category') }"
           >
             <option value="" selected>-- Select one --</option>
-            <option [value]="item" *ngFor="let item of categories">
-              {{ item | titlecase }}
+            <option [value]="category.id" *ngFor="let category of categories">
+              {{ category.description | titlecase }}
             </option>
           </select>
         </div>
 
-        <div class="mb-3">
-          <div class="row">
-            <div class="col">
-              <label for="date" class="form-label">Fecha</label>
-            </div>
-            <div class="col">
-              <div class="form-check form-switch">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  role="switch"
-                  id="flexSwitchCheckDefault"
-                  formControlName="type"
-                />
-                <label class="form-check-label" for="flexSwitchCheckDefault">
-                  {{ newMessageGroup.value.type ? "Day" : "Hour" }}
-                </label>
-              </div>
-            </div>
-          </div>
-
+        <div class="mb-1">
+          <label for="startTime" class="form-label">Hora inicio</label>
           <input
-            type="datetime-local"
+            type="time"
             class="form-control form-control-sm"
-            name="date"
+            name="startTime"
             id=""
             aria-describedby="helpId"
-            placeholder=" -- Agregue el mensaje --"
-            formControlName="date"
+            formControlName="startTime"
           />
-          <small
+          <!-- <small
             *ngIf="isValid(newMessageGroup, 'type')"
             id="helpId"
             class="form-text text-muted"
-            >Help text</small
           >
+            Help text
+          </small> -->
+        </div>
+        <div class="mb-1">
+          <label for="endTime" class="form-label">Hora fin</label>
+          <input
+            type="time"
+            class="form-control form-control-sm"
+            name="endTime"
+            id=""
+            aria-describedby="helpId"
+            formControlName="endTime"
+          />
+          <!-- <small
+            *ngIf="isValid(newMessageGroup, 'type')"
+            id="helpId"
+            class="form-text text-muted"
+          >
+            Help text
+          </small> -->
         </div>
       </div>
     </div>
+
     <div class="text-end">
       <button
         *ngIf="!status.spinner"
@@ -133,6 +152,8 @@
       </button>
     </div>
   </form>
+
+  <!-- <pre> {{newMessageGroup.value | json}} </pre> -->
   <div>
     <ul class="nav nav-tabs mb-3">
       <li
@@ -156,20 +177,24 @@
     >
       <thead class="table-primary text-primary">
         <tr>
-          <th class="" style="min-width: 10rem">Texto</th>
-          <th class="text-center" style="width: 8rem">Categoria</th>
-          <th class="" style="width: 11rem">Fecha / Hora</th>
-          <th class="" style="width: 5rem"></th>
+          <th class="">Pregunta</th>
+          <th class="">Respuesta</th>
+          <th class="text-center">Categoria</th>
+          <th class="">Rango de horas</th>
+          <th class=""> Acciones </th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
         <tr *ngFor="let msg of listMessages; index as i_msg" class="">
-          <td scope="row">{{ msg.message }}</td>
+          <td >{{ msg.query }}</td>
+          <td >{{ msg.answer }}</td>
           <td class="text-center">
             <span class="badge bg-primary"> {{ msg.category }} </span>
           </td>
           <td>
-            {{ msg.type ? (msg.date | date: "d/M/y, h:mm a") : (msg.date | date: "h:mm a") }}          </td>
+            {{ msg.startTime }} -
+            {{ msg.endTime }}
+          </td>
           <td>
             <i
               class="bi bi-pencil-square bg-white border rouded px-1 me-2"
@@ -189,9 +214,10 @@
   </div>
 
   <div *ngIf="menu[1].selected">resuestas</div>
-</section> -->
+</section>
 
-<section class="row justify-content-center">
+<!-- TODO: mandar este codigo de scan qr a un modal -->
+<!-- <section class="row justify-content-center">
   <div class="col-4">
     <h2>Scan de QRCODE to use the app</h2>
     <ol>
@@ -228,4 +254,44 @@
     </div>
     <div #qrcode *ngIf="!status.loadingQR && status.responseQR" class=""></div>
   </div>
-</section>
+</section> -->
+
+<!-- codigo para otro tipo de form message -->
+
+<!-- <div class="mb-3">
+  <div class="row">
+    <div class="col">
+      <label for="date" class="form-label">Fecha</label>
+    </div>
+    <div class="col">
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckDefault"
+          formControlName="type"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault">
+          {{ newMessageGroup.value.type ? "Day" : "Hour" }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <input
+    type="time"
+    class="form-control form-control-sm"
+    name="startTime"
+    id=""
+    aria-describedby="helpId"
+    formControlName="startTime"
+  />
+  <small
+    *ngIf="isValid(newMessageGroup, 'type')"
+    id="helpId"
+    class="form-text text-muted"
+  >
+    Help text
+  </small>
+</div> -->

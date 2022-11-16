@@ -15,7 +15,7 @@ export class LoginComponent {
   //#region variables
   loginForm: FormGroup = this.fb.group({
     email: [
-      'test2@gmail.com',
+      'test1@gmail.com',
       [
         Validators.required,
         Validators.email,
@@ -52,7 +52,7 @@ export class LoginComponent {
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: (res) => {
         this.toast.success(res.message);
-        this.router.navigateByUrl('/admin/settings');
+        this.router.navigateByUrl('/admin');
       },
       error: (err) => {
         this.toast.error(err.error.message);
