@@ -15,7 +15,7 @@ export class RegisterComponent {
   //#region variables
   registerForm: FormGroup = this.fb.group({
     username: [
-      'test3',
+      '',
       [
         Validators.required,
         Validators.minLength(1),
@@ -24,7 +24,7 @@ export class RegisterComponent {
       ],
     ],
     fullName: [
-      'test',
+      '',
       // [
       //   Validators.required,
       //   Validators.minLength(1),
@@ -33,7 +33,7 @@ export class RegisterComponent {
       // ],
     ],
     email: [
-      'test3@deer.com',
+      '',
       [
         Validators.required,
         Validators.email,
@@ -43,7 +43,7 @@ export class RegisterComponent {
       ],
     ],
     password: [
-      'Asd1234.',
+      '',
       [
         Validators.required,
         Validators.minLength(8),

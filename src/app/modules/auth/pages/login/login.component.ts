@@ -15,7 +15,7 @@ export class LoginComponent {
   //#region variables
   loginForm: FormGroup = this.fb.group({
     email: [
-      'test1@gmail.com',
+      '',
       [
         Validators.required,
         Validators.email,
@@ -25,7 +25,7 @@ export class LoginComponent {
       ],
     ],
     password: [
-      'Asd1234.',
+      '',
       [
         Validators.required,
         Validators.minLength(8),
