@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { LocalStorageKey } from '../../shared/interfaces/storage.interface';
-import { StorageService } from '../../shared/services';
+import { StorageService } from '../../../services';
 
 @Injectable({ providedIn: 'root' })
 export class MainService {

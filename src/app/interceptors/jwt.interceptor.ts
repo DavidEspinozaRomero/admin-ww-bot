@@ -8,7 +8,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { StorageService } from '../modules/shared/services';
+import { StorageService } from '../services';
 import { LocalStorageKey } from '../modules/shared/interfaces/storage.interface';
 
 @Injectable()

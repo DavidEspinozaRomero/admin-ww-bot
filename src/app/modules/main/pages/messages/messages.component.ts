@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MainService } from '../../services/main.service';
 import { Manager, Socket } from 'socket.io-client';
-import { ToastBaseService } from 'src/app/modules/shared/services';
-import { StorageService } from '../../../shared/services/storage.service';
+import { ToastBaseService } from 'src/app/services';
+import { StorageService } from '../../../../services/storage.service';
 import { LocalStorageKey } from 'src/app/modules/shared/interfaces/storage.interface';
 import {
   FormBuilder,

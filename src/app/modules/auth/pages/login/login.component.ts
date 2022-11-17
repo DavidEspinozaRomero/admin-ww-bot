@@ -2,7 +2,7 @@ import { Component,  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ToastBaseService } from '../../../shared/services/toast.service';
+import { ToastBaseService } from '../../../../services/toast.service';
 import { AuthService } from '../../services/auth.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
 

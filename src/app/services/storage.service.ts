@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { CryptService } from './';
-import { LocalStorageKey } from '../interfaces/storage.interface';
+import { CryptService } from '.';
+import { LocalStorageKey } from '../modules/shared/interfaces/storage.interface';
 
 @Injectable({
   providedIn: 'root',
