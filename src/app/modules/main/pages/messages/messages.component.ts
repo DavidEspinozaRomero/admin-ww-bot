@@ -35,11 +35,11 @@ export class MessagesComponent implements OnInit {
     conected: false,
     showFormMessage: false,
   };
-  
-    menu = [
-      { label: 'respuestas', selected: true },
-      { label: 'mensajes', selected: false },
-    ];
+
+  menu = [
+    { label: 'respuestas', selected: true },
+    { label: 'mensajes', selected: false },
+  ];
 
   categories: Category[] = [];
   listMessages: any[] = [];
@@ -58,7 +58,6 @@ export class MessagesComponent implements OnInit {
     category: ['', Validators.required],
     startTime: [null, [Validators.required]],
     endTime: [null, [Validators.required]],
-    // type: [true, [Validators.required]],
   });
 
   miForm: FormGroup = this.fb.group({
@@ -75,8 +74,8 @@ export class MessagesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.wsConect();
-    this.initapis()
+    this.wsConect();
+    this.initApis();
   }
 
   //#region Apis
@@ -88,8 +87,6 @@ export class MessagesComponent implements OnInit {
       .getAllMessages()
       .subscribe({
         next: (res: any) => {
-          console.log(res);
-
           this.listMessages = res.data as Message[];
           this.status.response = true;
         },
@@ -100,17 +97,15 @@ export class MessagesComponent implements OnInit {
       })
       .add(() => (this.status.loading = false));
   }
-  initapis() {
+  initApis() {
     forkJoin({
       allmessages: this.mainService.getAllMessages(),
       categories: this.mainService.getCategories(),
     })
       .subscribe({
         next: ({ allmessages, categories }: any) => {
-          console.log(allmessages);
           this.listMessages = allmessages.data as Message[];
-          this.categories = categories
-
+          this.categories = categories;
           this.status.response = true;
         },
         error: (err) => {
@@ -124,8 +119,10 @@ export class MessagesComponent implements OnInit {
   // Post
   createMessage(json: {}) {
     this.mainService.createMessage(json).subscribe({
-      next: (message:any) => {
-        message.category = this.categories.find(category => category.id == message.category.id)?.description
+      next: (message: any) => {
+        message.category = this.replaceCategoryIdToDescription(
+          message.category.id
+        );
         this.listMessages.push(message);
         this.BtnNewMessage?.nativeElement.click();
         this.resetForm();
@@ -140,7 +137,11 @@ export class MessagesComponent implements OnInit {
   updateMessage(id: string, json: {}, index: number) {
     this.mainService.updateMessage(id, json).subscribe({
       next: (res: any) => {
-        this.listMessages.splice(index, 1, { ...res.data });
+        const editedMessage = res.data
+        editedMessage.category = this.replaceCategoryIdToDescription(
+          editedMessage.category.id
+        );
+        this.listMessages.splice(index, 1, editedMessage);
         this.BtnNewMessage?.nativeElement.click();
         this.resetForm();
       },
@@ -177,7 +178,8 @@ export class MessagesComponent implements OnInit {
 
   edit(msg: any, index: number) {
     this.msgIndex = index;
-    this.newMessageGroup.reset(msg);
+    const newMessage = {...msg, category: this.replaceCategoryDescriptionToId(msg.category)}
+    this.newMessageGroup.reset(newMessage);
     const open = document
       .getElementById('collapseExample')
       ?.classList.contains('show');
@@ -204,67 +206,83 @@ export class MessagesComponent implements OnInit {
   }
 
   buildJson() {
-    const { id = null, category = 1, ...data } = { ...this.newMessageGroup.value };
+    const {
+      id = null,
+      category = 1,
+      ...data
+    } = { ...this.newMessageGroup.value };
     if (id) {
-      this.updateMessage(id, {category, data}, this.msgIndex);
+      this.updateMessage(id, { category: +category, ...data }, this.msgIndex);
       return;
     }
-    this.createMessage({category: +category,...data});
+    this.createMessage({ category: +category, ...data });
   }
 
   isValid(form: FormGroup, control: string) {
     return form.get(control)?.errors && form.get(control)?.touched;
   }
 
-  // wsConect() {
-  //   this.manager = new Manager(this.URLWS, {
-  //     extraHeaders: {
-  //       authorization:
-  //         this.storage.getLocalStorage(LocalStorageKey.token) || '',
-  //     },
-  //   });
-  //   this.socket?.removeAllListeners();
+  replaceCategoryIdToDescription(id: number): string {
+    return this.categories.find(
+      (category) => category.id == id
+    )?.description || '';
+  }
 
-  //   this.socket = this.manager.socket('/');
+  replaceCategoryDescriptionToId(categoryDescription: string): number {
+    return this.categories.find(
+      (category) => category.description == categoryDescription
+    )?.id || 0;
+  }
 
-  //   this.socket.on('connect', () => {
-  //     console.log('conect');
-  //     this.status.conected = true;
-  //   });
-  //   this.socket.on('disconnect', () => {
-  //     console.log('disconect');
-  //     this.status.conected = false;
-  //   });
+  wsConect() {
+    this.manager = new Manager(this.URLWS, {
+      extraHeaders: {
+        authorization:
+          this.storage.getLocalStorage(LocalStorageKey.token) || '',
+      },
+    });
+    this.socket?.removeAllListeners();
 
-  //   this.socket.on(
-  //     'message-from-server',
-  //     (payload: { action: string; description: string }) => {
-  //       const { action, description } = payload;
-  //       if (action == 'download') {
-  //         this.getQRCODE();
-  //       }
-  //       console.log(payload);
-  //     }
-  //   );
-  // }
+    this.socket = this.manager.socket('/');
 
-  // getQRCODE() {
-  //   this.status.loadingQR = true;
-  //   this.mainService
-  //     .getqrimg()
-  //     .subscribe({
-  //       next: (res: any) => {
-  //         this.status.responseQR = true;
-  //         setTimeout(() => {
-  //           this.qrcodeDiv.nativeElement.innerHTML = res;
-  //         }, 300);
-  //       },
-  //       error: (err) => {
-  //         this.status.responseQR = false;
-  //       },
-  //     })
-  //     .add(() => (this.status.loadingQR = false));
-  // }
+    this.socket.on('connect', () => {
+      console.log('conect');
+      this.status.conected = true;
+    });
+    this.socket.on('disconnect', () => {
+      console.log('disconect');
+      this.status.conected = false;
+    });
+
+    this.socket.on(
+      'message-from-server',
+      (payload: { action: string; description: string }) => {
+        const { action, description } = payload;
+        if (action == 'download') {
+          this.getQRCODE();
+        }
+        console.log(payload);
+      }
+    );
+  }
+
+  getQRCODE() {
+    this.status.loadingQR = true;
+    this.mainService
+      .getqrimg()
+      .subscribe({
+        next: (res: any) => {
+          this.status.responseQR = true;
+          setTimeout(() => {
+            this.qrcodeDiv.nativeElement.innerHTML = res;
+          }, 300);
+        },
+        error: (err) => {
+          this.status.responseQR = false;
+        },
+      })
+      .add(() => (this.status.loadingQR = false));
+  }
   //#endregion methods
 }
 

@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  UrlApi: 'http://localhost:3000/',
+  UrlApi: 'https://wwmessagesmanager.herokuapp.com/',
 };
