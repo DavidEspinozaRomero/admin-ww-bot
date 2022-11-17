@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { StorageService } from '../services';
-import { LocalStorageKey } from '../modules/shared/interfaces/storage.interface';
+import { LocalStorageKey } from '../services/storage.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

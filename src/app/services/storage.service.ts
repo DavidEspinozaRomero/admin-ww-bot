@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { CryptService } from '.';
-import { LocalStorageKey } from '../modules/shared/interfaces/storage.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,4 +18,9 @@ export class StorageService {
   removeLocalStorage(key: LocalStorageKey) {
     localStorage.removeItem(key);
   }
+}
+
+export const enum LocalStorageKey {
+  token = 'token',
+  user = 'user',
 }
