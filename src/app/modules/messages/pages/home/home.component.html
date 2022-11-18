@@ -8,17 +8,32 @@
 <span> {{ status.conected ? "conect" : "aoeu" }} </span> -->
 
 <section *ngIf="!status.loading && status.response">
-  <button
-    #BtnNewMessage
-    type="button"
-    class="btn btn-primary mb-3"
-    data-bs-toggle="collapse"
-    data-bs-target="#collapseExample"
-    aria-expanded="false"
-    aria-controls="collapseExample"
-  >
-    + Nuevo Mensaje
-  </button>
+  <div class="row">
+    <div class="col-auto">
+      <button
+        #BtnNewMessage
+        type="button"
+        class="btn btn-primary mb-3"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >
+        + Nuevo Mensaje
+      </button>
+    </div>
+    <div class="col-auto">
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#modalqrcode"
+      >
+        Connect to WhatsApp
+      </button>
+    </div>
+  </div>
 
   <form
     class="mb-3 collapse"
@@ -180,13 +195,13 @@
           <th class="">Respuesta</th>
           <th class="text-center">Categoria</th>
           <th class="">Rango de horas</th>
-          <th class=""> Acciones </th>
+          <th class="">Acciones</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
         <tr *ngFor="let msg of listMessages; index as i_msg" class="">
-          <td >{{ msg.query }}</td>
-          <td >{{ msg.answer }}</td>
+          <td>{{ msg.query }}</td>
+          <td>{{ msg.answer }}</td>
           <td class="text-center">
             <span class="badge bg-primary"> {{ msg.category }} </span>
           </td>
@@ -215,45 +230,7 @@
   <div *ngIf="menu[1].selected">resuestas</div>
 </section>
 
-<!-- TODO: mandar este codigo de scan qr a un modal -->
-<!-- <section class="row justify-content-center">
-  <div class="col-4">
-    <h2>Scan de QRCODE to use the app</h2>
-    <ol>
-      <li>Abre WhatsApp en tu teléfono</li>
-      <li>
-        Toca Menu <i class="bi bi-three-dots-vertical"></i> o Configuracion
-        <i class="bi bi-gear"></i> y selecciona dispositivos vinculados
-      </li>
-      <li>
-        Cuando se active la cámara, apunta tu teléfono hacia esta pantalla para
-        escanear el código
-      </li>
-    </ol>
-  </div>
-  <div class="col-3" style="background-color: #eee">
-    <div
-      *ngIf="status.loadingQR"
-      class="d-flex h-100 justify-content-center align-items-center"
-    >
-      <div class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-    <div
-      *ngIf="!status.loadingQR && !status.responseQR"
-      class="h-100 text-center p-3"
-    >
-      <p class="mt-4">
-        <i class="bi bi-arrow-clockwise fs-1 text-success"></i>
-      </p>
-      <button class="btn btn-outline-primary" (click)="getQRCODE()">
-        Refresh code
-      </button>
-    </div>
-    <div #qrcode *ngIf="!status.loadingQR && status.responseQR" class=""></div>
-  </div>
-</section> -->
+<app-modalqrcode></app-modalqrcode>
 
 <!-- codigo para otro tipo de form message -->
 

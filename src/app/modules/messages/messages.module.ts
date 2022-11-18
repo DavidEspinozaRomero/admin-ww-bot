@@ -5,11 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MessagesRoutingModule } from './messages-routing.module';
 import { HomeComponent } from './pages/home/home.component';
 import { SharedModule } from '../shared/shared.module';
+import { ModalqrcodeComponent } from './components/modalqrcode/modalqrcode.component';
 
 
 @NgModule({
   declarations: [
-    HomeComponent
+    HomeComponent,
+    ModalqrcodeComponent
   ],
   imports: [
     CommonModule,

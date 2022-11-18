@@ -1,0 +1,73 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalqrcode"
+  tabindex="-1"
+  aria-labelledby="modalqrcodeLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white " id="modalqrcodeLabel">QRCODE</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <section class="row justify-content-center">
+          <div class="col">
+            <h2>Scan de QRCODE to use the app</h2>
+            <ol>
+              <li>Abre WhatsApp en tu teléfono</li>
+              <li>
+                Toca Menu <i class="bi bi-three-dots-vertical"></i> o
+                Configuracion <i class="bi bi-gear"></i> y selecciona
+                dispositivos vinculados
+              </li>
+              <li>
+                Cuando se active la cámara, apunta tu teléfono hacia esta
+                pantalla para escanear el código
+              </li>
+            </ol>
+          </div>
+          <div class="col" style="background-color: #eee">
+            <div
+              *ngIf="status.loadingQR"
+              class="d-flex h-100 justify-content-center align-items-center"
+            >
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            <div
+              *ngIf="!status.loadingQR && !status.responseQR"
+              class="h-100 text-center p-3"
+            >
+              <p class="mt-4">
+                <i class="bi bi-arrow-clockwise fs-1 text-success"></i>
+              </p>
+              <button class="btn btn-outline-primary" (click)="getQRCODE()">
+                Refresh code
+              </button>
+            </div>
+            <div
+              #qrcode
+              *ngIf="!status.loadingQR && status.responseQR"
+              class=""
+            ></div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
