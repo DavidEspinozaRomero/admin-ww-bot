@@ -1,4 +1,3 @@
-export { MessagesComponent } from './messages/messages.component';
 export { LayoutComponent } from './layout/layout.component';
 export { SettingsComponent } from './settings/settings.component';
 export { DashboardComponent } from './dashboard/dashboard.component';

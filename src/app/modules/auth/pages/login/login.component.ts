@@ -1,4 +1,4 @@
-import { Component,  } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -52,11 +52,11 @@ export class LoginComponent {
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: (res) => {
         this.toast.success(res.message);
-        this.router.navigateByUrl('/admin');
       },
       error: (err) => {
         this.toast.error(err.error.message);
       },
+      complete: () => this.router.navigateByUrl('/admin'),
     });
   }
   //#endregion methods

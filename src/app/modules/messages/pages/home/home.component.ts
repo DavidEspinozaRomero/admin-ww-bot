@@ -1,23 +1,26 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MainService } from '../../services/main.service';
 import { Manager, Socket } from 'socket.io-client';
 import { ToastBaseService } from 'src/app/services';
-import { LocalStorageKey, StorageService } from '../../../../services/storage.service';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Category, Message } from '../interfaces/message.inteface';
+
+
+import { LocalStorageKey, StorageService } from '../../../../services/storage.service';
+import { Category, Message } from '../../interfaces/message.inteface';
 import { forkJoin } from 'rxjs';
+import { MessagesService } from '../../services/messages.service';
 
 @Component({
-  selector: 'app-messages',
-  templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.scss'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class MessagesComponent implements OnInit {
+export class HomeComponent implements OnInit {
+
   //#region
   //#endregion
   //#region variables
@@ -69,7 +72,7 @@ export class MessagesComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly toast: ToastBaseService,
     private readonly storage: StorageService,
-    private readonly mainService: MainService
+    private readonly messagesService: MessagesService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +85,7 @@ export class MessagesComponent implements OnInit {
   // TODO: agregar evento para llamar a la api y traer el qrcode
   getAllMessages() {
     this.status.loading = true;
-    this.mainService
+    this.messagesService
       .getAllMessages()
       .subscribe({
         next: (res: any) => {
@@ -98,8 +101,8 @@ export class MessagesComponent implements OnInit {
   }
   initApis() {
     forkJoin({
-      allmessages: this.mainService.getAllMessages(),
-      categories: this.mainService.getCategories(),
+      allmessages: this.messagesService.getAllMessages(),
+      categories: this.messagesService.getCategories(),
     })
       .subscribe({
         next: ({ allmessages, categories }: any) => {
@@ -117,7 +120,7 @@ export class MessagesComponent implements OnInit {
 
   // Post
   createMessage(json: {}) {
-    this.mainService.createMessage(json).subscribe({
+    this.messagesService.createMessage(json).subscribe({
       next: (message: any) => {
         message.category = this.replaceCategoryIdToDescription(
           message.category.id
@@ -134,7 +137,7 @@ export class MessagesComponent implements OnInit {
 
   // Update
   updateMessage(id: string, json: {}, index: number) {
-    this.mainService.updateMessage(id, json).subscribe({
+    this.messagesService.updateMessage(id, json).subscribe({
       next: (res: any) => {
         const editedMessage = res.data
         editedMessage.category = this.replaceCategoryIdToDescription(
@@ -152,7 +155,7 @@ export class MessagesComponent implements OnInit {
 
   // Delete
   deleteMessage(id: string, cb: () => void) {
-    this.mainService.deleteMessage(id).subscribe({
+    this.messagesService.deleteMessage(id).subscribe({
       next: (res) => {
         cb();
       },
@@ -267,7 +270,7 @@ export class MessagesComponent implements OnInit {
 
   getQRCODE() {
     this.status.loadingQR = true;
-    this.mainService
+    this.messagesService
       .getqrimg()
       .subscribe({
         next: (res: any) => {
@@ -290,17 +293,3 @@ type SvgInHtml = HTMLElement & SVGElement;
 
 //#endregion interfaces
 
-// new Date().toDateString()
-// 'Sun Oct 02 2022'
-// new Date().toGMTString()
-// 'Mon, 03 Oct 2022 01:15:14 GMT'
-// new Date().toISOString()
-// '2022-10-03T01:15:29.241Z'
-// new Date().toString()
-// 'Sun Oct 02 2022 20:15:52 GMT-0500 (Ecuador Time)'
-// new Date().toLocaleDateString()
-// '10/2/2022'
-// new Date().toLocaleString()
-// '10/2/2022, 8:16:25 PM'
-// new Date().toLocaleTimeString()
-// '8:16:36 PM'

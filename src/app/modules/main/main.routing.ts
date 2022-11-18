@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
-  MessagesComponent,
   HistoryComponent,
   DashboardComponent,
   ContactsComponent,
@@ -15,7 +14,6 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'messages', component: MessagesComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'contacts', component: ContactsComponent },
       { path: 'settings', component: SettingsComponent },
