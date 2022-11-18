@@ -11,13 +11,6 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'admin',
-    loadChildren: () =>
-      import('./modules/main/main.module').then((m) => m.MainModule),
-    canActivate: [ValidateTokenGuard],
-    canLoad: [ValidateTokenGuard],
-  },
-  {
     path: 'dashboard',
     component: LayoutComponent,
     loadChildren: () =>

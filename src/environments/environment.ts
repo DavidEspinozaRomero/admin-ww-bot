@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   UrlApi: 'http://localhost:3000/',
+  WebSocketUrl: 'socket.io/socket.io.js',
 };
 
 /*

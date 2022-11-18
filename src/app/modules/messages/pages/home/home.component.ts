@@ -13,6 +13,7 @@ import { LocalStorageKey, StorageService } from '../../../../services/storage.se
 import { Category, Message } from '../../interfaces/message.inteface';
 import { forkJoin } from 'rxjs';
 import { MessagesService } from '../../services/messages.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
   msgIndex!: number;
 
   showCode: boolean = false;
-  private URLWS: string = 'http://localhost:3000/socket.io/socket.io.js';
+  private URLWS: string = `${environment.UrlApi}${environment.WebSocketUrl}`;
   manager: any;
   socket!: Socket;
 

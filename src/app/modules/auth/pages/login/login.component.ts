@@ -56,7 +56,7 @@ export class LoginComponent {
       error: (err) => {
         this.toast.error(err.error.message);
       },
-      complete: () => this.router.navigateByUrl('/admin'),
+      complete: () => this.router.navigateByUrl('/messages'),
     });
   }
   //#endregion methods

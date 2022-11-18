@@ -40,11 +40,7 @@ export class AuthService {
 
   validarToken() {
     const URL = `${this.BaseUrl}auth/check-status`;
-    const headers: HttpHeaders = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.storage.getLocalStorage(LocalStorageKey.token) || ''}`
-    );
-    return this.httpClient.get<authloginResponse>(URL, { headers }).pipe(
+    return this.httpClient.get<authloginResponse>(URL).pipe(
       map((res) => {
         this.setUserAndToken(res);
         return true;
