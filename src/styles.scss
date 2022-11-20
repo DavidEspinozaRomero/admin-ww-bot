@@ -10,3 +10,17 @@ body {
   transition: margin-left .5s; /* If you want a transition effect */
   margin-left: 4rem;
 }
+
+*::-webkit-scrollbar {
+  width: .25rem;
+  height: .25rem;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: blue;   
+  border-radius: 2rem;      
+  
+}
+
+
+
+

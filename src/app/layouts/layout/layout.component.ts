@@ -13,10 +13,10 @@ export class LayoutComponent implements OnInit {
     // { icon: 'bi bi-building', label: 'brand name', route: './brand' },
     { icon: 'bi bi-house-door', label: 'dashboard', route: '/dashboard' },
     { icon: 'bi bi-person', label: 'contacts', route: '/contacts' },
-    { icon: 'bi bi-hourglass', label: 'history', route: '/history' },
-    { icon: 'bi bi-question-circle', label: 'help', route: '/help' },
     { icon: 'bi bi-chat', label: 'messages', route: '/messages' },
+    { icon: 'bi bi-hourglass', label: 'history', route: '/history' },
     { icon: 'bi bi-gear', label: 'settings', route: '/settings' },
+    { icon: 'bi bi-question-circle', label: 'help', route: '/help' },
     // { icon: 'bi bi-box-arrow-left', label: 'log out' },
   ];
   colapse: boolean = true;

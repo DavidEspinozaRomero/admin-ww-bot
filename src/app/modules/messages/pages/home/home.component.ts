@@ -8,8 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 
-
-import { LocalStorageKey, StorageService } from '../../../../services/storage.service';
+import {
+  LocalStorageKey,
+  StorageService,
+} from '../../../../services/storage.service';
 import { Category, Message } from '../../interfaces/message.inteface';
 import { forkJoin } from 'rxjs';
 import { MessagesService } from '../../services/messages.service';
@@ -18,10 +20,9 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
   //#region
   //#endregion
   //#region variables
@@ -140,7 +141,7 @@ export class HomeComponent implements OnInit {
   updateMessage(id: string, json: {}, index: number) {
     this.messagesService.updateMessage(id, json).subscribe({
       next: (res: any) => {
-        const editedMessage = res.data
+        const editedMessage = res.data;
         editedMessage.category = this.replaceCategoryIdToDescription(
           editedMessage.category.id
         );
@@ -181,7 +182,10 @@ export class HomeComponent implements OnInit {
 
   edit(msg: any, index: number) {
     this.msgIndex = index;
-    const newMessage = {...msg, category: this.replaceCategoryDescriptionToId(msg.category)}
+    const newMessage = {
+      ...msg,
+      category: this.replaceCategoryDescriptionToId(msg.category),
+    };
     this.newMessageGroup.reset(newMessage);
     const open = document
       .getElementById('collapseExample')
@@ -196,7 +200,7 @@ export class HomeComponent implements OnInit {
     });
   }
   resetForm() {
-    this.newMessageGroup.reset();
+    this.newMessageGroup.reset({ category: '' });
   }
 
   save() {
@@ -226,15 +230,17 @@ export class HomeComponent implements OnInit {
   }
 
   replaceCategoryIdToDescription(id: number): string {
-    return this.categories.find(
-      (category) => category.id == id
-    )?.description || '';
+    return (
+      this.categories.find((category) => category.id == id)?.description || ''
+    );
   }
 
   replaceCategoryDescriptionToId(categoryDescription: string): number {
-    return this.categories.find(
-      (category) => category.description == categoryDescription
-    )?.id || 0;
+    return (
+      this.categories.find(
+        (category) => category.description == categoryDescription
+      )?.id || 0
+    );
   }
 
   wsConect() {
@@ -293,4 +299,3 @@ export class HomeComponent implements OnInit {
 type SvgInHtml = HTMLElement & SVGElement;
 
 //#endregion interfaces
-

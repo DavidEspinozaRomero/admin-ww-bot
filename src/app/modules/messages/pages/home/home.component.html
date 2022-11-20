@@ -4,8 +4,7 @@
   (onRetry)="ngOnInit()"
 ></app-retry>
 
-<!-- <h1>ws conect</h1>
-<span> {{ status.conected ? "conect" : "aoeu" }} </span> -->
+<span> {{ status.conected ? "conectado" : "desconectado" }} </span>
 
 <section *ngIf="!status.loading && status.response">
   <div class="row">
@@ -23,14 +22,13 @@
       </button>
     </div>
     <div class="col-auto">
-      <!-- Button trigger modal -->
       <button
         type="button"
         class="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#modalqrcode"
       >
-        Connect to WhatsApp
+        Vincular WhatsApp
       </button>
     </div>
   </div>
@@ -176,6 +174,7 @@
         (click)="selecNavItem(item)"
       >
         <a
+          role="button"
           class="nav-link"
           [ngClass]="{ 'active bg-primary text-white ': item.selected }"
         >
@@ -227,7 +226,9 @@
     </table>
   </div>
 
-  <div *ngIf="menu[1].selected">resuestas</div>
+  <div *ngIf="menu[1].selected">
+    <app-in-progress></app-in-progress>
+  </div>
 </section>
 
 <app-modalqrcode></app-modalqrcode>
