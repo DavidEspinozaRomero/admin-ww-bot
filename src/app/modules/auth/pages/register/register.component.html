@@ -17,8 +17,16 @@
           type="text"
           formControlName="username"
           placeholder="Ingrese su nombre"
+          [ngClass]="{
+            'is-invalid': utils.isValidControl(registerForm, 'username')
+          }"
         />
-        <span class="focus-form-control"></span>
+        <small
+          *ngIf="utils.isValidControl(registerForm, 'username')"
+          class="text-danger"
+        >
+          mínimo 2 letras
+        </small>
       </div>
       <div class="mb-3">
         <span class="form-label">Email</span>
@@ -27,8 +35,16 @@
           type="email"
           formControlName="email"
           placeholder="Ingrese su email"
+          [ngClass]="{
+            'is-invalid': utils.isValidControl(registerForm, 'email')
+          }"
         />
-        <span class="focus-form-control"></span>
+        <small
+          *ngIf="utils.isValidControl(registerForm, 'email')"
+          class="text-danger"
+        >
+          debe ser un correo valido example@gmail.com
+        </small>
       </div>
 
       <div class="mb-3">
@@ -38,15 +54,20 @@
           type="password"
           formControlName="password"
           placeholder="Ingrese su contraseña"
+          [ngClass]="{
+            'is-invalid': utils.isValidControl(registerForm, 'password')
+          }"
         />
-        <span class="focus-form-control"></span>
+        <small
+          *ngIf="utils.isValidControl(registerForm, 'password')"
+          class="text-danger"
+        >
+          la contraseña debe tener minimo 8 caracteres, 1 mayuscula,1 minuscula,
+          1 simbolo.
+        </small>
       </div>
 
-      <button
-        class="btn btn-primary mb-3 d-block mx-auto"
-        type="submit"
-        [disabled]="registerForm.invalid"
-      >
+      <button class="btn btn-primary mb-3 d-block mx-auto" type="submit">
         Registro
       </button>
 

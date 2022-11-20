@@ -1,4 +1,7 @@
-<div class="row p-0 m-0 align-items-center justify-content-center " style="height: 100vh;">
+<div
+  class="row p-0 m-0 align-items-center justify-content-center"
+  style="height: 100vh"
+>
   <div class="col-8 col-sm-6 col-md-5">
     <form
       class="bg-white p-5 rounded shadow-lg"
@@ -6,7 +9,7 @@
       [formGroup]="loginForm"
       (ngSubmit)="login()"
     >
-      <p class="fs-3 fw-bold mb-4 text-primary"> Login </p>
+      <p class="fs-3 fw-bold mb-4 text-primary">Login</p>
 
       <div class="mb-3">
         <span class="form-label">Email</span>
@@ -15,8 +18,16 @@
           type="email"
           formControlName="email"
           placeholder="Ingrese su email"
+          [ngClass]="{
+            'is-invalid': utils.isValidControl(loginForm, 'email')
+          }"
         />
-        <span class=""></span>
+        <small
+          *ngIf="utils.isValidControl(loginForm, 'email')"
+          class="text-danger"
+        >
+          debe ser un correo valido example@gmail.com
+        </small>
       </div>
 
       <div class="mb-3">
@@ -26,15 +37,20 @@
           type="password"
           formControlName="password"
           placeholder="Ingrese su contraseña"
+          [ngClass]="{
+            'is-invalid': utils.isValidControl(loginForm, 'password')
+          }"
         />
-        <span class=""></span>
+        <small
+          *ngIf="utils.isValidControl(loginForm, 'password')"
+          class="text-danger"
+        >
+          la contraseña debe tener minimo 8 caracteres, 1 mayuscula,1 minuscula,
+          1 simbolo.
+        </small>
       </div>
 
-      <button
-        class="btn btn-primary mb-3 d-block mx-auto"
-        type="submit"
-        [disabled]="loginForm.invalid"
-      >
+      <button class="btn btn-primary mb-3 d-block mx-auto" type="submit">
         Login
       </button>
 

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastBaseService } from '../../../../services/toast.service';
 import { AuthService } from '../../services/auth.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
+import { UtilsService } from '../../../../utils/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -39,13 +40,14 @@ export class LoginComponent {
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly toast: ToastBaseService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    readonly utils: UtilsService
   ) {}
 
   //#region methods
   login() {
+    this.loginForm.markAllAsTouched()
     if (this.loginForm.invalid) {
-      console.log('invalid');
       return;
     }
 

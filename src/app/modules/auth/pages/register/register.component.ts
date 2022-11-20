@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastBaseService } from '../../../../services/toast.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
+import { UtilsService } from 'src/app/utils/utils.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,7 @@ export class RegisterComponent {
       '',
       [
         Validators.required,
-        Validators.minLength(1),
+        Validators.minLength(2),
         Validators.maxLength(32),
         // Validators.pattern(RegExpAPP.username),
       ],
@@ -57,11 +58,15 @@ export class RegisterComponent {
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly authService: AuthService,
-    private readonly toast: ToastBaseService
+    private readonly toast: ToastBaseService,
+    readonly utils: UtilsService,
   ) {}
 
   //#region methods
   register() {
+    this.registerForm.markAllAsTouched()
+    // this.registerForm.markAsTouched()
+
     if (this.registerForm.invalid) {
       console.log('invalid');
       return;
@@ -76,5 +81,6 @@ export class RegisterComponent {
       },
     });
   }
+
   //#endregion methods
 }
