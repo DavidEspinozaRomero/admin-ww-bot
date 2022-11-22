@@ -82,6 +82,46 @@ export class HomeComponent implements OnInit {
     this.initApis();
   }
 
+  //#region WebSocket
+  wsConect() {
+    this.manager = new Manager(this.URLWS, {
+      extraHeaders: {
+        authorization:
+          this.storage.getLocalStorage(LocalStorageKey.token) || '',
+      },
+    });
+    this.socket?.removeAllListeners();
+
+    this.socket = this.manager.socket('/');
+
+    this.socket.on('connect', () => {
+      console.log('conect');
+      this.status.conected = true;
+    });
+    this.socket.on('disconnect', () => {
+      console.log('disconect');
+      this.status.conected = false;
+    });
+
+    this.socket.on(
+      'message-from-server',
+      (payload: { action: string; description: string }) => {
+        console.log(payload);
+        
+        const { action, description } = payload;
+        if (action == 'download') {
+          this.getQRCODE();
+        }
+        if (action == 'ready') {
+          this.status.conected = true;
+        }
+        console.log(payload);
+      }
+    );
+  }
+
+  //#endregion WebSocket
+
   //#region Apis
   // Get
   // TODO: agregar evento para llamar a la api y traer el qrcode
@@ -240,38 +280,6 @@ export class HomeComponent implements OnInit {
       this.categories.find(
         (category) => category.description == categoryDescription
       )?.id || 0
-    );
-  }
-
-  wsConect() {
-    this.manager = new Manager(this.URLWS, {
-      extraHeaders: {
-        authorization:
-          this.storage.getLocalStorage(LocalStorageKey.token) || '',
-      },
-    });
-    this.socket?.removeAllListeners();
-
-    this.socket = this.manager.socket('/');
-
-    this.socket.on('connect', () => {
-      console.log('conect');
-      this.status.conected = true;
-    });
-    this.socket.on('disconnect', () => {
-      console.log('disconect');
-      this.status.conected = false;
-    });
-
-    this.socket.on(
-      'message-from-server',
-      (payload: { action: string; description: string }) => {
-        const { action, description } = payload;
-        if (action == 'download') {
-          this.getQRCODE();
-        }
-        console.log(payload);
-      }
     );
   }
 

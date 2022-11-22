@@ -4,7 +4,18 @@
   (onRetry)="ngOnInit()"
 ></app-retry>
 
-<span> {{ status.conected ? "conectado" : "desconectado" }} </span>
+<span>
+  {{ status.conected ? "Conectado" : "Desconectado" }}
+  <i
+    class="rounded-circle d-inline-block"
+    style="width: 0.5rem; height: 0.5rem"
+    [ngClass]="{
+      'bg-success': status.conected,
+      'bg-danger': !status.conected
+    }"
+  >
+  </i>
+</span>
 
 <section *ngIf="!status.loading && status.response">
   <div class="row">
