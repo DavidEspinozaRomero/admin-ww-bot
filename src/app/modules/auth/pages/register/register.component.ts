@@ -24,15 +24,15 @@ export class RegisterComponent {
         // Validators.pattern(RegExpAPP.username),
       ],
     ],
-    fullName: [
-      '',
-      // [
-      //   Validators.required,
-      //   Validators.minLength(1),
-      //   Validators.maxLength(32),
-      //   Validators.pattern(RegExpAPP.name),
-      // ],
-    ],
+    // fullName: [
+    //   '',
+    //   [
+    //     Validators.required,
+    //     Validators.minLength(1),
+    //     Validators.maxLength(32),
+    //     Validators.pattern(RegExpAPP.name),
+    //   ],
+    // ],
     email: [
       '',
       [
