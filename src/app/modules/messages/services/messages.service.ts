@@ -19,7 +19,7 @@ export class MessagesService {
     const URL = `${this.BaseUrl}bot-webwhatsap/qrcode`;
     const headers: HttpHeaders = new HttpHeaders();
     headers.set('Accept', `image/svg+xml`);
-    return this.httpClient.get(URL, { headers });
+    return this.httpClient.get(URL, { headers,  responseType: 'text' },);
   }
 
   createMessage(body: {}) {

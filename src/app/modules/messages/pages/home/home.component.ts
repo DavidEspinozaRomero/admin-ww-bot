@@ -29,13 +29,12 @@ export class HomeComponent implements OnInit {
   @ViewChild('qrcode') qrcodeDiv!: ElementRef<HTMLDivElement>;
   @ViewChild('BtnNewMessage') BtnNewMessage?: ElementRef<HTMLButtonElement>;
   @ViewChild('formColapse') formColapse?: ElementRef<HTMLFormElement>;
+  @ViewChild('modalqrcode') modalqrcode?: ElementRef<HTMLButtonElement>;
 
   status = {
     loading: false,
     response: false,
     spinner: false,
-    loadingQR: false,
-    responseQR: false,
     conected: false,
     showFormMessage: false,
   };
@@ -96,7 +95,6 @@ export class HomeComponent implements OnInit {
 
     this.socket.on('connect', () => {
       console.log('conect');
-      this.status.conected = true;
     });
     this.socket.on('disconnect', () => {
       console.log('disconect');
@@ -106,16 +104,10 @@ export class HomeComponent implements OnInit {
     this.socket.on(
       'message-from-server',
       (payload: { action: string; description: string }) => {
-        console.log(payload);
-        
         const { action, description } = payload;
-        if (action == 'download') {
-          this.getQRCODE();
-        }
         if (action == 'ready') {
           this.status.conected = true;
         }
-        console.log(payload);
       }
     );
   }
@@ -283,27 +275,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getQRCODE() {
-    this.status.loadingQR = true;
-    this.messagesService
-      .getqrimg()
-      .subscribe({
-        next: (res: any) => {
-          this.status.responseQR = true;
-          setTimeout(() => {
-            this.qrcodeDiv.nativeElement.innerHTML = res;
-          }, 300);
-        },
-        error: (err) => {
-          this.status.responseQR = false;
-        },
-      })
-      .add(() => (this.status.loadingQR = false));
-  }
   //#endregion methods
 }
 
 //#region interfaces
-type SvgInHtml = HTMLElement & SVGElement;
 
 //#endregion interfaces

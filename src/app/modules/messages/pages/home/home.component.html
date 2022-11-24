@@ -34,6 +34,7 @@
     </div>
     <div class="col-auto">
       <button
+        #modalqrcode
         type="button"
         class="btn btn-primary"
         data-bs-toggle="modal"
@@ -242,7 +243,7 @@
   </div>
 </section>
 
-<app-modalqrcode></app-modalqrcode>
+<app-modalqrcode [socket]="this.socket"></app-modalqrcode>
 
 <!-- codigo para otro tipo de form message -->
 
