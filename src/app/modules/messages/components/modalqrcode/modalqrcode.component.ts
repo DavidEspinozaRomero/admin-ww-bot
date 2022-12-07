@@ -35,7 +35,9 @@ export class ModalqrcodeComponent implements OnInit {
     this.socket.on(
       'message-from-server',
       (payload: { action: string; description: string }) => {
-        const { action, description } = payload;
+        const { action } = payload;
+        console.log(payload);
+        
         if (action == 'creating') {
           this.status.spinner = true;
         }

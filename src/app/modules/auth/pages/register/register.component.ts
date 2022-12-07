@@ -59,18 +59,11 @@ export class RegisterComponent {
     private readonly router: Router,
     private readonly authService: AuthService,
     private readonly toast: ToastBaseService,
-    readonly utils: UtilsService,
+    readonly utils: UtilsService
   ) {}
-
-  //#region methods
-  register() {
-    this.registerForm.markAllAsTouched()
-    // this.registerForm.markAsTouched()
-
-    if (this.registerForm.invalid) {
-      console.log('invalid');
-      return;
-    }
+  //#region Apis
+  //Post
+  registerUser() {
     this.authService.registerUser(this.registerForm.value).subscribe({
       next: (res) => {
         this.toast.success(res.message);
@@ -80,6 +73,20 @@ export class RegisterComponent {
         this.toast.error(err.error.message);
       },
     });
+  }
+
+  //#endregion Apis
+
+  //#region methods
+  register() {
+    this.registerForm.markAllAsTouched();
+    // this.registerForm.markAsTouched()
+
+    if (this.registerForm.invalid) {
+      console.log('invalid');
+      return;
+    }
+    this.registerUser();
   }
 
   //#endregion methods

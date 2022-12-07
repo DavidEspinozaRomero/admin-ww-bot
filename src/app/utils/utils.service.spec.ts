@@ -18,7 +18,7 @@ const mockfg = {
 };
 //#endregion mocks
 
-fdescribe('UtilsService', () => {
+describe('UtilsService', () => {
   let service: UtilsService;
 
   beforeEach(() => {
