@@ -44,13 +44,9 @@ export class LoginComponent {
     readonly utils: UtilsService
   ) {}
 
-  //#region methods
-  login() {
-    this.loginForm.markAllAsTouched()
-    if (this.loginForm.invalid) {
-      return;
-    }
-
+  //#region Apis
+  //Post
+  loginUser() {
     this.authService.loginUser(this.loginForm.value).subscribe({
       next: (res) => {
         this.toast.success(res.message);
@@ -60,6 +56,18 @@ export class LoginComponent {
       },
       complete: () => this.router.navigateByUrl('/messages'),
     });
+  }
+
+  //#endregion Apis
+
+  //#region methods
+  login() {
+    this.loginForm.markAllAsTouched();
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.loginUser();
   }
   //#endregion methods
 }

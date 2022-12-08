@@ -1,20 +1,23 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { RouterTestingModule,  } from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+
+import { of } from 'rxjs';
 import { ToastrModule } from 'ngx-toastr';
 
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../services/auth.service';
 import { ToastBaseService } from '../../../../services/toast.service';
 import { UtilsService } from '../../../../utils/utils.service';
-import { of } from 'rxjs';
+import { routes } from '../../auth.routing';
 
-fdescribe('RegisterComponent', () => {
+
+describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
   let service: AuthService;
@@ -25,7 +28,7 @@ fdescribe('RegisterComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        RouterTestingModule,
+        RouterTestingModule.withRoutes(routes),
         ToastrModule.forRoot({
           timeOut: 3000,
           positionClass: 'toast-bottom-right',
@@ -34,12 +37,12 @@ fdescribe('RegisterComponent', () => {
       ],
       providers: [
         FormBuilder,
-        AuthService,
-        ToastBaseService,
-        UtilsService,
         HttpTestingController,
+        ToastBaseService,
+        AuthService,
+        UtilsService,
       ],
-      schemas: [NO_ERRORS_SCHEMA,CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
@@ -116,7 +119,6 @@ fdescribe('RegisterComponent', () => {
       //form value expect
     });
   });
-
   describe('Methods', () => {
     it('has register function', () => {
       expect(typeof component.register).toBe('function');

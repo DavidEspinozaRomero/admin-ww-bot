@@ -8,7 +8,7 @@ import {
   RegisterComponent,
 } from './pages';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,

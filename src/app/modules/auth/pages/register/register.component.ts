@@ -80,10 +80,7 @@ export class RegisterComponent {
   //#region methods
   register() {
     this.registerForm.markAllAsTouched();
-    // this.registerForm.markAsTouched()
-
     if (this.registerForm.invalid) {
-      console.log('invalid');
       return;
     }
     this.registerUser();
