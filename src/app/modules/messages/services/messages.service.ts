@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { StorageService } from 'src/app/services';
-import { environment } from 'src/environments/environment';
+import { StorageService } from '../../../services';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

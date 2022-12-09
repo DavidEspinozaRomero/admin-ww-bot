@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastBaseService } from '../../../../services/toast.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
-import { UtilsService } from 'src/app/utils/utils.service';
+import { UtilsService } from '../../../../utils/utils.service';
 
 @Component({
   selector: 'app-register',

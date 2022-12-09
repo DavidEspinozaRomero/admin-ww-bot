@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Manager, Socket } from 'socket.io-client';
-import { ToastBaseService } from 'src/app/services';
+import { ToastBaseService } from '../../../../services';
 import {
   FormBuilder,
   FormControl,
@@ -15,7 +15,7 @@ import {
 import { Category, Message } from '../../interfaces/message.inteface';
 import { forkJoin } from 'rxjs';
 import { MessagesService } from '../../services/messages.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-home',
