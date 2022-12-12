@@ -1,7 +1,17 @@
-
 it('empty', () => {
-  expect(true).toBeTruthy()
-})
+  expect(true).toBeTruthy();
+});
+
+// let http: HttpTestingController;
+// http = TestBed.inject(HttpTestingController);
+// const req = http.expectOne(`http://localhost:3000/auth/register`);
+// const request = req.request.body;
+
+// const payload = {
+//   username: 'test1',
+//   email: 'test1@gmail.com',
+//   password: 'Asd1234.',
+// };
 
 //#region Jasmine
 // // import {

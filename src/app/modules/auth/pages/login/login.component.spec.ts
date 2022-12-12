@@ -1,7 +1,125 @@
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import {
+  HttpClientTestingModule,
+} from '@angular/common/http/testing';
 
-it('empty', () => {
-  expect(true).toBeTruthy()
-})
+import { screen, render } from '@testing-library/angular';
+import { createMock } from '@testing-library/angular/jest-utils';
+import userEvent from '@testing-library/user-event';
+import { of } from 'rxjs';
+import { ToastrModule } from 'ngx-toastr';
+
+import { LoginComponent } from './login.component';
+import { AuthService } from '../../services/auth.service';
+import { ToastBaseService } from '../../../../services/toast.service';
+import { UtilsService } from '../../../../utils/utils.service';
+import { routes } from '../../auth.routing';
+
+// #region Mocks
+const loginUserMock = {
+  message: 'Welcome back',
+  id: 'dc19037b-fd5d-41b0-9fb7-c4c0328937f7',
+  username: 'test1',
+  email: 'test1@gmail.com',
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRjMTkwMzdiLWZkNWQtNDFiMC05ZmI3LWM0YzAzMjg5MzdmNyIsImlhdCI6MTY3MDUyOTY4MywiZXhwIjoxNjcwNTM2ODgzfQ.W9iqvFSY8oE1Ue3wWqriGb1nVUiwyafMuySPLbqB2ww',
+};
+
+const authServiceMock = createMock(AuthService);
+authServiceMock.loginUser = jest.fn(() => of(loginUserMock));
+
+// #endregion Mocks
+
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+
+  beforeEach(async () => {
+    const rendered = await render(LoginComponent, {
+      imports: [
+        HttpClientTestingModule,
+        ReactiveFormsModule,
+        RouterTestingModule.withRoutes(routes),
+        ToastrModule.forRoot({
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right',
+          preventDuplicates: true,
+        }),
+      ],
+      providers: [FormBuilder, ToastBaseService, UtilsService, AuthService],
+      componentProviders: [
+        {
+          provide: AuthService,
+          useValue: authServiceMock,
+        },
+      ],
+    });
+    component = rendered.fixture.componentInstance;
+  });
+
+  describe('Layout', () => {
+    it('has registro header', async () => {
+      const header = screen.getByRole('heading', { name: 'Login' });
+      expect(header).toBeInTheDocument();
+    });
+
+    it('has email input', () => {
+      const input = screen.getByLabelText('Email');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute('type', 'email');
+    });
+    it('has password input', () => {
+      const input = screen.getByLabelText('Password');
+      expect(input).toBeInTheDocument();
+      expect(input).toHaveAttribute('type', 'password');
+    });
+    it('has login button', () => {
+      const button = screen.getByRole('button', { name: 'Login' });
+      expect(button).toBeInTheDocument();
+    });
+  });
+
+  describe('Apis', () => {
+    it('has login function', () => {
+      expect(typeof component.loginUser).toBe('function');
+    });
+
+    it('should call the service', async () => {
+      const email = screen.getByLabelText('Email');
+      const password = screen.getByLabelText('Password');
+      const button = screen.getByRole('button', { name: 'Login' });
+
+      await userEvent.type(email, 'test1@gmail.com');
+      await userEvent.type(password, 'Asd1234.');
+      await userEvent.click(button);
+
+      expect(authServiceMock.loginUser).toHaveBeenCalled();
+    });
+  });
+
+  describe('Methods', () => {
+    it('has login function', () => {
+      expect(typeof component.login).toBe('function');
+    });
+
+    it('should check if form is invalid', () => {
+      component.login();
+      expect(component.loginForm.invalid).toBeTruthy();
+    });
+
+    it('should check if form is valid', async () => {
+      const email = screen.getByLabelText('Email');
+      const password = screen.getByLabelText('Password');
+
+      await userEvent.type(email, 'test1@gmail.com');
+      await userEvent.type(password, 'Asd1234.');
+
+      component.login();
+
+      expect(component.loginForm.invalid).toBeFalsy();
+    });
+  });
+});
 
 //#region Jasmine
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
