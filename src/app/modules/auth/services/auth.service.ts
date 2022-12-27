@@ -3,7 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, of, tap } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { LocalStorageKey, StorageService } from '../../../services/storage.service';
+import {
+  LocalStorageKey,
+  StorageService,
+} from '../../../services/storage.service';
 import {
   authloginResponse,
   registerUser,

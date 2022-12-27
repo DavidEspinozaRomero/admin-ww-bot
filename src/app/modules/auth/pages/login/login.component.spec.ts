@@ -94,6 +94,7 @@ describe('LoginComponent', () => {
       await userEvent.click(button);
 
       expect(authServiceMock.loginUser).toHaveBeenCalled();
+      // authServiceMock.loginUser.
     });
   });
 

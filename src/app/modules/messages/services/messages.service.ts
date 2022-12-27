@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { StorageService } from '../../../services';
+// import { StorageService } from '../../../services';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class MessagesService {
 
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly storage: StorageService
+    // private readonly storage: StorageService
   ) {}
 
   getqrimg() {
