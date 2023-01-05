@@ -7,6 +7,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { RetryComponent } from './components/retry/retry.component';
 import { InProgressComponent } from './components/in-progress/in-progress.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { ErrInputMessageDirective } from './directives/err-input-message.directive';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     RetryComponent,
     InProgressComponent,
     LoadingComponent,
+    ErrInputMessageDirective
   ],
   exports: [
     SideMenuComponent,
@@ -22,6 +24,7 @@ import { LoadingComponent } from './components/loading/loading.component';
     RetryComponent,
     InProgressComponent,
     LoadingComponent,
+    ErrInputMessageDirective
   ],
   imports: [CommonModule, RouterModule],
 })
