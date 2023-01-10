@@ -13,7 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../services/auth.service';
-import { ToastBaseService } from '../../../../services/toast.service';
+import { CustomToastService } from '../../../../services/toast.service';
 import { UtilsService } from '../../../../utils/utils.service';
 import { routes } from '../../auth.routing';
 
@@ -47,7 +47,7 @@ describe('RegisterComponent', () => {
           preventDuplicates: true,
         }),
       ],
-      providers: [FormBuilder, ToastBaseService, UtilsService, AuthService],
+      providers: [FormBuilder, CustomToastService, UtilsService, AuthService],
       componentProviders: [
         {
           provide: AuthService,

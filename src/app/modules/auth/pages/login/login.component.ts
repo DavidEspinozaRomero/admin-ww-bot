@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ToastBaseService } from '../../../../services/toast.service';
+import { CustomToastService } from '../../../../services/toast.service';
 import { AuthService } from '../../services/auth.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
 import { UtilsService } from '../../../../utils/utils.service';
@@ -39,7 +39,7 @@ export class LoginComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
-    private readonly toast: ToastBaseService,
+    private readonly toast: CustomToastService,
     private readonly authService: AuthService,
     readonly utils: UtilsService
   ) {}

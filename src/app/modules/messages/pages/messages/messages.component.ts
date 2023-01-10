@@ -9,7 +9,7 @@ import {
 
 import { forkJoin } from 'rxjs';
 
-import { ToastBaseService } from '../../../../services';
+import { CustomToastService } from '../../../../services';
 import { MessagesService } from '../../services/messages.service';
 import {
   LocalStorageKey,
@@ -73,7 +73,7 @@ export class MessagesComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly toast: ToastBaseService,
+    private readonly toast: CustomToastService,
     private readonly storage: StorageService,
     private readonly messagesService: MessagesService
   ) {}

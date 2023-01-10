@@ -1,23 +1,28 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { render, screen } from '@testing-library/angular';
 
 import { MessagesComponent } from './messages.component';
 
 describe('MessagesComponent', () => {
-  let component: MessagesComponent;
-  let fixture: ComponentFixture<MessagesComponent>;
+  // let component: MessagesComponent;
+  // let fixture: ComponentFixture<MessagesComponent>;
 
+  // fb: FormBuilder,
+  // toast: CustomToastService,
+  // storage: StorageService,
+  // messagesService: MessagesService
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ MessagesComponent ]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(MessagesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    await render(MessagesComponent, {
+      imports: [HttpClientTestingModule, ReactiveFormsModule],
+    });
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('Layout', () => {
+    it('has a tilte', () => {
+      const btn = screen.getByRole('button', { name: '+ Nuevo Mensaje' });
+      expect(btn).toBeInTheDocument();
+    });
   });
 });

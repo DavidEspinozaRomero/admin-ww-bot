@@ -1,6 +1,6 @@
-// import { ToastBaseService } from './toast.service';
+// import { CustomToastService } from './toast.service';
 
-describe('ToastBaseService', () => {
+describe('CustomToastService', () => {
   it('should be created', () => {
     expect(true).toBeTruthy();
   });

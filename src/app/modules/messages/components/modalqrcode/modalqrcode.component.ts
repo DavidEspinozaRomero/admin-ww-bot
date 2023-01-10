@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MessagesService } from '../../services/messages.service';
-import { ToastBaseService } from '../../../../services/toast.service';
+import { CustomToastService } from '../../../../services/toast.service';
 import { Socket } from 'socket.io-client';
 
 @Component({
@@ -20,7 +20,7 @@ export class ModalqrcodeComponent implements OnInit {
 
   constructor(
     private readonly messagesService: MessagesService,
-    private toast: ToastBaseService
+    private toast: CustomToastService
   ) {}
 
   ngOnInit(): void {

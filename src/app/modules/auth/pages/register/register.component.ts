@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
-import { ToastBaseService } from '../../../../services/toast.service';
+import { CustomToastService } from '../../../../services/toast.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
 import { UtilsService } from '../../../../utils/utils.service';
 
@@ -58,7 +58,7 @@ export class RegisterComponent {
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly authService: AuthService,
-    private readonly toast: ToastBaseService,
+    private readonly toast: CustomToastService,
     readonly utils: UtilsService
   ) {}
   //#region Apis

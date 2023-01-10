@@ -12,7 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { LoginComponent } from './login.component';
 import { AuthService } from '../../services/auth.service';
-import { ToastBaseService } from '../../../../services/toast.service';
+import { CustomToastService } from '../../../../services/toast.service';
 import { UtilsService } from '../../../../utils/utils.service';
 import { routes } from '../../auth.routing';
 
@@ -46,7 +46,7 @@ describe('LoginComponent', () => {
           preventDuplicates: true,
         }),
       ],
-      providers: [FormBuilder, ToastBaseService, UtilsService, AuthService],
+      providers: [FormBuilder, CustomToastService, UtilsService, AuthService],
       componentProviders: [
         {
           provide: AuthService,
@@ -136,7 +136,7 @@ describe('LoginComponent', () => {
 
 // import { LoginComponent } from './login.component';
 // import { AuthService } from '../../services/auth.service';
-// import { ToastBaseService } from '../../../../services/toast.service';
+// import { CustomToastService } from '../../../../services/toast.service';
 // import { UtilsService } from '../../../../utils/utils.service';
 // import { routes } from '../../auth.routing';
 // import { of } from 'rxjs';
@@ -162,7 +162,7 @@ describe('LoginComponent', () => {
 //       providers: [
 //         FormBuilder,
 //         HttpTestingController,
-//         ToastBaseService,
+//         CustomToastService,
 //         AuthService,
 //         UtilsService,
 //       ],

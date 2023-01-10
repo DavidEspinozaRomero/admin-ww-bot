@@ -4,49 +4,51 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root',
 })
-export class ToastBaseService {
-  private readonly successBase = {
-    TitleDefault: 'Listo',
-    MessageDefault: 'Complete',
-  };
-  private readonly errorBase = {
-    TitleDefault: 'Upss',
-    MessageDefault: 'Cant do the action',
-  };
-  private readonly infoBase = {
-    TitleDefault: 'Check the info',
-    MessageDefault: 'Ar u sure??',
-  };
-  private readonly warningBase = {
-    TitleDefault: 'Wait!',
-    MessageDefault: 'Ar u sure??',
+export class CustomToastService {
+  private readonly msg = {
+    success: {
+      titleDefault: 'Listo',
+      messageDefault: 'Complete',
+    },
+    error: {
+      titleDefault: 'Upss',
+      messageDefault: 'Cant do the action',
+    },
+    info: {
+      titleDefault: 'Check the info',
+      messageDefault: 'Ar u sure??',
+    },
+    warning: {
+      titleDefault: 'Wait!',
+      messageDefault: 'Ar u sure??',
+    },
   };
 
   constructor(private readonly toast: ToastrService) {}
 
   success(message?: string, title?: string) {
     return this.toast.success(
-      message || this.successBase.MessageDefault,
-      title || this.successBase.TitleDefault
+      message || this.msg.success.messageDefault,
+      title || this.msg.success.titleDefault
     );
   }
 
   error(message?: string, title?: string) {
     return this.toast.error(
-      message || this.errorBase.MessageDefault,
-      title || this.errorBase.TitleDefault
+      message || this.msg.error.messageDefault,
+      title || this.msg.error.titleDefault
     );
   }
   info(message?: string, title?: string) {
     return this.toast.info(
-      message || this.infoBase.MessageDefault,
-      title || this.infoBase.TitleDefault
+      message || this.msg.info.messageDefault,
+      title || this.msg.info.titleDefault
     );
   }
   warning(message?: string, title?: string) {
     return this.toast.warning(
-      message || this.warningBase.MessageDefault,
-      title || this.warningBase.TitleDefault
+      message || this.msg.warning.messageDefault,
+      title || this.msg.warning.titleDefault
     );
   }
 }
