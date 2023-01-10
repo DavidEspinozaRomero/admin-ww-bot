@@ -5,7 +5,12 @@ import {
 } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { render, screen, waitFor } from '@testing-library/angular';
+import {
+  render,
+  RenderResult,
+  screen,
+  waitFor,
+} from '@testing-library/angular';
 import { createMock } from '@testing-library/angular/jest-utils';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
@@ -78,14 +83,15 @@ messagesServiceMock.getCategories = jest.fn(() => of());
 
 describe('MessagesComponent', () => {
   let component: MessagesComponent;
-  // let fixture: ComponentFixture<MessagesComponent>;
+  let fixture: ComponentFixture<MessagesComponent>;
+  let rendered: RenderResult<MessagesComponent>;
 
   // fb: FormBuilder,
   // toast: CustomToastService,
   // storage: StorageService,
   // messagesService: MessagesService
   beforeEach(async () => {
-    const rendered = await render(MessagesComponent, {
+    rendered = await render(MessagesComponent, {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
@@ -105,6 +111,10 @@ describe('MessagesComponent', () => {
         { provide: MessagesService, useValue: messagesServiceMock },
       ],
     });
+  });
+
+  beforeEach(() => {
+    fixture = rendered.fixture;
     component = rendered.fixture.componentInstance;
   });
 
@@ -115,24 +125,44 @@ describe('MessagesComponent', () => {
     });
     it('has 2 btn whit text "+ Nuevo Mensaje", "Vincular WhatsApp"', async () => {
       component.status.response = true;
-
-      const btn1 = await screen.findByRole('button', {
+      fixture.detectChanges();
+      const btn1 = await screen.getByRole('button', {
         name: '+ Nuevo Mensaje',
       });
-      const btn2 = await screen.findByRole('button', {
+      const btn2 = await screen.getByRole('button', {
         name: 'Vincular WhatsApp',
       });
 
       expect(btn1).toBeInTheDocument();
       expect(btn2).toBeInTheDocument();
     });
-    it('has form whit inputs, textarea, date selector', async () => {
+    it('has form whit inputs, textarea, date selector, buttons save/cancel', () => {
       component.status.response = true;
-      await waitFor(() => {
-        const input1 = screen.getByLabelText('Pregunta');
+      fixture.detectChanges();
+      const inputQuery = screen.getByLabelText('Pregunta');
+      const inputAnswer = screen.getByLabelText('Respuesta');
+      const inputCategory = screen.getByLabelText('Categoria');
+      const inputHoraInicio = screen.getByLabelText('Hora inicio');
+      const inputHoraFin = screen.getByLabelText('Hora fin');
+      const guardar = screen.getByRole('button', { name: 'Guardar' });
+      const cancelar = screen.getByRole('button', { name: 'Cancelar' });
 
-        expect(input1).toBeInTheDocument();
-      });
+      expect(inputQuery).toBeInTheDocument();
+      expect(inputAnswer).toBeInTheDocument();
+      expect(inputCategory).toBeInTheDocument();
+      expect(inputHoraInicio).toBeInTheDocument();
+      expect(inputHoraFin).toBeInTheDocument();
+      expect(guardar).toBeInTheDocument();
+      expect(cancelar).toBeInTheDocument();
     });
+    // it('has nav tabs', () => {
+    //   component.status.response = true;
+    //   fixture.detectChanges();
+    //   const nav = screen.getByRole('list', {name:''});
+    //   const tabs = screen.getAllByRole('listitem');
+      
+    //   expect(nav).toBeInTheDocument();
+    //   expect(tabs).toBeInTheDocument();
+    // });
   });
 });
