@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { render, screen } from '@testing-library/angular';
+import { render, screen, waitFor } from '@testing-library/angular';
 import { createMock } from '@testing-library/angular/jest-utils';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
@@ -69,15 +69,15 @@ const response = {
 };
 
 const messagesServiceMock = createMock(MessagesService);
-messagesServiceMock.getAllMessages = jest.fn(() => of(response.allmessages));
-messagesServiceMock.getCategories = jest.fn(() => of(response.categories));
+messagesServiceMock.getAllMessages = jest.fn(() => of());
+messagesServiceMock.getCategories = jest.fn(() => of());
 // messagesServiceMock.updateMessage = jest.fn(()=> of())
 // messagesServiceMock.createMessage = jest.fn(()=> of())
 // messagesServiceMock.deleteMessage = jest.fn(()=> of())
 //#endregion Mocks
 
 describe('MessagesComponent', () => {
-  // let component: MessagesComponent;
+  let component: MessagesComponent;
   // let fixture: ComponentFixture<MessagesComponent>;
 
   // fb: FormBuilder,
@@ -85,7 +85,7 @@ describe('MessagesComponent', () => {
   // storage: StorageService,
   // messagesService: MessagesService
   beforeEach(async () => {
-    await render(MessagesComponent, {
+    const rendered = await render(MessagesComponent, {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
@@ -105,36 +105,34 @@ describe('MessagesComponent', () => {
         { provide: MessagesService, useValue: messagesServiceMock },
       ],
     });
+    component = rendered.fixture.componentInstance;
   });
 
   describe('Layout', () => {
-    it('has a init correctly', async () => {
-      const btn = await screen.findByRole('button', {
-        name: '+ Nuevo Mensaje',
-      });
-
-      expect(btn).toBeInTheDocument();
-
+    it('has a init correctly', () => {
       expect(messagesServiceMock.getAllMessages).toBeCalled();
       expect(messagesServiceMock.getCategories).toBeCalled();
     });
-    // it('has a init correctly', async () => {
-    //   const http = TestBed.inject(HttpTestingController);
+    it('has 2 btn whit text "+ Nuevo Mensaje", "Vincular WhatsApp"', async () => {
+      component.status.response = true;
 
-    //   const call = http.expectOne('/api/1.0/users');
-    //   const reqBody = call.request.body;
-    //   console.log(call);
-    //   const result = {
-    //     username: 'user1',
-    //     email: 'user1@gmail.com',
-    //     password: 'secretpassword',
-    //   };
-    //   const btn = screen.getByRole('button', { name: '+ Nuevo Mensaje' });
-    //   const btn = await screen.findByRole('button', {
-    //     name: '+ Nuevo Mensaje',
-    //   });
+      const btn1 = await screen.findByRole('button', {
+        name: '+ Nuevo Mensaje',
+      });
+      const btn2 = await screen.findByRole('button', {
+        name: 'Vincular WhatsApp',
+      });
 
-    //   expect(btn).toBeInTheDocument();
-    // });
+      expect(btn1).toBeInTheDocument();
+      expect(btn2).toBeInTheDocument();
+    });
+    it('has form whit inputs, textarea, date selector', async () => {
+      component.status.response = true;
+      await waitFor(() => {
+        const input1 = screen.getByLabelText('Pregunta');
+
+        expect(input1).toBeInTheDocument();
+      });
+    });
   });
 });
