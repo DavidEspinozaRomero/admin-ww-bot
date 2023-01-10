@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Manager, Socket } from 'socket.io-client';
-import { ToastBaseService } from '../../../../services';
 import {
   FormBuilder,
   FormControl,
@@ -8,21 +7,24 @@ import {
   Validators,
 } from '@angular/forms';
 
+import { forkJoin } from 'rxjs';
+
+import { ToastBaseService } from '../../../../services';
+import { MessagesService } from '../../services/messages.service';
 import {
   LocalStorageKey,
   StorageService,
 } from '../../../../services/storage.service';
 import { Category, Message } from '../../interfaces/message.inteface';
-import { forkJoin } from 'rxjs';
-import { MessagesService } from '../../services/messages.service';
 import { environment } from '../../../../../environments/environment';
 
+
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class MessagesComponent implements OnInit {
   //#region
   //#endregion
   //#region variables
@@ -122,8 +124,8 @@ export class HomeComponent implements OnInit {
     this.messagesService
       .getAllMessages()
       .subscribe({
-        next: (res: any) => {
-          this.listMessages = res.data as Message[];
+        next: (res) => {
+          this.listMessages = res.data;
           this.status.response = true;
         },
         error: (err) => {

@@ -52,7 +52,7 @@ export class AuthService {
     );
   }
 
-  //#region method
+  //#region methods
   setUserAndToken(res: authloginResponse) {
     const { message, token, ...userData } = res;
     this.storage.setLocalStorage(LocalStorageKey.token, token);

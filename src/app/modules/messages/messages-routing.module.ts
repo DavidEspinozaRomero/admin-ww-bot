@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from './pages/home/home.component';
+import { MessagesComponent } from './pages/messages/messages.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: MessagesComponent },
   { path: '**', redirectTo: '' },
 ];
 

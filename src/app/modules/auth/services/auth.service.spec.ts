@@ -36,8 +36,8 @@ const response = {
 
 describe('AuthService', () => {
   let service: AuthService;
-  let httpMock: HttpTestingController & any;
-  let storageMock: StorageService & any;
+  let httpMock: any;
+  let storageMock: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

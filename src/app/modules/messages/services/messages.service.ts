@@ -1,25 +1,27 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs';
 
 // import { StorageService } from '../../../services';
 import { environment } from '../../../../environments/environment';
+import { ResGetAllMessages } from '../interfaces/message.inteface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MessagesService {
   private readonly BaseUrl = environment.UrlApi;
 
   constructor(
-    private readonly httpClient: HttpClient,
-    // private readonly storage: StorageService
-  ) {}
+    private readonly httpClient: HttpClient
+  ) // private readonly storage: StorageService
+  {}
 
   getqrimg() {
     const URL = `${this.BaseUrl}bot-webwhatsap/qrcode`;
     const headers: HttpHeaders = new HttpHeaders();
     headers.set('Accept', `image/svg+xml`);
-    return this.httpClient.get(URL, { headers,  responseType: 'text' },);
+    return this.httpClient.get(URL, { headers, responseType: 'text' });
   }
 
   createMessage(body: {}) {
@@ -29,7 +31,7 @@ export class MessagesService {
 
   getAllMessages() {
     const URL = `${this.BaseUrl}messages`;
-    return this.httpClient.get(URL);
+    return this.httpClient.get<ResGetAllMessages>(URL);
   }
 
   updateMessage(id: string, body: {}) {
@@ -47,4 +49,3 @@ export class MessagesService {
     return this.httpClient.get(URL);
   }
 }
-

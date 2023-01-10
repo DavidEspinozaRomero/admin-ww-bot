@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:jest": "jest --watchAll --verbose",
+    "test:coverage": "jest --coverage",
     "test:addpath": "jest --watch"
   },
   "private": true,
