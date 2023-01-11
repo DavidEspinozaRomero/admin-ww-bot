@@ -34,12 +34,12 @@ export class MessagesService {
     return this.httpClient.get<ResGetAllMessages>(URL);
   }
 
-  updateMessage(id: string, body: {}) {
+  updateMessage(id: string | number, body: {}) {
     const URL = `${this.BaseUrl}messages/${id}`;
     return this.httpClient.patch(URL, body);
   }
 
-  deleteMessage(id: string) {
+  deleteMessage(id: string | number) {
     const URL = `${this.BaseUrl}messages/${id}`;
     return this.httpClient.delete(URL);
   }

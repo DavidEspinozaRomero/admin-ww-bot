@@ -61,10 +61,10 @@
             aria-describedby="helpId"
             placeholder=" -- Agregue el mensaje --"
             formControlName="query"
-            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'query') }"
+            [ngClass]="{ 'is-invalid': utils.isValidControl(newMessageGroup, 'query') }"
           />
           <small
-            *ngIf="isValid(newMessageGroup, 'query')"
+            *ngIf="utils.isValidControl(newMessageGroup, 'query')"
             id="helpId"
             class="form-text"
             err-msg
@@ -81,11 +81,11 @@
             placeholder=" -- Agregue el mensaje --"
             formControlName="answer"
             rows="4"
-            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'answer') }"
+            [ngClass]="{ 'is-invalid': utils.isValidControl(newMessageGroup, 'answer') }"
           >
           </textarea>
           <small
-            *ngIf="isValid(newMessageGroup, 'answer')"
+            *ngIf="utils.isValidControl(newMessageGroup, 'answer')"
             id="helpId"
             class="form-text text-muted"
             >Help text</small
@@ -99,7 +99,7 @@
             class="form-select form-select-sm"
             id="category"
             formControlName="category"
-            [ngClass]="{ 'is-invalid': isValid(newMessageGroup, 'category') }"
+            [ngClass]="{ 'is-invalid': utils.isValidControl(newMessageGroup, 'category') }"
           >
             <option value="" selected>-- Select one --</option>
             <option [value]="category.id" *ngFor="let category of categories">
@@ -118,7 +118,7 @@
             formControlName="startTime"
           />
           <!-- <small
-            *ngIf="isValid(newMessageGroup, 'type')"
+            *ngIf="utils.isValidControl(newMessageGroup, 'type')"
             id="helpId"
             class="form-text text-muted"
           >
@@ -135,7 +135,7 @@
             formControlName="endTime"
           />
           <!-- <small
-            *ngIf="isValid(newMessageGroup, 'type')"
+            *ngIf="utils.isValidControl(newMessageGroup, 'type')"
             id="helpId"
             class="form-text text-muted"
           >
@@ -275,7 +275,7 @@
     formControlName="startTime"
   />
   <small
-    *ngIf="isValid(newMessageGroup, 'type')"
+    *ngIf="utils.isValidControl(newMessageGroup, 'type')"
     id="helpId"
     class="form-text text-muted"
   >

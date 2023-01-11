@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Manager, Socket } from 'socket.io-client';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
@@ -17,12 +18,12 @@ import {
 } from '../../../../services/storage.service';
 import { Category, Message } from '../../interfaces/message.inteface';
 import { environment } from '../../../../../environments/environment';
-
+import { UtilsService } from '../../../../utils/utils.service';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
-  styleUrls: ['./messages.component.scss']
+  styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
   //#region
@@ -75,7 +76,8 @@ export class MessagesComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly toast: CustomToastService,
     private readonly storage: StorageService,
-    private readonly messagesService: MessagesService
+    private readonly messagesService: MessagesService,
+    public readonly utils: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -119,22 +121,22 @@ export class MessagesComponent implements OnInit {
   //#region Apis
   // Get
   // TODO: agregar evento para llamar a la api y traer el qrcode
-  getAllMessages() {
-    this.status.loading = true;
-    this.messagesService
-      .getAllMessages()
-      .subscribe({
-        next: (res) => {
-          this.listMessages = res.data;
-          this.status.response = true;
-        },
-        error: (err) => {
-          this.toast.error(err.message);
-          this.status.response = false;
-        },
-      })
-      .add(() => (this.status.loading = false));
-  }
+  // getAllMessages() {
+  //   this.status.loading = true;
+  //   this.messagesService
+  //     .getAllMessages()
+  //     .subscribe({
+  //       next: (res) => {
+  //         this.listMessages = res.data;
+  //         this.status.response = true;
+  //       },
+  //       error: (err) => {
+  //         this.toast.error(err.message);
+  //         this.status.response = false;
+  //       },
+  //     })
+  //     .add(() => (this.status.loading = false));
+  // }
   initApis() {
     forkJoin({
       allmessages: this.messagesService.getAllMessages(),
@@ -257,10 +259,6 @@ export class MessagesComponent implements OnInit {
       return;
     }
     this.createMessage({ category: +category, ...data });
-  }
-
-  isValid(form: FormGroup, control: string) {
-    return form.get(control)?.errors && form.get(control)?.touched;
   }
 
   replaceCategoryIdToDescription(id: number): string {

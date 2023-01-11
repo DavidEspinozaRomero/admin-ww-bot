@@ -25,7 +25,7 @@ export interface Category {
 
 // export class Msg {
 
-//Todo: agregar default
+//TODO: agregar default
 //   asdf(obj) {
 //     return new Msg(obj)
 //   } 

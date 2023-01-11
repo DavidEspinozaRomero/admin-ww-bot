@@ -11,6 +11,7 @@ import { of } from 'rxjs';
 import { CustomToastService, StorageService } from '../../../../services';
 import { MessagesService } from '../../services/messages.service';
 import { MessagesComponent } from './messages.component';
+import { UtilsService } from '../../../../utils/utils.service';
 
 //#region Mocks
 
@@ -89,6 +90,16 @@ describe('MessagesComponent', () => {
   let component: MessagesComponent;
   let compiled: HTMLElement;
 
+  function initMock() {
+    httpMock
+      .expectOne('http://localhost:3000/messages')
+      .flush(response.allmessages);
+    httpMock
+      .expectOne('http://localhost:3000/messages/get-categories')
+      .flush(response.categories);
+    fixture.detectChanges();
+  }
+
   beforeEach(async () => {
     rendered = await render(MessagesComponent, {
       imports: [
@@ -105,6 +116,7 @@ describe('MessagesComponent', () => {
         CustomToastService,
         StorageService,
         MessagesService,
+        UtilsService,
       ],
     });
   });
@@ -120,27 +132,11 @@ describe('MessagesComponent', () => {
   it('should exist', () => {
     expect(component).toBeTruthy();
   });
-  it('should exist', () => {
+  it('should match the snapshot', () => {
     expect(compiled).toMatchSnapshot();
   });
+
   describe('Layout', () => {
-    const initMock = () => {
-      httpMock
-        .expectOne('http://localhost:3000/messages')
-        .flush(response.allmessages);
-      httpMock
-        .expectOne('http://localhost:3000/messages/get-categories')
-        .flush(response.categories);
-      fixture.detectChanges();
-    };
-    it('has a init correctly', () => {
-      const testReq = httpMock.expectOne('http://localhost:3000/messages');
-      const testReq2 = httpMock.expectOne(
-        'http://localhost:3000/messages/get-categories'
-      );
-      expect(testReq.request.method).toBe('GET');
-      expect(testReq2.request.method).toBe('GET');
-    });
     it('has 2 btn whit text "+ Nuevo Mensaje", "Vincular WhatsApp"', async () => {
       initMock();
 
@@ -202,6 +198,114 @@ describe('MessagesComponent', () => {
       expect(colh3).toBeInTheDocument();
       expect(colh4).toBeInTheDocument();
       expect(colh5).toBeInTheDocument();
+    });
+  });
+  describe('Apis', () => {
+    it('has initApis', () => {
+      expect(typeof component.initApis).toBe('function');
+    });
+    it('onInit run initApis(), call the apis correctly', () => {
+      const testReq = httpMock.expectOne('http://localhost:3000/messages');
+      const testReq2 = httpMock.expectOne(
+        'http://localhost:3000/messages/get-categories'
+      );
+      expect(testReq.request.method).toBe('GET');
+      expect(testReq2.request.method).toBe('GET');
+    });
+
+    it('has createMessage', () => {
+      expect(typeof component.createMessage).toBe('function');
+    });
+    it('send json to the service', () => {
+      const spy = jest.spyOn(service, 'createMessage');
+      const url = 'http://localhost:3000/messages';
+      const jsonMock = {
+        // id: 1,
+        query: 'hola',
+        answer: 'hola david',
+        category: 1,
+        startTime: '8:00',
+        endTime: '10:00',
+      };
+      component.createMessage(jsonMock);
+
+      const testReq = httpMock.match(url);
+      expect(testReq[1].request.method).toBe('POST');
+      testReq[1].flush(response.createmsg);
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith(jsonMock);
+    });
+
+    it('has updateMessage', () => {
+      expect(typeof component.updateMessage).toBe('function');
+    });
+    it('send json to the service', () => {
+      const spy = jest.spyOn(service, 'updateMessage');
+      const jsonMock = {
+        id: '1',
+        query: 'hola',
+        answer: 'hola david',
+        category: 1,
+        startTime: '8:00',
+        endTime: '10:00',
+      };
+      const url = `http://localhost:3000/messages/${jsonMock.id}`;
+      component.updateMessage(jsonMock.id, jsonMock, 0);
+
+      const testReq = httpMock.expectOne(url);
+      expect(testReq.request.method).toBe('PATCH');
+      testReq.flush(response.updatemsg);
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith(jsonMock.id, jsonMock);
+    });
+
+    it('has deleteMessage', () => {
+      expect(typeof component.deleteMessage).toBe('function');
+    });
+    it('send json to the service', () => {
+      const spy = jest.spyOn(service, 'deleteMessage');
+      const id = '1';
+      const url = `http://localhost:3000/messages/${id}`;
+      component.deleteMessage(id, () => null);
+
+      const testReq = httpMock.expectOne(url);
+      expect(testReq.request.method).toBe('DELETE');
+      testReq.flush(response.updatemsg);
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith(id);
+    });
+  });
+
+  describe('Methods', () => {
+    it('has selecNavItem', () => {
+      expect(typeof component.selecNavItem).toBe('function');
+    });
+    it('has cancel', () => {
+      expect(typeof component.cancel).toBe('function');
+    });
+    it('has edit', () => {
+      expect(typeof component.edit).toBe('function');
+    });
+    it('has erase', () => {
+      expect(typeof component.erase).toBe('function');
+    });
+    it('has resetForm', () => {
+      expect(typeof component.resetForm).toBe('function');
+    });
+    it('has save', () => {
+      expect(typeof component.save).toBe('function');
+    });
+    it('has buildJson', () => {
+      expect(typeof component.buildJson).toBe('function');
+    });
+    it('has replaceCategoryIdToDescription', () => {
+      expect(typeof component.replaceCategoryIdToDescription).toBe('function');
+    });
+    it('has replaceCategoryDescriptionToId', () => {
+      expect(typeof component.replaceCategoryDescriptionToId).toBe('function');
     });
   });
 });
