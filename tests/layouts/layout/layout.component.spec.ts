@@ -1,5 +1,5 @@
 
-import { LayoutComponent } from './layout.component';
+import { LayoutComponent } from '../../../src/app/layouts/layout/layout.component';
 
 describe('LayoutComponent', () => {
 

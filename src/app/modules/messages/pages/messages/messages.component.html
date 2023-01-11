@@ -179,6 +179,7 @@
       <li
         *ngFor="let item of menu"
         class="nav-item"
+        [attr.aria-label]="item.label"
         (click)="selecNavItem(item)"
       >
         <a

@@ -47,7 +47,7 @@ export class MessagesComponent implements OnInit {
   ];
 
   categories: Category[] = [];
-  listMessages: any[] = [];
+  listMessages: Message[] = [];
 
   msgIndex!: number;
 

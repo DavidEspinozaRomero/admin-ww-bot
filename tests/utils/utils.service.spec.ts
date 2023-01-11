@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UtilsService } from './utils.service';
+import { UtilsService } from '../../src/app/utils/utils.service';
 
 //#region mocks
 

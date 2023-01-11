@@ -1,22 +1,14 @@
-import { CommonModule } from '@angular/common';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {
-  render,
-  RenderResult,
-  screen,
-  waitFor,
-} from '@testing-library/angular';
-import { createMock } from '@testing-library/angular/jest-utils';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { render, RenderResult, screen } from '@testing-library/angular';
+import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
 
 import { CustomToastService, StorageService } from '../../../../services';
-import { ResGetAllMessages } from '../../interfaces/message.inteface';
 import { MessagesService } from '../../services/messages.service';
 import { MessagesComponent } from './messages.component';
 
@@ -65,31 +57,38 @@ const response = {
   deletemsg: {
     message: 'mensanje eliminado',
   },
-  categories: {
-    data: [
-      { id: '1', category: 'default' },
-      { id: '2', category: 'family' },
-    ],
-  },
+  categories: [
+    {
+      id: 1,
+      description: 'default',
+    },
+    {
+      id: 2,
+      description: 'family',
+    },
+    {
+      id: 3,
+      description: 'job',
+    },
+  ],
 };
 
-const messagesServiceMock = createMock(MessagesService);
-messagesServiceMock.getAllMessages = jest.fn(() => of());
-messagesServiceMock.getCategories = jest.fn(() => of());
+// const messagesServiceMock = createMock(MessagesService);
+// messagesServiceMock.getAllMessages = jest.fn(() => of());
+// messagesServiceMock.getCategories = jest.fn(() => of());
 // messagesServiceMock.updateMessage = jest.fn(()=> of())
 // messagesServiceMock.createMessage = jest.fn(()=> of())
 // messagesServiceMock.deleteMessage = jest.fn(()=> of())
 //#endregion Mocks
 
 describe('MessagesComponent', () => {
-  let component: MessagesComponent;
-  let fixture: ComponentFixture<MessagesComponent>;
+  let service: MessagesService;
+  let httpMock: HttpTestingController;
   let rendered: RenderResult<MessagesComponent>;
+  let fixture: ComponentFixture<MessagesComponent>;
+  let component: MessagesComponent;
+  let compiled: HTMLElement;
 
-  // fb: FormBuilder,
-  // toast: CustomToastService,
-  // storage: StorageService,
-  // messagesService: MessagesService
   beforeEach(async () => {
     rendered = await render(MessagesComponent, {
       imports: [
@@ -107,25 +106,44 @@ describe('MessagesComponent', () => {
         StorageService,
         MessagesService,
       ],
-      componentProviders: [
-        { provide: MessagesService, useValue: messagesServiceMock },
-      ],
     });
   });
 
   beforeEach(() => {
+    service = TestBed.inject(MessagesService);
+    httpMock = TestBed.inject(HttpTestingController);
     fixture = rendered.fixture;
     component = rendered.fixture.componentInstance;
+    compiled = rendered.fixture.nativeElement;
   });
 
+  it('should exist', () => {
+    expect(component).toBeTruthy();
+  });
+  it('should exist', () => {
+    expect(compiled).toMatchSnapshot();
+  });
   describe('Layout', () => {
+    const initMock = () => {
+      httpMock
+        .expectOne('http://localhost:3000/messages')
+        .flush(response.allmessages);
+      httpMock
+        .expectOne('http://localhost:3000/messages/get-categories')
+        .flush(response.categories);
+      fixture.detectChanges();
+    };
     it('has a init correctly', () => {
-      expect(messagesServiceMock.getAllMessages).toBeCalled();
-      expect(messagesServiceMock.getCategories).toBeCalled();
+      const testReq = httpMock.expectOne('http://localhost:3000/messages');
+      const testReq2 = httpMock.expectOne(
+        'http://localhost:3000/messages/get-categories'
+      );
+      expect(testReq.request.method).toBe('GET');
+      expect(testReq2.request.method).toBe('GET');
     });
     it('has 2 btn whit text "+ Nuevo Mensaje", "Vincular WhatsApp"', async () => {
-      component.status.response = true;
-      fixture.detectChanges();
+      initMock();
+
       const btn1 = await screen.getByRole('button', {
         name: '+ Nuevo Mensaje',
       });
@@ -137,8 +155,8 @@ describe('MessagesComponent', () => {
       expect(btn2).toBeInTheDocument();
     });
     it('has form whit inputs, textarea, date selector, buttons save/cancel', () => {
-      component.status.response = true;
-      fixture.detectChanges();
+      initMock();
+
       const inputQuery = screen.getByLabelText('Pregunta');
       const inputAnswer = screen.getByLabelText('Respuesta');
       const inputCategory = screen.getByLabelText('Categoria');
@@ -155,14 +173,35 @@ describe('MessagesComponent', () => {
       expect(guardar).toBeInTheDocument();
       expect(cancelar).toBeInTheDocument();
     });
-    // it('has nav tabs', () => {
-    //   component.status.response = true;
-    //   fixture.detectChanges();
-    //   const nav = screen.getByRole('list', {name:''});
-    //   const tabs = screen.getAllByRole('listitem');
-      
-    //   expect(nav).toBeInTheDocument();
-    //   expect(tabs).toBeInTheDocument();
-    // });
+    it('has nav tabs', () => {
+      initMock();
+
+      const nav = screen.getByRole('list', { name: '' });
+      const listitem1 = screen.getByRole('button', { name: 'Respuestas' });
+      const listitem2 = screen.getByRole('button', { name: 'Mensajes' });
+
+      expect(nav).toBeInTheDocument();
+      expect(listitem1).toBeInTheDocument();
+      expect(listitem2).toBeInTheDocument();
+    });
+    it('has table whit headers: Pregunta, Respuesta, Categoria, Rango de horas, Acciones', () => {
+      initMock();
+
+      const table = screen.getByRole('table', { name: 'questions-answers' });
+      const colh1 = screen.getByRole('columnheader', { name: 'Pregunta' });
+      const colh2 = screen.getByRole('columnheader', { name: 'Respuesta' });
+      const colh3 = screen.getByRole('columnheader', { name: 'Categoria' });
+      const colh4 = screen.getByRole('columnheader', {
+        name: 'Rango de horas',
+      });
+      const colh5 = screen.getByRole('columnheader', { name: 'Acciones' });
+
+      expect(table).toBeInTheDocument();
+      expect(colh1).toBeInTheDocument();
+      expect(colh2).toBeInTheDocument();
+      expect(colh3).toBeInTheDocument();
+      expect(colh4).toBeInTheDocument();
+      expect(colh5).toBeInTheDocument();
+    });
   });
 });

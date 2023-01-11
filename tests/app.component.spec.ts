@@ -1,4 +1,4 @@
-import { AppComponent } from './app.component';
+import { AppComponent } from '../src/app/app.component';
 
 describe('AppComponent', () => {
 

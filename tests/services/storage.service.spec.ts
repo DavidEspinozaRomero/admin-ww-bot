@@ -1,5 +1,5 @@
 
-import { StorageService } from './storage.service';
+import { StorageService } from '../../src/app/services';
 
 describe('StorageService', () => {
 

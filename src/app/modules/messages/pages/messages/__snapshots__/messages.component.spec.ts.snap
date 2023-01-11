@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagesComponent should exist 1`] = `
+<div
+  id="root1"
+>
+  
+  <app-retry />
+  
+  <span>
+     Desconectado 
+    <i
+      class="rounded-circle d-inline-block bg-danger"
+      style="width: 0.5rem; height: 0.5rem;"
+    />
+  </span>
+  
+  <app-modalqrcode />
+</div>
+`;
