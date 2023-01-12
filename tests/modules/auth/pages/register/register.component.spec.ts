@@ -11,11 +11,11 @@ import userEvent from '@testing-library/user-event';
 import { of } from 'rxjs';
 import { ToastrModule } from 'ngx-toastr';
 
-import { RegisterComponent } from './register.component';
-import { AuthService } from '../../services/auth.service';
-import { CustomToastService } from '../../../../services/toast.service';
-import { UtilsService } from '../../../../utils/utils.service';
-import { routes } from '../../auth.routing';
+import { RegisterComponent } from '../../../../../src/app/modules/auth/pages/register/register.component';
+import { AuthService } from '../../../../../src/app/modules/auth/services/auth.service';
+import { CustomToastService } from '../../../../../src/app/services/toast.service';
+import { UtilsService } from '../../../../../src/app/utils/utils.service';
+import { routes } from '../../../../../src/app/modules/auth/auth.routing';
 
 // #region Mocks
 const registerUserMock = {

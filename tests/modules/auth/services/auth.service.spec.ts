@@ -6,8 +6,8 @@ import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { AuthService } from './auth.service';
-import { StorageService } from '../../../services';
+import { AuthService } from '../../../../src/app/modules/auth/services/auth.service';
+import { StorageService } from '../../../../src/app/services';
 
 //#region Mocks
 const response = {

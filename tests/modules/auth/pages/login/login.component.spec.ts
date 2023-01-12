@@ -10,11 +10,11 @@ import userEvent from '@testing-library/user-event';
 import { of } from 'rxjs';
 import { ToastrModule } from 'ngx-toastr';
 
-import { LoginComponent } from './login.component';
-import { AuthService } from '../../services/auth.service';
-import { CustomToastService } from '../../../../services/toast.service';
-import { UtilsService } from '../../../../utils/utils.service';
-import { routes } from '../../auth.routing';
+import { LoginComponent } from '../../../../../src/app/modules/auth/pages/login/login.component';
+import { AuthService } from '../../../../../src/app/modules/auth/services/auth.service';
+import { CustomToastService } from '../../../../../src/app/services/toast.service';
+import { UtilsService } from '../../../../../src/app/utils/utils.service';
+import { routes } from '../../../../../src/app/modules/auth/auth.routing';
 
 // #region Mocks
 const loginUserMock = {
