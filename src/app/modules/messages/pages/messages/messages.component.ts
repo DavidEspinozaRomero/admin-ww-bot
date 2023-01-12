@@ -57,7 +57,7 @@ export class MessagesComponent implements OnInit {
   manager: any;
   socket!: Socket;
 
-  newMessageGroup: FormGroup = this.fb.group({
+  messageForm: FormGroup = this.fb.group({
     id: [null],
     query: [null, [Validators.required, Validators.minLength(2)]],
     answer: [null, [Validators.required, Validators.minLength(2)]],
@@ -66,9 +66,9 @@ export class MessagesComponent implements OnInit {
     endTime: [null, [Validators.required]],
   });
 
-  miForm: FormGroup = this.fb.group({
-    messages: this.fb.array([]),
-  });
+  // miForm: FormGroup = this.fb.group({
+  //   messages: this.fb.array([]),
+  // });
 
   //#endregion variables
 
@@ -222,26 +222,28 @@ export class MessagesComponent implements OnInit {
       ...msg,
       category: this.replaceCategoryDescriptionToId(msg.category),
     };
-    this.newMessageGroup.reset(newMessage);
-    const open = document
+    this.messageForm.reset(newMessage);
+    const isShowed = document
       .getElementById('collapseExample')
       ?.classList.contains('show');
-    if (!open) {
+    if (!isShowed) {
       this.BtnNewMessage?.nativeElement.click();
     }
   }
+
   erase(msg: any, index: number) {
     this.deleteMessage(msg.id, () => {
       this.listMessages.splice(index, 1);
     });
   }
+
   resetForm() {
-    this.newMessageGroup.reset({ category: '' });
+    this.messageForm.reset({ category: '' });
   }
 
   save() {
-    this.newMessageGroup.markAllAsTouched();
-    if (this.newMessageGroup.invalid) {
+    this.messageForm.markAllAsTouched();
+    if (this.messageForm.invalid) {
       this.toast.error('Falta llenar el formulario');
       return;
     }
@@ -253,7 +255,7 @@ export class MessagesComponent implements OnInit {
       id = null,
       category = 1,
       ...data
-    } = { ...this.newMessageGroup.value };
+    } = { ...this.messageForm.value };
     if (id) {
       this.updateMessage(id, { category: +category, ...data }, this.msgIndex);
       return;

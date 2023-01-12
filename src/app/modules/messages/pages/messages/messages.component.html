@@ -48,7 +48,7 @@
   <form
     class="mb-3 collapse"
     id="collapseExample"
-    [formGroup]="newMessageGroup"
+    [formGroup]="messageForm"
   >
     <div class="row">
       <div class="col">
@@ -61,10 +61,10 @@
             aria-describedby="helpId"
             placeholder=" -- Agregue el mensaje --"
             formControlName="query"
-            [ngClass]="{ 'is-invalid': utils.isValidControl(newMessageGroup, 'query') }"
+            [ngClass]="{ 'is-invalid': utils.isValidControl(messageForm, 'query') }"
           />
           <small
-            *ngIf="utils.isValidControl(newMessageGroup, 'query')"
+            *ngIf="utils.isValidControl(messageForm, 'query')"
             id="helpId"
             class="form-text"
             err-msg
@@ -81,11 +81,11 @@
             placeholder=" -- Agregue el mensaje --"
             formControlName="answer"
             rows="4"
-            [ngClass]="{ 'is-invalid': utils.isValidControl(newMessageGroup, 'answer') }"
+            [ngClass]="{ 'is-invalid': utils.isValidControl(messageForm, 'answer') }"
           >
           </textarea>
           <small
-            *ngIf="utils.isValidControl(newMessageGroup, 'answer')"
+            *ngIf="utils.isValidControl(messageForm, 'answer')"
             id="helpId"
             class="form-text text-muted"
             >Help text</small
@@ -99,7 +99,7 @@
             class="form-select form-select-sm"
             id="category"
             formControlName="category"
-            [ngClass]="{ 'is-invalid': utils.isValidControl(newMessageGroup, 'category') }"
+            [ngClass]="{ 'is-invalid': utils.isValidControl(messageForm, 'category') }"
           >
             <option value="" selected>-- Select one --</option>
             <option [value]="category.id" *ngFor="let category of categories">
@@ -118,7 +118,7 @@
             formControlName="startTime"
           />
           <!-- <small
-            *ngIf="utils.isValidControl(newMessageGroup, 'type')"
+            *ngIf="utils.isValidControl(messageForm, 'type')"
             id="helpId"
             class="form-text text-muted"
           >
@@ -135,7 +135,7 @@
             formControlName="endTime"
           />
           <!-- <small
-            *ngIf="utils.isValidControl(newMessageGroup, 'type')"
+            *ngIf="utils.isValidControl(messageForm, 'type')"
             id="helpId"
             class="form-text text-muted"
           >
@@ -173,7 +173,7 @@
     </div>
   </form>
 
-  <!-- <pre> {{newMessageGroup.value | json}} </pre> -->
+  <!-- <pre> {{messageForm.value | json}} </pre> -->
   <div>
     <ul class="nav nav-tabs mb-3">
       <li
@@ -260,7 +260,7 @@
           formControlName="type"
         />
         <label class="form-check-label" for="flexSwitchCheckDefault">
-          {{ newMessageGroup.value.type ? "Day" : "Hour" }}
+          {{ messageForm.value.type ? "Day" : "Hour" }}
         </label>
       </div>
     </div>
@@ -275,7 +275,7 @@
     formControlName="startTime"
   />
   <small
-    *ngIf="utils.isValidControl(newMessageGroup, 'type')"
+    *ngIf="utils.isValidControl(messageForm, 'type')"
     id="helpId"
     class="form-text text-muted"
   >

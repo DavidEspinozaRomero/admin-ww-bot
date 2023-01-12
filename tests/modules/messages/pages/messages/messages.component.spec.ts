@@ -4,11 +4,19 @@ import {
 } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { render, RenderResult, screen } from '@testing-library/angular';
+import {
+  fireEvent,
+  render,
+  RenderResult,
+  screen,
+} from '@testing-library/angular';
 import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
 
-import { CustomToastService, StorageService } from '../../../../../src/app/services';
+import {
+  CustomToastService,
+  StorageService,
+} from '../../../../../src/app/services';
 import { MessagesService } from '../../../../../src/app/modules/messages/services/messages.service';
 import { MessagesComponent } from '../../../../../src/app/modules/messages/pages/messages/messages.component';
 import { UtilsService } from '../../../../../src/app/utils/utils.service';
@@ -122,8 +130,8 @@ describe('MessagesComponent', () => {
   });
 
   beforeEach(() => {
-    service = TestBed.inject(MessagesService);
     httpMock = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(MessagesService);
     fixture = rendered.fixture;
     component = rendered.fixture.componentInstance;
     compiled = rendered.fixture.nativeElement;
@@ -283,29 +291,180 @@ describe('MessagesComponent', () => {
     it('has selecNavItem', () => {
       expect(typeof component.selecNavItem).toBe('function');
     });
+    it('selecNavItem change the selected item', () => {
+      expect(component.menu[0].selected).toBeTruthy();
+      expect(component.menu[1].selected).toBeFalsy();
+
+      component.selecNavItem(component.menu[1]);
+
+      expect(component.menu[0].selected).toBeFalsy();
+      expect(component.menu[1].selected).toBeTruthy();
+
+      component.selecNavItem(component.menu[0]);
+      expect(component.menu[0].selected).toBeTruthy();
+      expect(component.menu[1].selected).toBeFalsy();
+    });
+
     it('has cancel', () => {
       expect(typeof component.cancel).toBe('function');
     });
+    it('cancel click the btncancel and run resetForm method', () => {
+      initMock();
+
+      const spy1 = jest.spyOn(component, 'resetForm');
+      const spy2 = jest.spyOn(component.BtnNewMessage!.nativeElement, 'click');
+      component.cancel();
+
+      expect(spy1).toHaveBeenCalled();
+      expect(spy2).toHaveBeenCalled();
+    });
+
     it('has edit', () => {
       expect(typeof component.edit).toBe('function');
     });
+    it('edit send the data to the form and show it if its hidden', () => {
+      initMock();
+
+      const formInitVal = {
+        id: null,
+        query: null,
+        answer: null,
+        category: '',
+        startTime: null,
+        endTime: null,
+      };
+
+      const messagetableMock = {
+        id: 1,
+        query: 'saludo',
+        answer: 'hola david e',
+        category: 'default',
+        startTime: '8:00',
+        endTime: '10:00',
+      };
+      const messageformMock = {
+        id: 1,
+        query: 'saludo',
+        answer: 'hola david e',
+        category: 1,
+        startTime: '8:00',
+        endTime: '10:00',
+      };
+
+      const spy1 = jest.spyOn(component.BtnNewMessage!.nativeElement, 'click');
+      expect(component.messageForm.value).toEqual(formInitVal);
+
+      component.edit(messagetableMock, 0);
+      expect(component.messageForm.value).toEqual(messageformMock);
+      expect(spy1).toHaveBeenCalled();
+    });
+
     it('has erase', () => {
       expect(typeof component.erase).toBe('function');
     });
+    it('erase() call the api and delete in the list the item selected', () => {
+      initMock();
+      expect(component.listMessages).toEqual(response.allmessages.data);
+
+      const msg = {
+        id: 1,
+      };
+      const url = `http://localhost:3000/messages/${msg.id}`;
+      const spy = jest.spyOn(service, 'deleteMessage');
+      const allmsgMock = [
+        {
+          id: 2,
+          query: 'hola2',
+          answer: 'hola david2',
+          category: '2',
+          startTime: '9:00',
+          endTime: '11:00',
+        },
+      ];
+      
+      component.erase(msg, 0);
+      
+      const testreq = httpMock.expectOne(url);
+      testreq.flush(of({}));
+      expect(testreq.request.method).toBe('DELETE');
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith(msg.id);
+      expect(component.listMessages).toEqual(allmsgMock);
+    });
+
     it('has resetForm', () => {
       expect(typeof component.resetForm).toBe('function');
     });
+    it('resetForm ', () => {
+      initMock();
+
+      const formInitVal = {
+        id: null,
+        query: null,
+        answer: null,
+        category: '',
+        startTime: null,
+        endTime: null,
+      };
+
+      const messagetableMock = {
+        id: 1,
+        query: 'saludo',
+        answer: 'hola david e',
+        category: 'default',
+        startTime: '8:00',
+        endTime: '10:00',
+      };
+      const messageformMock = {
+        id: 1,
+        query: 'saludo',
+        answer: 'hola david e',
+        category: 1,
+        startTime: '8:00',
+        endTime: '10:00',
+      };
+      component.edit(messagetableMock, 0);
+      expect(component.messageForm.value).toEqual(messageformMock);
+
+      component.resetForm();
+      expect(component.messageForm.value).toEqual(formInitVal);
+    });
+
     it('has save', () => {
       expect(typeof component.save).toBe('function');
     });
+
     it('has buildJson', () => {
       expect(typeof component.buildJson).toBe('function');
     });
+
     it('has replaceCategoryIdToDescription', () => {
       expect(typeof component.replaceCategoryIdToDescription).toBe('function');
     });
+
     it('has replaceCategoryDescriptionToId', () => {
       expect(typeof component.replaceCategoryDescriptionToId).toBe('function');
+    });
+  });
+
+  describe('Interactions', () => {
+    it('Tabs change the selected item', () => {
+      initMock();
+      const listitem1 = screen.getByRole('button', { name: 'Respuestas' });
+      const listitem2 = screen.getByRole('button', { name: 'Mensajes' });
+
+      expect(component.menu[0].selected).toBeTruthy();
+      expect(component.menu[1].selected).toBeFalsy();
+
+      fireEvent.click(listitem2);
+
+      expect(component.menu[0].selected).toBeFalsy();
+      expect(component.menu[1].selected).toBeTruthy();
+
+      fireEvent.click(listitem1);
+      expect(component.menu[0].selected).toBeTruthy();
+      expect(component.menu[1].selected).toBeFalsy();
     });
   });
 });

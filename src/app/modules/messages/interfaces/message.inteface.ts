@@ -24,11 +24,10 @@ export interface Category {
 }
 
 // export class Msg {
-
-//TODO: agregar default
-//   asdf(obj) {
-//     return new Msg(obj)
-//   } 
+//   //TODO: agregar default
+//   buildMsg(obj) {
+//     return new Msg();
+//   }
 
 //   constructor(
 //     private id: number,

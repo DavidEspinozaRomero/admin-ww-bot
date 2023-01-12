@@ -1,7 +1,8 @@
-<nav class="sidebar " [ngClass]="{ menu_extend: !colapse }">
+<nav class="sidebar" aria-label="sidebar" [ngClass]="{ menu_extend: !colapse }">
   <p
     class="my-3 ps-3 text-white"
     role="button"
+    aria-label="brand and sidebar toggle btn"
     style="inline-size: max-content"
     (click)="colapse = !colapse"
   >

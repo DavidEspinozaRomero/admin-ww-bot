@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayoutComponent Layout should create 1`] = `
+<div
+  id="root1"
+>
+  <nav
+    aria-label="sidebar"
+    class="sidebar"
+  >
+    <p
+      aria-label="brand and sidebar toggle btn"
+      class="my-3 ps-3 text-white"
+      role="button"
+      style="inline-size: max-content;"
+    >
+      <i
+        class="fs-5 bi bi-apple"
+      />
+      <span
+        class="ms-3"
+      >
+        BRAND
+      </span>
+    </p>
+    <ul
+      class="nav d-block h-100"
+    >
+      <li
+        class="nav-item"
+        role="button"
+        tabindex="0"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-house-door"
+          />
+          <span
+            class="ms-3"
+          >
+             Dashboard 
+          </span>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        role="button"
+        tabindex="0"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-person"
+          />
+          <span
+            class="ms-3"
+          >
+             Contacts 
+          </span>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        role="button"
+        tabindex="0"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-chat"
+          />
+          <span
+            class="ms-3"
+          >
+             Messages 
+          </span>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        role="button"
+        tabindex="0"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-hourglass"
+          />
+          <span
+            class="ms-3"
+          >
+             History 
+          </span>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        role="button"
+        tabindex="0"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-gear"
+          />
+          <span
+            class="ms-3"
+          >
+             Settings 
+          </span>
+        </a>
+      </li>
+      <li
+        class="nav-item"
+        role="button"
+        tabindex="0"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-question-circle"
+          />
+          <span
+            class="ms-3"
+          >
+             Help 
+          </span>
+        </a>
+      </li>
+      
+      <li
+        class="nav-item mt-auto"
+      >
+        <a
+          class="nav-link"
+        >
+          <i
+            class="fs-5 bi bi-box-arrow-left"
+          />
+          <span
+            class="ms-3"
+          >
+            Log out
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <main
+    class="main p-3 vh-100"
+  >
+    <router-outlet />
+    
+  </main>
+</div>
+`;
