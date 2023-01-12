@@ -8,10 +8,10 @@ import { render, RenderResult, screen } from '@testing-library/angular';
 import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
 
-import { CustomToastService, StorageService } from '../../../../services';
-import { MessagesService } from '../../services/messages.service';
-import { MessagesComponent } from './messages.component';
-import { UtilsService } from '../../../../utils/utils.service';
+import { CustomToastService, StorageService } from '../../../../../src/app/services';
+import { MessagesService } from '../../../../../src/app/modules/messages/services/messages.service';
+import { MessagesComponent } from '../../../../../src/app/modules/messages/pages/messages/messages.component';
+import { UtilsService } from '../../../../../src/app/utils/utils.service';
 
 //#region Mocks
 

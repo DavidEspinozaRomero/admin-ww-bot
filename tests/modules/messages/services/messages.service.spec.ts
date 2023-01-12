@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { MessagesService } from './messages.service';
+import { MessagesService } from '../../../../src/app/modules/messages/services/messages.service';
 
 //#region Mocks
 const response = {
