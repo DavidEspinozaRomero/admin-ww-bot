@@ -247,20 +247,23 @@ export class MessagesComponent implements OnInit {
       this.toast.error('Falta llenar el formulario');
       return;
     }
-    this.buildJson();
+    this.buildJson({ ...this.messageForm.value });
   }
 
-  buildJson() {
-    const {
-      id = null,
-      category = 1,
-      ...data
-    } = { ...this.messageForm.value };
-    if (id) {
-      this.updateMessage(id, { category: +category, ...data }, this.msgIndex);
+  buildJson(msgFormValue: {
+    id: string;
+    query: string;
+    answer: string;
+    category: string;
+    startTime: string;
+    endTime: string;
+  }) {
+    const { id = null, category = 1, ...data } = msgFormValue;
+    if (!id) {
+      this.createMessage({ category: +category, ...data });
       return;
     }
-    this.createMessage({ category: +category, ...data });
+    this.updateMessage(id, { category: +category, ...data }, this.msgIndex);
   }
 
   replaceCategoryIdToDescription(id: number): string {

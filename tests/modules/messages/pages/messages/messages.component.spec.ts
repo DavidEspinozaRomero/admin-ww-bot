@@ -10,6 +10,7 @@ import {
   RenderResult,
   screen,
 } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
 import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
 
@@ -59,7 +60,7 @@ const response = {
     id: 1,
     query: 'saludo',
     answer: 'hola david e',
-    category: 1,
+    category: { id: 1 },
     startTime: '8:00',
     endTime: '10:00',
   },
@@ -92,6 +93,7 @@ const response = {
 
 describe('MessagesComponent', () => {
   let service: MessagesService;
+  let toast: CustomToastService;
   let httpMock: HttpTestingController;
   let rendered: RenderResult<MessagesComponent>;
   let fixture: ComponentFixture<MessagesComponent>;
@@ -132,6 +134,7 @@ describe('MessagesComponent', () => {
   beforeEach(() => {
     httpMock = TestBed.inject(HttpTestingController);
     service = TestBed.inject(MessagesService);
+    toast = TestBed.inject(CustomToastService);
     fixture = rendered.fixture;
     component = rendered.fixture.componentInstance;
     compiled = rendered.fixture.nativeElement;
@@ -206,6 +209,12 @@ describe('MessagesComponent', () => {
       expect(colh3).toBeInTheDocument();
       expect(colh4).toBeInTheDocument();
       expect(colh5).toBeInTheDocument();
+    });
+    it('has table whit data: Pregunta, Respuesta, Categoria, Rango de horas, Acciones', () => {
+      initMock();
+
+      const btn_edit = screen.getAllByRole('button', { name: 'btn-edit' });
+      expect(btn_edit[0]).toBeInTheDocument();
     });
   });
   describe('Apis', () => {
@@ -381,9 +390,9 @@ describe('MessagesComponent', () => {
           endTime: '11:00',
         },
       ];
-      
+
       component.erase(msg, 0);
-      
+
       const testreq = httpMock.expectOne(url);
       testreq.flush(of({}));
       expect(testreq.request.method).toBe('DELETE');
@@ -434,6 +443,48 @@ describe('MessagesComponent', () => {
     it('has save', () => {
       expect(typeof component.save).toBe('function');
     });
+    // it('save and the form is invalid, then throw a toast whit error mgs', async () => {
+    //   initMock();
+    //   // const btn = await screen.getByRole('button', {
+    //   //   name: '+ Nuevo Mensaje',
+    //   // });
+    //   const guardar = screen.getByRole('button', { name: 'Guardar' });
+
+    //   // await userEvent.click(btn);
+    //   await userEvent.click(guardar);
+    //   fixture.detectChanges();
+
+    //   // const spy = jest.spyOn(toast, 'error');
+    //   expect(component.messageForm.invalid).toBeTruthy();
+    //   // expect(spy).toHaveBeenCalled();
+    // });
+    // it('save and the form is valid, then then call buildjson', async () => {
+    //   initMock();
+
+    //   const inputQuery = screen.getByLabelText('Pregunta');
+    //   const inputAnswer = screen.getByLabelText('Respuesta');
+    //   const inputCategory = screen.getByLabelText('Categoria');
+    //   const inputHoraInicio = screen.getByLabelText('Hora inicio');
+    //   const inputHoraFin = screen.getByLabelText('Hora fin');
+    //   const guardar = screen.getByRole('button', { name: 'Guardar' });
+    //   const spy = jest.spyOn(component, 'buildJson');
+
+    //   // const url = `http://localhost:3000/messages/1`;
+    //   // const testReq = httpMock.expectOne(url);
+    //   // expect(testReq.request.method).toBe('PATCH');
+    //   // testReq.flush(response.updatemsg);
+
+    //   await userEvent.type(inputQuery, 'saludo');
+    //   await userEvent.type(inputAnswer, 'hola david e');
+    //   await userEvent.selectOptions(inputCategory, '1');
+    //   await userEvent.type(inputHoraInicio, '8:00');
+    //   await userEvent.type(inputHoraFin, '10:00');
+    //   await userEvent.click(guardar);
+    //   fixture.detectChanges();
+
+    //   expect(component.messageForm.valid).toBeTruthy();
+    //   expect(spy).toHaveBeenCalled();
+    // });
 
     it('has buildJson', () => {
       expect(typeof component.buildJson).toBe('function');
