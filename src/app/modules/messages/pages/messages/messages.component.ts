@@ -143,8 +143,8 @@ export class MessagesComponent implements OnInit {
       categories: this.messagesService.getCategories(),
     })
       .subscribe({
-        next: ({ allmessages, categories }: any) => {
-          this.listMessages = allmessages.data as Message[];
+        next: ({ allmessages, categories }) => {
+          this.listMessages = allmessages;
           this.categories = categories;
           this.status.response = true;
         },

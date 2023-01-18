@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 
 // import { StorageService } from '../../../services';
 import { environment } from '../../../../environments/environment';
-import { Message, ResGetAllMessages } from '../interfaces';
+import { Category, ResGetAllMessages } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +13,8 @@ export class MessagesService {
   private readonly BaseUrl = environment.UrlApi;
 
   constructor(
-    private readonly httpClient: HttpClient
-  ) // private readonly storage: StorageService
-  {}
+    private readonly httpClient: HttpClient // private readonly storage: StorageService
+  ) {}
 
   getqrimg() {
     const URL = `${this.BaseUrl}bot-webwhatsap/qrcode`;
@@ -31,9 +30,9 @@ export class MessagesService {
 
   getAllMessages() {
     const URL = `${this.BaseUrl}messages`;
-    return this.httpClient.get<ResGetAllMessages>(URL).pipe(
-      tap( (res:ResGetAllMessages) => res.data )
-    );
+    return this.httpClient
+      .get<ResGetAllMessages>(URL)
+      .pipe(map((res) => res.data));
   }
 
   updateMessage(id: string | number, body: {}) {
@@ -48,6 +47,6 @@ export class MessagesService {
 
   getCategories() {
     const URL = `${this.BaseUrl}messages/get-categories`;
-    return this.httpClient.get(URL);
+    return this.httpClient.get<Category[]>(URL);
   }
 }

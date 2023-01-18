@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadingService {
-
-  constructor() { }
+  isLoading: EventEmitter<boolean> = new EventEmitter();
+  constructor() {}
 }
