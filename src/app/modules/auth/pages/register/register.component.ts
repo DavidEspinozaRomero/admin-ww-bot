@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { CustomToastService } from '../../../../services/toast.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
 import { UtilsService } from '../../../../utils/utils.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -53,6 +54,7 @@ export class RegisterComponent {
       ],
     ],
   });
+
   //#endregion variables
   constructor(
     private readonly fb: FormBuilder,
@@ -64,15 +66,18 @@ export class RegisterComponent {
   //#region Apis
   //Post
   registerUser() {
-    this.authService.registerUser(this.registerForm.value).subscribe({
-      next: (res) => {
-        this.toast.success(res.message);
-        this.router.navigateByUrl('/admin/settings');
-      },
-      error: (err) => {
-        this.toast.error(err.error.message);
-      },
-    });
+    this.authService
+      .registerUser(this.registerForm.value)
+      .subscribe({
+        next: (res) => {
+          this.toast.success(res.message);
+          this.router.navigateByUrl('/admin/settings');
+        },
+        error: (err) => {
+          this.toast.error(err.error.message);
+        },
+      })
+      // .unsubscribe();
   }
 
   //#endregion Apis

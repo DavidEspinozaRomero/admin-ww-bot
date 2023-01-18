@@ -1,6 +1,4 @@
-export { CustomToastService } from './toast.service';
-export { CryptService } from './crypt.service';
-export { StorageService } from './storage.service';
-
-
-
+export * from './crypt.service';
+export * from './loading.service';
+export * from './storage.service';
+export * from './toast.service';

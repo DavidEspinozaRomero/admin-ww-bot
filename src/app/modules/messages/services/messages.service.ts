@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 
 // import { StorageService } from '../../../services';
 import { environment } from '../../../../environments/environment';
-import { ResGetAllMessages } from '../interfaces/message.inteface';
+import { Message, ResGetAllMessages } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +31,9 @@ export class MessagesService {
 
   getAllMessages() {
     const URL = `${this.BaseUrl}messages`;
-    return this.httpClient.get<ResGetAllMessages>(URL);
+    return this.httpClient.get<ResGetAllMessages>(URL).pipe(
+      tap( (res:ResGetAllMessages) => res.data )
+    );
   }
 
   updateMessage(id: string | number, body: {}) {
