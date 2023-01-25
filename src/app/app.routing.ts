@@ -6,6 +6,11 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 
 const routes: Routes = [
   {
+    path: '',
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
@@ -34,9 +39,7 @@ const routes: Routes = [
     path: 'history',
     component: LayoutComponent,
     loadChildren: () =>
-      import('./modules/history/history.module').then(
-        (m) => m.HistoryModule
-      ),
+      import('./modules/history/history.module').then((m) => m.HistoryModule),
     canActivate: [ValidateTokenGuard],
     canLoad: [ValidateTokenGuard],
   },
@@ -44,9 +47,7 @@ const routes: Routes = [
     path: 'help',
     component: LayoutComponent,
     loadChildren: () =>
-      import('./modules/help/help.module').then(
-        (m) => m.HelpModule
-      ),
+      import('./modules/help/help.module').then((m) => m.HelpModule),
     canActivate: [ValidateTokenGuard],
     canLoad: [ValidateTokenGuard],
   },
@@ -70,7 +71,7 @@ const routes: Routes = [
     canActivate: [ValidateTokenGuard],
     canLoad: [ValidateTokenGuard],
   },
-  { path: '**', redirectTo: 'auth' },
+  { path: '**', redirectTo: '' },
   // { path: '', pathMatch: 'full', redirectTo: 'path' },
 ];
 

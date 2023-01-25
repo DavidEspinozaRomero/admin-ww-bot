@@ -7,18 +7,22 @@ import { SharedModule } from '../shared/shared.module';
 
 import { ModalqrcodeComponent } from './components/modalqrcode/modalqrcode.component';
 import { MessagesComponent } from './pages/messages/messages.component';
-
+import {
+  InProgressModule,
+  LoadingModule,
+  RetryModule,
+} from '../shared/components';
 
 @NgModule({
-  declarations: [
-    ModalqrcodeComponent,
-    MessagesComponent
-  ],
+  declarations: [ModalqrcodeComponent, MessagesComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     MessagesRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+    LoadingModule,
+    InProgressModule,
+    RetryModule,
+  ],
 })
-export class MessagesModule { }
+export class MessagesModule {}

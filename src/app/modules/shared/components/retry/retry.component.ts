@@ -5,11 +5,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   templateUrl: './retry.component.html',
   styleUrls: ['./retry.component.scss'],
 })
-export class RetryComponent implements OnInit {
+export class RetryComponent {
   @Output() onRetry: EventEmitter<boolean> = new EventEmitter();
-  constructor() {}
-
-  ngOnInit(): void {}
 
   retry() {
     this.onRetry.emit(true);
