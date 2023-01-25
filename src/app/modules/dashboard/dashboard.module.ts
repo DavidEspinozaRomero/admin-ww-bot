@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardRoutingModule } from './dashboard.routing';
 import { HomeComponent } from './pages/home/home.component';
-import { SharedModule } from '../shared/shared.module';
+import { DirectivesModule } from '../shared';
 import { InProgressModule, LoadingModule } from '../shared/components';
 
 @NgModule({
@@ -11,7 +11,7 @@ import { InProgressModule, LoadingModule } from '../shared/components';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    SharedModule,
+    DirectivesModule,
     LoadingModule,
     InProgressModule,
   ],

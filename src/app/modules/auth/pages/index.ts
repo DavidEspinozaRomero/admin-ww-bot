@@ -1,4 +1,4 @@
-export { LayoutComponent } from './layout/layout.component';
-export { LoginComponent } from './login/login.component';
-export { RegisterComponent } from './register/register.component';
-export { RestorePasswordComponent } from './restore-password/restore-password.component';
+export * from './layout/layout.component';
+export * from './login/login.component';
+export * from './register/register.component';
+export * from './restore-password/restore-password.component';

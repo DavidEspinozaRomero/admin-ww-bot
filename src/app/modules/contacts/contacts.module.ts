@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ContactsRoutingModule } from './contacts-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { ContactsRoutingModule } from './contacts.routing';
 import { ContactsComponent } from './pages/contacts/contacts.component';
+import { DirectivesModule } from '../shared';
 import { InProgressModule, LoadingModule } from '../shared/components';
 
 @NgModule({
@@ -11,7 +11,7 @@ import { InProgressModule, LoadingModule } from '../shared/components';
   imports: [
     CommonModule,
     ContactsRoutingModule,
-    SharedModule,
+    DirectivesModule,
     LoadingModule,
     InProgressModule,
   ],

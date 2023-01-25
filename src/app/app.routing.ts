@@ -6,11 +6,6 @@ import { LayoutComponent } from './layouts/layout/layout.component';
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () =>
-      import('./modules/home/home.module').then((m) => m.HomeModule),
-  },
-  {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then((m) => m.AuthModule),
@@ -70,6 +65,12 @@ const routes: Routes = [
       ),
     canActivate: [ValidateTokenGuard],
     canLoad: [ValidateTokenGuard],
+  },
+  {
+    path: '',
+    title: 'Home',
+    loadChildren: () =>
+      import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   { path: '**', redirectTo: '' },
   // { path: '', pathMatch: 'full', redirectTo: 'path' },
