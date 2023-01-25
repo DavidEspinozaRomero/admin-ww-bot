@@ -8,6 +8,7 @@ import {
   HomeComponent,
   LandingComponent,
 } from './pages';
+import { InProgressModule } from '../shared';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import {
     ContactComponent,
     AboutUsComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule],
+  imports: [CommonModule, HomeRoutingModule, InProgressModule],
 })
 export class HomeModule {}
