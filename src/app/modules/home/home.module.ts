@@ -9,6 +9,7 @@ import {
   LandingComponent,
 } from './pages';
 import { InProgressModule } from '../shared';
+import { CardImgLrComponent } from './components/card-img-lr/card-img-lr.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { InProgressModule } from '../shared';
     LandingComponent,
     ContactComponent,
     AboutUsComponent,
+    CardImgLrComponent,
   ],
   imports: [CommonModule, HomeRoutingModule, InProgressModule],
 })
