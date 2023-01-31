@@ -24,13 +24,13 @@
 
     <ul class="navbar-nav flex-row">
       <li class="nav-item mx-3">
-        <a class="nav-link" routerLink="landing"> landing </a>
+        <a class="nav-link" href="#info"> Info </a>
       </li>
       <li class="nav-item mx-3">
-        <a class="nav-link" routerLink="contact"> contact </a>
+        <a class="nav-link" href="#path"> Path </a>
       </li>
       <li class="nav-item mx-3">
-        <a class="nav-link" routerLink="about-us"> about-us </a>
+        <a class="nav-link" href="#pricing"> Price </a>
       </li>
     </ul>
     <div class="d-flex">
@@ -63,48 +63,11 @@
         </div>
       </div>
     </section>
-    <!-- <div class="my-4"></div> -->
-    <hr />
-    <!-- <section id="metrics" class="bg-white">
-      <div class="row mt-4">
-        <div class="col">
-          <div class="px-3 d-flex align-items-center justify-content-center">
-            <i class="bi bi-person p-3 me-3 bg-primary text-white rounded-circle"></i>
-            <p>
-              <span class="fs-3 fw-bold">persons</span>
-              <br />
-              <span>s</span>
-            </p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="px-3 d-flex align-items-center justify-content-center">
-            <i class="bi bi-person p-3 me-3 bg-primary text-white rounded-circle"></i>
-            <p>
-              <span class="fs-3 fw-bold">persons</span>
-              <br />
-              <span>s</span>
-            </p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="px-3 d-flex align-items-center justify-content-center">
-            <i class="bi bi-person p-3 me-3 bg-primary text-white rounded-circle"></i>
-            <p>
-              <span class="fs-3 fw-bold">persons</span>
-              <br />
-              <span>s</span>
-            </p>
-          </div>
-        </div>
-        
-      </div>
-    </section> -->
-    <section id="info">
+
+    <section id="info" class="">
       <app-card-img-text> </app-card-img-text>
     </section>
-    <hr />
-    <section id="path">
+    <section id="path" class="py-5">
       <div class="d-flex justify-content-evenly position-relative">
         <div
           class="rounded-circle border bg-primary fs-1 text-center text-white fw-bold path-form"
@@ -112,7 +75,7 @@
           1
         </div>
         <div
-          class="col-3 bg-primary opacity-50 border my-auto"
+          class="col-auto col-md-3 bg-primary opacity-50 border my-auto"
           style="height: 1rem"
         ></div>
         <div
@@ -121,7 +84,7 @@
           2
         </div>
         <div
-          class="col-3 bg-primary opacity-50 border my-auto"
+          class="col-auto col-md-3 bg-primary opacity-50 border my-auto"
           style="height: 1rem"
         ></div>
         <div
@@ -130,16 +93,19 @@
           3
         </div>
       </div>
+      <br />
+      <br />
       <div class="d-flex justify-content-evenly position-relative">
         <div class="col fs-4 text-center">Crea una cuenta</div>
-        <div class="col-3"></div>
+        <div class="col-auto col-md-3"></div>
         <div class="col fs-4 text-center">
           Vincula con una cuenta de whatsapp
         </div>
-        <div class="col-3"></div>
+        <div class="col-auto col-md-3"></div>
         <div class="col fs-4 text-center">Personalízala a tu gusto</div>
       </div>
-
+      <br />
+      <br />
       <div class="">
         <h2>Title</h2>
         <p>
@@ -150,34 +116,86 @@
         </p>
       </div>
     </section>
-    <hr />
-    <section id="plans">
+    <section id="pricing" class="bg-white py-5">
       <div class="row justify-content-center">
-        <div class="col col-md-4">1</div>
-        <div class="col col-md-4">2</div>
+        <div class="col col-md-4">
+          <div class="card border-primary">
+            <span
+              class="card-title bg-primary text-center text-white"
+              style="font-size: 12px"
+            >
+              La mejor opción
+            </span>
+            <div class="card-body pt-2">
+              <!-- <span class="badge bg-warning opacity-50 text-white"> Ahorra un 63% </span> -->
+              <p class="card-text">
+                <span class="fs-5"> Completo </span> <br />
+                <span class="card-text fs-3">5,99 US$ /m</span> <br />
+                <small class="">
+                  397,68 US$143,76 US$ los 2 primeros años
+                  <br />
+                  Puede estar sujeto a IVA
+                </small>
+              </p>
+              <a class="btn btn-primary" role="button">
+                Consigue el plan completo
+              </a>
+              <br />
+              <small class="">
+                <i class="bi bi-shield-fill-check text-success"></i> Garantía de
+                devolución de 30 días garantizada
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-md-4">
+          <div class="card">
+            <br />
+            <div class="card-body pt-2">
+              <!-- <span class="badge bg-warning opacity-50 text-white"> Ahorra un 63% </span> -->
+              <p class="card-text">
+                <span class="fs-5"> Estandar </span> <br />
+                <span class="card-text fs-3">4,99 US$ /m</span> <br />
+                <small class="">
+                  397,68 US$143,76 US$ los 2 primeros años
+                  <br />
+                  Puede estar sujeto a IVA
+                </small>
+              </p>
+              <a class="btn btn-primary" role="button">
+                Consigue el plan completo
+              </a>
+              <br />
+              <small class="">
+                <i class="bi bi-shield-fill-check text-success"></i> Garantía de
+                devolución de 30 días garantizada
+              </small>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <hr />
-    <section id="contact"></section>
-    <hr />
-    <section id="about-us"></section>
   </main>
 </div>
 
-<!-- <ul class="nav justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link" routerLink="landing"> landing </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="contact"> contact </a>
-  </li>
+<!-- <footer>
+  <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="landing"> landing </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="contact"> contact </a>
+    </li>
 
-  <li class="nav-item">
-    <a class="nav-link" routerLink="auth"> Login </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" routerLink="auth/register"> Register </a>
-  </li>
-</ul> -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="auth"> Login </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="auth/register"> Register </a>
+    </li>
+  </ul>
+</footer> -->
 
 <app-in-progress></app-in-progress>
