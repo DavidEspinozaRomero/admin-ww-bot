@@ -10,6 +10,7 @@ import {
 } from './pages';
 import { InProgressModule } from '../shared';
 import { CardImgLrComponent } from './components/card-img-lr/card-img-lr.component';
+import { CardImgTextComponent } from './components/card-img-text/card-img-text.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CardImgLrComponent } from './components/card-img-lr/card-img-lr.compone
     ContactComponent,
     AboutUsComponent,
     CardImgLrComponent,
+    CardImgTextComponent,
   ],
   imports: [CommonModule, HomeRoutingModule, InProgressModule],
 })

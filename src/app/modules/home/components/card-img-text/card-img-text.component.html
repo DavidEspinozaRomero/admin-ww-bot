@@ -1,0 +1,20 @@
+<div class="card border-0">
+  <div class="row my-3 justify-content-center" *ngFor="let card of cards">
+    <div class="col-auto col-md-4">
+      <img
+        loading="lazy"
+        [src]="card.src"
+        [alt]="card.alt"
+        class="w-100 img-fluid rounded"
+        style="aspect-ratio: 16/9"
+      />
+    </div>
+    <div class="col-auto"></div>
+    <div class="col-auto col-md-5 h-100 my-auto">
+      <div class="card-body">
+        <h2 class="card-title fs-4">{{ card.title }}</h2>
+        <p class="card-text fs-5">{{ card.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

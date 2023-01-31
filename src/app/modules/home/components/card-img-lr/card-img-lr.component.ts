@@ -11,7 +11,7 @@ export class CardImgLrComponent implements OnInit {
   @Input() alt?:string
   @Input() title?:string
   @Input() description?:string
-  @Input() imgPosition?:string
+  @Input() imgPosition?:boolean
   @Input() routerLink?:string
 
   constructor() { }

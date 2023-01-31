@@ -2,6 +2,7 @@
   <div class="row g-0">
     <div class="col-md-6" *ngIf="!imgPosition">
       <img
+        loading="lazy"
         [src]="src"
         class="img-fluid rounded-start aspect-ratio-16"
         [alt]="alt"
@@ -16,6 +17,7 @@
     </div>
     <div class="col-md-6" *ngIf="imgPosition">
       <img
+        loading="lazy"
         [src]="src"
         class="img-fluid rounded-end aspect-ratio-16"
         [alt]="alt"
