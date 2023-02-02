@@ -3,7 +3,11 @@
   style="height: 100vh"
 >
   <div class="col-8 col-sm-6 col-md-5">
-    <form
+    <div *ngIf="sendEmail" class="bg-white p-5 rounded shadow-lg">
+      <h3 class="fw-bold mb-4 text-primary"><i class="bi bi-envelope-check"></i> Correo enviado exitosamente</h3>
+      <p class="text-center">Por favor revisa tu bandeja de entrada</p>
+    </div>
+    <form *ngIf="!sendEmail"
       class="bg-white p-5 rounded shadow-lg"
       autocomplete="off"
       [formGroup]="registerForm"

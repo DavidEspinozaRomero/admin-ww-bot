@@ -6,6 +6,7 @@ import {
   LoginComponent,
   RestorePasswordComponent,
   RegisterComponent,
+  VerifyEmailComponent,
 } from './pages';
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'restore-password', component: RestorePasswordComponent },
+      { path: 'verify-email', component: VerifyEmailComponent },
       { path: '**', redirectTo: 'login' },
     ],
   },

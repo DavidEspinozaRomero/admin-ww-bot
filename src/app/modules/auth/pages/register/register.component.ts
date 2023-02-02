@@ -6,7 +6,6 @@ import { AuthService } from '../../services/auth.service';
 import { CustomToastService } from '../../../../services/toast.service';
 import { RegExpAPP } from '../../interfaces/auth.interface';
 import { UtilsService } from '../../../../utils/utils.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class RegisterComponent {
   //#region variables
+  sendEmail = false
   registerForm: FormGroup = this.fb.group({
     username: [
       '',
@@ -66,18 +66,15 @@ export class RegisterComponent {
   //#region Apis
   //Post
   registerUser() {
-    this.authService
-      .registerUser(this.registerForm.value)
-      .subscribe({
-        next: (res) => {
-          this.toast.success(res.message);
-          this.router.navigateByUrl('/admin/settings');
-        },
-        error: (err) => {
-          this.toast.error(err.error.message);
-        },
-      })
-      // .unsubscribe();
+    this.authService.registerUser(this.registerForm.value).subscribe({
+      next: (res) => {
+        this.toast.success(res.message);
+        this.sendEmail = true
+      },
+      error: (err) => {
+        this.toast.error(err.error.message);
+      },
+    });
   }
 
   //#endregion Apis
@@ -85,9 +82,7 @@ export class RegisterComponent {
   //#region methods
   register() {
     this.registerForm.markAllAsTouched();
-    if (this.registerForm.invalid) {
-      return;
-    }
+    if (this.registerForm.invalid) return;
     this.registerUser();
   }
 

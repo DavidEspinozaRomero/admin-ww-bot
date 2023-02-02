@@ -9,6 +9,7 @@ import {
   RestorePasswordComponent,
   RegisterComponent,
 } from './pages';
+import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {
     RestorePasswordComponent,
     RegisterComponent,
     LayoutComponent,
+    VerifyEmailComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, AuthRoutingModule],
 })

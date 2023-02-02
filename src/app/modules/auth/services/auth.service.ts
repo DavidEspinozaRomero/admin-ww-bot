@@ -28,6 +28,8 @@ export class AuthService {
     private readonly storage: StorageService
   ) {}
 
+  //#region Apis
+
   registerUser(json: registerUser) {
     const URL = `${this.BaseUrl}auth/register`;
     return this.httpClient.post<any>(URL, json);
@@ -51,6 +53,12 @@ export class AuthService {
       catchError((err) => of(false))
     );
   }
+
+  verifyEmail(token: {}) {
+    const URL = `${this.BaseUrl}auth/verify-email`;
+    return this.httpClient.post(URL, token);
+  }
+  //#endregion Apis
 
   //#region methods
   setUserAndToken(res: authloginResponse) {
