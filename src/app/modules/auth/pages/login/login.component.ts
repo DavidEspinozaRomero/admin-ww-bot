@@ -14,6 +14,7 @@ import { UtilsService } from '../../../../utils/utils.service';
 })
 export class LoginComponent {
   //#region variables
+  hidepassword = true
   loginForm: FormGroup = this.fb.group({
     email: [
       '',

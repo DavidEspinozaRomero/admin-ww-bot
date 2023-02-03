@@ -13,7 +13,8 @@ import { UtilsService } from '../../../../utils/utils.service';
 })
 export class RegisterComponent {
   //#region variables
-  sendEmail = false
+  hidepassword = true;
+  sendEmail = false;
   registerForm: FormGroup = this.fb.group({
     username: [
       '',
@@ -67,7 +68,7 @@ export class RegisterComponent {
     this.authService.registerUser(this.registerForm.value).subscribe({
       next: (res) => {
         this.toast.success(res.message);
-        this.sendEmail = true
+        this.sendEmail = true;
       },
       error: (err) => {
         this.toast.error(err.error.message);

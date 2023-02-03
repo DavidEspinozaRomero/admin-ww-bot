@@ -4,10 +4,13 @@
 >
   <div class="col-8 col-sm-6 col-md-5">
     <div *ngIf="sendEmail" class="bg-white p-5 rounded shadow-lg">
-      <h3 class="fw-bold mb-4 text-primary"><i class="bi bi-envelope-check"></i> Correo enviado exitosamente</h3>
+      <h3 class="fw-bold mb-4 text-primary">
+        <i class="bi bi-envelope-check"></i> Correo enviado exitosamente
+      </h3>
       <p class="text-center">Por favor revisa tu bandeja de entrada</p>
     </div>
-    <form *ngIf="!sendEmail"
+    <form
+      *ngIf="!sendEmail"
       class="bg-white p-5 rounded shadow-lg"
       autocomplete="off"
       [formGroup]="registerForm"
@@ -55,16 +58,29 @@
 
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input
-          id="password"
-          class="form-control"
-          type="password"
-          formControlName="password"
-          placeholder="Ingrese su contraseña"
-          [ngClass]="{
-            'is-invalid': utils.isValidControl(registerForm, 'password')
-          }"
-        />
+        <div class="input-group mb-3">
+          <input
+            id="password"
+            class="form-control"
+            [type]="hidepassword ? 'password' : 'text'"
+            formControlName="password"
+            placeholder="Ingrese su contraseña"
+            [ngClass]="{
+              'is-invalid': utils.isValidControl(registerForm, 'password')
+            }"
+          />
+          <span
+            *ngIf="hidepassword"
+            class="input-group-text bi bi-eye"
+            (click)="hidepassword = !hidepassword"
+          ></span>
+          <span
+            *ngIf="!hidepassword"
+            class="input-group-text bi bi-eye-slash"
+            (click)="hidepassword = !hidepassword"
+          ></span>
+        </div>
+
         <small
           *ngIf="utils.isValidControl(registerForm, 'password')"
           class="text-danger"
@@ -80,8 +96,12 @@
 
       <div class="mb-3 text-center">
         <span class=""> ¿Ya tienes cuenta? </span>
-
         <a routerLink="../login" class=""> Ingresa aquí </a>
+      </div>
+
+      <div class="mb-3 text-center">
+        <span class=""> Olvide mi contraseña.</span>
+        <a routerLink="../forgot-password" class=""> Entra aquí </a>
       </div>
     </form>
   </div>
