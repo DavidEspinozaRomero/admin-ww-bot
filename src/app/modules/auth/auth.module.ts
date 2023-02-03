@@ -10,6 +10,7 @@ import {
   RegisterComponent,
 } from './pages';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { VerifyEmailComponent } from './pages/verify-email/verify-email.componen
     RegisterComponent,
     LayoutComponent,
     VerifyEmailComponent,
+    ForgotPasswordComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, AuthRoutingModule],
 })

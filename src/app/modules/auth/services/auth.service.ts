@@ -58,6 +58,17 @@ export class AuthService {
     const URL = `${this.BaseUrl}auth/verify-email`;
     return this.httpClient.post(URL, token);
   }
+
+  forgotPassword(email: {}) {
+    const URL = `${this.BaseUrl}auth/forgot-password`;
+    return this.httpClient.post(URL, email);
+  }
+
+  restorePassword(json: {}) {
+    const URL = `${this.BaseUrl}auth/restore-password`;
+    return this.httpClient.post(URL, json);
+  }
+
   //#endregion Apis
 
   //#region methods

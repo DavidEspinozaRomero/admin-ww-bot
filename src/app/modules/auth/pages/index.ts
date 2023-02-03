@@ -1,3 +1,4 @@
+export * from './forgot-password/forgot-password.component';
 export * from './layout/layout.component';
 export * from './login/login.component';
 export * from './register/register.component';

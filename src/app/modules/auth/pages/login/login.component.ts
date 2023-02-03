@@ -36,6 +36,7 @@ export class LoginComponent {
     ],
   });
   //#endregion variables
+  
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,

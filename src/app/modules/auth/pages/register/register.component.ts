@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
 import { CustomToastService } from '../../../../services/toast.service';
@@ -58,7 +57,6 @@ export class RegisterComponent {
   //#endregion variables
   constructor(
     private readonly fb: FormBuilder,
-    private readonly router: Router,
     private readonly authService: AuthService,
     private readonly toast: CustomToastService,
     readonly utils: UtilsService
