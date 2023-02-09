@@ -7,6 +7,7 @@ export const environment = {
   UrlApi: 'http://localhost:3000/',
   // UrlApi: 'https://backwawbot.onrender.com/',
   WebSocketUrl: 'socket.io/socket.io.js',
+  paypalid: 'AYzz7cn2aB-2aa34M3zyK8XVMgyfGMxwv_5qULXxABGOeRLM-0t1psS1KKboWE_6IgI51iQkUR7kfQ0D',
 };
 
 /*

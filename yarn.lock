@@ -1848,6 +1848,13 @@
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
 
+"@paypal/paypal-js@*", "@paypal/paypal-js@^5.1.4":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@paypal/paypal-js/-/paypal-js-5.1.4.tgz#aff45a27bb542dc331853577094aee78d5233b75"
+  integrity sha512-5ktge4DFOMu3rvFR4YWDiPm4wDUzOmghtCM9ZxgJyJCOJP+61IVYdrENysMay91T4GOZ10k2ywWcBN5shsGhLw==
+  dependencies:
+    promise-polyfill "^8.2.3"
+
 "@schematics/angular@14.1.3":
   version "14.1.3"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-14.1.3.tgz#8ffeba77cc81bb81f0263768f0fdb2dab4f92950"
@@ -2115,6 +2122,13 @@
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@types/parse5/-/parse5-6.0.3.tgz#705bb349e789efa06f43f128cef51240753424cb"
   integrity sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==
+
+"@types/paypal__paypal-js@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/paypal__paypal-js/-/paypal__paypal-js-2.1.0.tgz#de3d3c4934056b715b2297197f391db235258ab8"
+  integrity sha512-6jExroICzbJp2ieIqCrdI5H7bM2cdQu/epvSoZKAR81z+XxVadjN0dLOy+EPBKAE2CMinqCdwSpvUQlBUmeYiw==
+  dependencies:
+    "@paypal/paypal-js" "*"
 
 "@types/prettier@^2.1.5":
   version "2.7.1"
@@ -6602,6 +6616,11 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==
+
+promise-polyfill@^8.2.3:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/promise-polyfill/-/promise-polyfill-8.3.0.tgz#9284810268138d103807b11f4e23d5e945a4db63"
+  integrity sha512-H5oELycFml5yto/atYqmjyigJoAo3+OXwolYiH7OfQuYlAqhxNvTfiNMbV9hsC6Yp83yE5r2KTVmtrG6R9i6Pg==
 
 promise-retry@^2.0.1:
   version "2.0.1"

@@ -67,8 +67,18 @@ const routes: Routes = [
     canLoad: [ValidateTokenGuard],
   },
   {
+    path: 'payments',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./modules/payments/payments.module').then(
+        (m) => m.PaymentsModule
+      ),
+    canActivate: [ValidateTokenGuard],
+    canLoad: [ValidateTokenGuard],
+  },
+  {
     path: '',
-    title: 'Home',
+    title: 'home',
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },

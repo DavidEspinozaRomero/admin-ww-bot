@@ -27,7 +27,6 @@ import { LayoutComponent } from './layouts/layout/layout.component';
       preventDuplicates: true,
     }),
     AppRoutingModule,
-    
   ],
   providers: [
     Location,
