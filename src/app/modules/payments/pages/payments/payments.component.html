@@ -1,11 +1,20 @@
-<script src="https://www.paypal.com/sdk/js?client-id={{environment.paypalid}}"></script>
+<script src="https://www.paypal.com/sdk/js?client-id={{
+    environment.paypalid
+  }}"></script>
 
-<div class="row">
-  <div class="col">
-    <h3> User data</h3>
-    
+<div class="row row-cols-1 row-cols-sm-2 justify-content-center">
+  <div class="col col-md-5 col-lg-4 mb-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white" > Plan </div>
+      <div class="card-body">
+        <h4 class="card-title">Pro</h4>
+        <p class="card-text"> Price: 5$ </p>
+      </div>
+      <!-- <div class="card-footer text-muted">Footer</div> -->
+    </div>
   </div>
-  <div class="col my-auto">
+  <div class="col col-md-5 col-lg-4 my-auto mb-4">
+    <h3> Paid Method </h3>
     <div #paypalcontainer></div>
   </div>
 </div>

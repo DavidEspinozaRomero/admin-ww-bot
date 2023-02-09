@@ -1,17 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { loadScript } from '@paypal/paypal-js';
 
 import { CustomToastService } from '../../../../services';
 import { environment } from '../../../../../environments/environment';
 import { PaymentsService } from '../../services';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payments',
@@ -22,6 +16,7 @@ export class PaymentsComponent implements OnInit {
   //#region Variables
   @ViewChild('paypalcontainer', { static: true }) paypalcontainer!: ElementRef;
   paypal!: any;
+
   //#endregion Variables
 
   constructor(
@@ -45,6 +40,7 @@ export class PaymentsComponent implements OnInit {
         'client-id': environment.paypalid,
       });
     } catch (error) {
+      // this.settings.response_paypal = false;
       console.error('failed to load the PayPal JS SDK script', error);
     }
 
