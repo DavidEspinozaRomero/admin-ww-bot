@@ -20,12 +20,16 @@ export interface authloginResponse {
   message: string;
   token: string;
   username: string;
+  isEmail: boolean;
+  isPaid: boolean;
 }
 
 export interface User {
   id: string;
   username: string;
   email: string;
+  isEmail: boolean;
+  isPaid: boolean;
 }
 
 export const RegExpAPP = {

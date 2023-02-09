@@ -1,0 +1,35 @@
+<div *ngIf="!user.isPaid">
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="bi bi-exclamation-triangle text-warning fs-5 me-3"></i>
+    <strong>Account invalid:</strong> need to have a plan to use.
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 justify-content-center">
+  <div class="col col-lg-4 mb-4">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <strong> UserName: </strong> {{ user.username }}
+      </li>
+
+      <li class="list-group-item">
+        <strong> Email: </strong> {{ user.email }}
+      </li>
+      <li class="list-group-item">
+        <strong> Plan: </strong>
+        <i *ngIf="user.isPaid" class="bi bi-check-circle text-success fs-5"></i>
+        <i *ngIf="!user.isPaid" class="bi bi-x-circle text-danger fs-5"></i>
+      </li>
+    </ul>
+  </div>
+  <div class="col col-lg-4 mb-4 text-center">
+    <h3>Paid Plan</h3>
+    <a name="" id="" class="btn btn-primary" routerLink="/payments" role="button"> Adquire </a>
+  </div>
+</div>

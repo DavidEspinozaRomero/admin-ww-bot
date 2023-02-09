@@ -5,10 +5,11 @@ import { SettingsRoutingModule } from './settings.routing';
 import { HomeComponent } from './pages/home/home.component';
 import { DirectivesModule } from '../shared';
 import { InProgressModule, LoadingModule } from '../shared/components';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, SettingsComponent],
   imports: [
     CommonModule,
     SettingsRoutingModule,
