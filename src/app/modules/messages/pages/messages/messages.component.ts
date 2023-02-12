@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Manager, Socket } from 'socket.io-client';
 import {
+  AbstractControl,
+  FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
@@ -55,9 +58,18 @@ export class MessagesComponent implements OnInit {
   manager: any;
   socket!: Socket;
 
+  keywordControl = this.fb.control('', [
+    Validators.required,
+    Validators.minLength(2),
+  ]);
+
+  public get keywordsArr(): string[] {
+    return structuredClone(this.messageForm.get('keywords')?.value);
+  }
+
   messageForm: FormGroup = this.fb.group({
     id: [null],
-    query: [null, [Validators.required, Validators.minLength(2)]],
+    keywords: this.fb.array([], [Validators.required, Validators.min(1)]),
     answer: [null, [Validators.required, Validators.minLength(2)]],
     category: ['', Validators.required],
     startTime: [null, [Validators.required]],
@@ -216,11 +228,23 @@ export class MessagesComponent implements OnInit {
 
   edit(msg: any, index: number) {
     this.msgIndex = index;
+    console.log(msg);
+
     const newMessage = {
       ...msg,
       category: this.replaceCategoryDescriptionToId(msg.category),
     };
     this.messageForm.reset(newMessage);
+    const temparr = this.messageForm.get('keywords') as FormArray;
+    this.cleanFormArr(temparr);
+    msg.keywords.forEach((keyword: string) => {
+      temparr.push(
+        this.fb.control(keyword, [Validators.required, Validators.minLength(2)])
+      );
+    });
+
+    console.log(this.messageForm);
+
     const isShowed = document
       .getElementById('collapseExample')
       ?.classList.contains('show');
@@ -236,7 +260,9 @@ export class MessagesComponent implements OnInit {
   }
 
   resetForm() {
-    this.messageForm.reset({ category: '' });
+    this.messageForm.reset({ category: '', keywords: [] });
+    const temparr = this.messageForm.get('keywords') as FormArray;
+    this.cleanFormArr(temparr);
   }
 
   save() {
@@ -245,12 +271,13 @@ export class MessagesComponent implements OnInit {
       this.toast.error('Falta llenar el formulario');
       return;
     }
-    this.buildJson({ ...this.messageForm.value });
+
+    this.buildJson(structuredClone(this.messageForm.value));
   }
 
   buildJson(msgFormValue: {
     id: string;
-    query: string;
+    keywords: string[];
     answer: string;
     category: string;
     startTime: string;
@@ -277,6 +304,45 @@ export class MessagesComponent implements OnInit {
       )?.id || 0
     );
   }
+
+  addKeyword() {
+    const keyword = this.keywordControl as FormControl;
+
+    if (this.keywordControl.invalid) return;
+    if (this.keywordsArr.includes(keyword.value)) return;
+
+    const formArr = this.messageForm.get('keywords') as FormArray;
+    formArr.push(
+      this.fb.control(keyword.value, [
+        Validators.required,
+        Validators.minLength(2),
+      ])
+    );
+    keyword.reset('');
+  }
+
+  removeKeyword(index: number) {
+    const formArr = this.messageForm.get('keywords') as FormArray;
+    formArr.removeAt(index);
+  }
+
+  cleanFormArr(arr: FormArray) {
+    while ((arr.controls.length = 0)) {
+      arr.removeAt(0);
+    }
+  }
+
+  // abstractToFormGroup(abstract: AbstractControl): FormGroup {
+  //   return abstract as FormGroup
+  // }
+
+  // abstractToFormArr(abstract: AbstractControl): FormArray {
+  //   return abstract as FormArray
+  // }
+
+  // removeControl_FormArr(index: number, formArr: FormArray) {
+  //   formArr.removeAt(index);
+  // }
 
   //#endregion methods
 }

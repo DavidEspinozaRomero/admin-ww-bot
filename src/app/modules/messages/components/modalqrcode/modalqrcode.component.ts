@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MessagesService } from '../../services/messages.service';
 import { CustomToastService } from '../../../../services/toast.service';
 import { Socket } from 'socket.io-client';

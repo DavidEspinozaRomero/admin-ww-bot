@@ -11,7 +11,7 @@ export interface ResGetAllMessages {
 
 export interface Message {
   id: number;
-  query: string;
+  keywords: string[];
   answer: string;
   startTime: string;
   endTime: string;
