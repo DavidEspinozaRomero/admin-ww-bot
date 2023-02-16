@@ -8,9 +8,9 @@ import { ModalqrcodeComponent } from './components/modalqrcode/modalqrcode.compo
 import { MessagesComponent } from './pages/messages/messages.component';
 import { DirectivesModule } from '../shared';
 import {
-  InProgressModule,
-  LoadingModule,
-  RetryModule,
+  InProgressComponent,
+  LoadingComponent,
+  RetryComponent,
 } from '../shared/components';
 
 @NgModule({
@@ -20,9 +20,9 @@ import {
     ReactiveFormsModule,
     MessagesRoutingModule,
     DirectivesModule,
-    LoadingModule,
-    InProgressModule,
-    RetryModule,
+    LoadingComponent,
+    InProgressComponent,
+    RetryComponent,
   ],
 })
 export class MessagesModule {}

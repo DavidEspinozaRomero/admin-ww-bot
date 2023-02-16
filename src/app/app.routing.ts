@@ -78,7 +78,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    title: 'home',
+    title: 'Avi bot',
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },

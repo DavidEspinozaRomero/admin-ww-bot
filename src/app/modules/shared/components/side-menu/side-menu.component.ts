@@ -1,11 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   selector: 'app-side-menu',
   templateUrl: './side-menu.component.html',
-  styleUrls: ['./side-menu.component.scss']
+  styleUrls: ['./side-menu.component.scss'],
 })
-export class SideMenuComponent implements OnInit {
+export class SideMenuComponent {
   //#region variables
   menu = [
     // { icon: '', label: '', route: '' },
@@ -20,9 +24,4 @@ export class SideMenuComponent implements OnInit {
   ];
   colapse: boolean = true;
   //#endregion variables
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard.routing';
 import { HomeComponent } from './pages/home/home.component';
 import { DirectivesModule } from '../shared';
-import { InProgressModule, LoadingModule } from '../shared/components';
+import { InProgressComponent, LoadingComponent } from '../shared/components';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -12,8 +12,8 @@ import { InProgressModule, LoadingModule } from '../shared/components';
     CommonModule,
     DashboardRoutingModule,
     DirectivesModule,
-    LoadingModule,
-    InProgressModule,
+    LoadingComponent,
+    InProgressComponent,
   ],
 })
 export class DashboardModule {}

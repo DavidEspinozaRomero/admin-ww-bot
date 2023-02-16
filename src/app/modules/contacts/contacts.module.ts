@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ContactsRoutingModule } from './contacts.routing';
 import { ContactsComponent } from './pages/contacts/contacts.component';
 import { DirectivesModule } from '../shared';
-import { InProgressModule, LoadingModule } from '../shared/components';
+import { InProgressComponent, LoadingComponent } from '../shared/components';
 
 @NgModule({
   declarations: [ContactsComponent],
@@ -12,8 +12,8 @@ import { InProgressModule, LoadingModule } from '../shared/components';
     CommonModule,
     ContactsRoutingModule,
     DirectivesModule,
-    LoadingModule,
-    InProgressModule,
+    LoadingComponent,
+    InProgressComponent,
   ],
 })
 export class ContactsModule {}

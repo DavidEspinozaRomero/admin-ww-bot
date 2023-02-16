@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SettingsRoutingModule } from './settings.routing';
 import { HomeComponent } from './pages/home/home.component';
 import { DirectivesModule } from '../shared';
-import { InProgressModule, LoadingModule } from '../shared/components';
+import { InProgressComponent, LoadingComponent } from '../shared/components';
 import { SettingsComponent } from './pages/settings/settings.component';
 
 
@@ -14,8 +14,8 @@ import { SettingsComponent } from './pages/settings/settings.component';
     CommonModule,
     SettingsRoutingModule,
     DirectivesModule,
-    LoadingModule,
-    InProgressModule,
+    LoadingComponent,
+    InProgressComponent,
   ],
 })
 export class SettingsModule {}

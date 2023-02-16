@@ -16,7 +16,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { LayoutComponent } from './layouts/layout/layout.component';
 
 @NgModule({
-  declarations: [AppComponent, LayoutComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -27,6 +27,7 @@ import { LayoutComponent } from './layouts/layout/layout.component';
       preventDuplicates: true,
     }),
     AppRoutingModule,
+    LayoutComponent,
   ],
   providers: [
     Location,

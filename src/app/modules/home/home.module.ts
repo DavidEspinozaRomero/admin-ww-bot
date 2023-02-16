@@ -8,7 +8,7 @@ import {
   HomeComponent,
   LandingComponent,
 } from './pages';
-import { InProgressModule } from '../shared';
+import { InProgressComponent } from '../shared';
 import { CardImgLrComponent } from './components/card-img-lr/card-img-lr.component';
 import { CardImgTextComponent } from './components/card-img-text/card-img-text.component';
 
@@ -21,6 +21,6 @@ import { CardImgTextComponent } from './components/card-img-text/card-img-text.c
     CardImgLrComponent,
     CardImgTextComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, InProgressModule],
+  imports: [CommonModule, HomeRoutingModule, InProgressComponent],
 })
 export class HomeModule {}
